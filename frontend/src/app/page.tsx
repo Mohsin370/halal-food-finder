@@ -29,6 +29,12 @@ export default async function Home() {
           <Slider items={restaurants} />
         </div>
       </div>
+      <div className="flex justify-center">
+        <div className="p-3 container">
+          <h1 className="font-bold text-2xl p-2">Featured Restaurants</h1>
+          <Slider items={restaurants} />
+        </div>
+      </div>
     </div>
   );
 }
