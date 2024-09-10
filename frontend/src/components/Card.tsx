@@ -15,7 +15,7 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({
   restaurant,
 }) => {
   return (
-    <div className="mr-3 mb-3">
+    <div className="mr-3 my-3">
       <Card className="py-4" isPressable={true}>
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h4 className="font-bold text-large">{restaurant.name}</h4>
