@@ -13,7 +13,7 @@ interface SliderProps {
 }
 
 
-export default function RestaurantList({ items }: { items: SliderProps[] }) {
+export default function Slider({ items }: { items: SliderProps[] }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollRight = () => {
