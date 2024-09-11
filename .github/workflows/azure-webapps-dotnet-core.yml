@@ -23,7 +23,6 @@ env:
   AZURE_WEBAPP_NAME: backend    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: './backend'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '8.0'                 # set this to the .NET Core version to use
-  DOTNET_ROOT: './backend'
 
 on:
   push:
@@ -56,16 +55,16 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./backend.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/${{env.AZURE_WEBAPP_NAME}}
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/${{env.AZURE_WEBAPP_NAME}}
+          path: ${{env.DOTNET_ROOT}}/backend
 
   deploy:
     permissions:
