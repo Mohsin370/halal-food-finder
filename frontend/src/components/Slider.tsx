@@ -72,7 +72,7 @@ export default function Slider({ items }: { items: SliderProps[] }) {
   return (
     <div className="relative">
       <div ref={scrollContainerRef} className="flex overflow-x-auto whitespace-nowrap scrollbar-hide px-3">
-        {items.map((item: SliderProps) => (
+        {items?.map((item: SliderProps) => (
           <div key={item.id} className="inline-block">
             <ScrollCard restaurant={item} />
           </div>
@@ -90,6 +90,7 @@ export default function Slider({ items }: { items: SliderProps[] }) {
           <ArrowRightCircleIcon className="h-6 w-6" />
         </button>
       )}
+      {items.length < 1 && <h3 className=" text-large font-bold text-center"> No Items Available</h3>}
     </div>
   );
 }
