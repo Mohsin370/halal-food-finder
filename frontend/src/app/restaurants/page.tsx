@@ -14,16 +14,14 @@ interface IRestaurants {
 
 const Listings = async () => {
   const restaurants: IRestaurants[] = await fetchRestaurants();
-  console.log(restaurants);
-
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
         <SearchInput />
         <div className="">
           {restaurants.map((restaurant: IRestaurants) => (
-            <div className="mb-3">
-              <ListingCard restaurant={restaurant} key={restaurant.id} />
+            <div className="mb-3" key={restaurant.id}>
+              <ListingCard restaurant={restaurant}/>
             </div>
           ))}
         </div>

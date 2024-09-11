@@ -1,8 +1,8 @@
 import Slider from "../components/Slider";
-import SearchInput from "../components/SearchInput";
 import { fetchRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
 import { Image } from "@nextui-org/react";
+import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {
   const restaurants = await fetchRestaurants();
@@ -19,9 +19,9 @@ export default async function Home() {
           alt="Landing Page Image"
         />
         <div className="absolute z-10 text-center top-40">
-          <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
-          <SearchInput />
-        </div>
+            <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
+            <SearchSection/>
+          </div>
       </div>
       <div className="flex justify-center">
         <div className="p-3 container">
