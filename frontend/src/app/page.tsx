@@ -8,7 +8,7 @@ export default async function Home() {
   const restaurants = await fetchRestaurants();
 
   return (
-    <div>
+    <div className="md:mx-3">
       <div className="flex justify-center mt-3 relative">
         <Image
           className="text-center object-cover"

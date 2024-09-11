@@ -80,13 +80,13 @@ export default function Slider({ items }: { items: SliderProps[] }) {
       </div>
 
       {showLeftButton && (
-        <button onClick={scrollLeft} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-red-500 text-white px-2 py-2 rounded-full z-10">
+        <button onClick={scrollLeft} className="absolute left-0 md:-left-5 top-1/2 transform -translate-y-1/2 bg-red-500 text-white px-2 py-2 rounded-full z-10">
           <ArrowLeftCircleIcon className="h-6 w-6" />
         </button>
       )}
 
       {showRightButton && (
-        <button onClick={scrollRight} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-red-500 text-white px-2 py-2 rounded-full z-10">
+        <button onClick={scrollRight} className="absolute right-0 md:-right-5 top-1/2 transform -translate-y-1/2 bg-red-500 text-white px-2 py-2 rounded-full z-10">
           <ArrowRightCircleIcon className="h-6 w-6" />
         </button>
       )}
