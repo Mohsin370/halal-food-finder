@@ -2,9 +2,13 @@
 import React from "react";
 import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
 import {Logo} from "../images/logo";
+import { useRouter } from 'next/navigation';
+
 
 export default function App() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
 
   const menuItems = [
     "Profile",
@@ -30,30 +34,20 @@ export default function App() {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand>
+        <NavbarBrand className="cursor-pointer" onClick={ ()=>router.push('/')}>
           <Logo />
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">HalalFindr</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand>
+        <NavbarBrand className="cursor-pointer" onClick={ ()=>router.push('/')}>
           <Logo />
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">HalalFindr</p>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
+          <Link color="foreground" className="cursor-pointer" onPress={ ()=>router.push('/restaurants')}>
+            Restaurants
           </Link>
         </NavbarItem>
       </NavbarContent>
