@@ -1,5 +1,5 @@
+import SearchSection from "../../components/client/SearchSection";
 import ListingCard from "../../components/ListingCard";
-import SearchInput from "../../components/SearchInput";
 import { fetchRestaurants } from "../../utils/api";
 import { Pagination } from "@nextui-org/react";
 
@@ -17,7 +17,9 @@ const Listings = async () => {
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
-        <SearchInput />
+        <div className="text-center m-auto">
+          <SearchSection displaySearchbtn={false}/>
+        </div>
         <div className="">
           {restaurants.map((restaurant: IRestaurants) => (
             <div className="mb-3" key={restaurant.id}>
