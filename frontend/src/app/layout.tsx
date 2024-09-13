@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {Providers} from "@/providers";
 import  Navbar  from "../components/Navbar";
+import Footer from "../components/Footer";
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false; // Prevent FontAwesome from automatically adding its CSS
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,6 +34,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar/>
         <Providers>{children}</Providers>
+        <Footer/>
       </body>
     </html>
   );
