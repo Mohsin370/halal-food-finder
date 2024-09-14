@@ -16,7 +16,7 @@ const SearchSection = ({displaySearchbtn =  true}:searchProps) => {
         <div className="flex justify-center items-center flex-wrap">
             <SearchInput />
             <Spacer x={4} />
-            <FilterModal/>
+            <div className="my-3 sm:my-0"><FilterModal/></div>
             <Spacer x={3} />
             {displaySearchbtn && <Button className="text-white bg-red-600 border-danger-800"  size="lg" variant="shadow" onPress={()=> router.push("/restaurants")}>Search</Button>} </div>
     );
