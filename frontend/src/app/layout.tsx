@@ -7,6 +7,8 @@ import Footer from "../components/Footer";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; // Prevent FontAwesome from automatically adding its CSS
+import "mapbox-gl/dist/mapbox-gl.css"; // Import the necessary Mapbox CSS
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

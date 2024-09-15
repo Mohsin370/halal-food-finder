@@ -20,7 +20,7 @@ export default async function Home() {
         />
         <div className="absolute z-10 text-center top-40">
             <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
-            <SearchSection/>
+            <SearchSection displayMapBtn={false}/>
           </div>
       </div>
       <div className="flex justify-center">
