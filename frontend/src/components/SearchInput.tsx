@@ -3,22 +3,11 @@ import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { autoCompleteAddress } from "../utils/api";
 import { useAsyncList } from "@react-stately/data";
+import { FeatureCollection, Feature } from "geojson";
 
 export default function SearchInput() {
-  type IAddress = {
-    geometry: {
-      coordinates: Array<number>;
-    };
-    properties: {
-      full_address: string;
-      mapbox_id: string;
-      feature_type: string;
-      name: string;
-      place_formatted: string;
-    };
-  };
 
-  let list = useAsyncList<IAddress>({
+  let list = useAsyncList<Feature>({
     async load({ filterText }) {
       if (
         filterText === undefined ||
@@ -29,26 +18,30 @@ export default function SearchInput() {
           items: [],
         };
       }
-      let addresses = await autoCompleteAddress(filterText);
+      let addresses: FeatureCollection = await autoCompleteAddress(filterText);
       return {
         items: addresses.features || [],
       };
     },
   });
 
-  const processLocationname = (item: IAddress) => {
+  const processLocationname = (item: Feature) => {
     let res: string = "";
     let { properties } = item;
+    if (!properties) return <div>No data</div>;
+
     switch (properties.feature_type) {
       case "address": {
         res = properties.full_address;
         break;
       }
-      case "poi": {
-        res = properties.name;
+      case "poi":
+        case "postcode": {
+        res = properties.name + ", "+ properties.place_formatted;
         break;
       }
       case "place":
+      case "locality":
       case "street": {
         res = properties.name + ", " + properties.place_formatted;
         break;
@@ -78,7 +71,7 @@ export default function SearchInput() {
         }}
       >
         {(item) => (
-          <AutocompleteItem key={item.properties.mapbox_id}>
+          <AutocompleteItem key={item.properties?.mapbox_id}>
             {processLocationname(item)}
           </AutocompleteItem>
         )}
