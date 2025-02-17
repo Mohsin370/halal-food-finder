@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Select, SelectItem, Slider } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Select, SelectItem, Slider } from "@heroui/react";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 
 interface FilterState {

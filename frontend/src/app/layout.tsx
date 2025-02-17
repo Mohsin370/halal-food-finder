@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import {Providers} from "@/providers";
-import  Navbar  from "../components/Navbar";
-import Footer from "../components/Footer";
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { Providers } from "@/providers";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Prevent FontAwesome from automatically adding its CSS
 import "mapbox-gl/dist/mapbox-gl.css"; // Import the necessary Mapbox CSS
+import LayoutWrapper from "./layoutWrapper";
 
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
+const geist = localFont({
+  src: "./fonts/Geist-VariableFont_wght.ttf",
   weight: "100 900",
 });
 
@@ -33,10 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar/>
-        <Providers>{children}</Providers>
-        <Footer/>
+      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}> */}
+      <body className={`${geist.className} antialiased`}>
+        <Providers>
+          <LayoutWrapper >{children}</LayoutWrapper>
+        </Providers>
       </body>
     </html>
   );

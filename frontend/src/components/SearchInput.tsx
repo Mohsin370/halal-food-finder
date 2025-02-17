@@ -1,5 +1,5 @@
 import React from "react";
-import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Input } from "@heroui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { autoCompleteAddress } from "../utils/api";
 import { useAsyncList } from "@react-stately/data";

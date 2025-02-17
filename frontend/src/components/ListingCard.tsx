@@ -1,6 +1,6 @@
 // components/Card.tsx
 
-import { Card, CardHeader, CardBody, Image, CardFooter } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image, CardFooter } from "@heroui/react";
 
 interface Restaurant {
   id: number;

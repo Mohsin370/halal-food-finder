@@ -1,5 +1,5 @@
 "use client";
-import { Button, Spacer } from "@nextui-org/react";
+import { Button, Spacer } from "@heroui/react";
 import SearchInput from "../SearchInput";
 import FilterModal from "../FilterModal";
 import { useRouter } from "next/navigation";

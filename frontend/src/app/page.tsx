@@ -1,7 +1,7 @@
 import Slider from "../components/Slider";
 import { fetchRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
-import { Image } from "@nextui-org/react";
+import { Image } from "@heroui/react";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { Link } from '@nextui-org/react';
+import { Link } from "@heroui/react";
 
 const Footer = () => {
   return (

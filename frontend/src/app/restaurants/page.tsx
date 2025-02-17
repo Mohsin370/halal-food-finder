@@ -1,7 +1,7 @@
 import SearchSection from "../../components/client/SearchSection";
 import ListingCard from "../../components/ListingCard";
 import { fetchRestaurants } from "../../utils/api";
-import { Pagination } from "@nextui-org/react";
+import { Pagination } from "@heroui/react";
 
 interface IRestaurants {
   id: number;
