@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import SideMenuItem from "./SideMenu";
 import { HomeIcon } from "@heroicons/react/24/outline";
@@ -23,11 +24,11 @@ const SideMenuList: ISideMenuList[] = [
 
 const SideBar = () => {
   return (
-    <div className="sm:w-10 md:w-2/12 lg:w-[300px] bg-red-500 text-white">
-      <div className="flex justify-center  content-center">
-        <div className="h-screen w-full text-center p-5">
-          {SideMenuList.map((item) => {
-            return <SideMenuItem item={item} />;
+    <div className="w-14 md:w-[250px] bg-red-500 text-white">
+      <div className="flex justify-center content-center">
+        <div className=" w-14 md:w-[250px] text-center p-5">
+          {SideMenuList.map((item, index) => {
+            return <SideMenuItem item={item} key={index} />;
           })}
         </div>
       </div>

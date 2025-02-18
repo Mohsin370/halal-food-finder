@@ -16,7 +16,7 @@ const SideMenu = ({ item }: { item: ISideMenuList }) => {
       <div className="pr-2">
         <item.icon className="h-5 w-5"></item.icon>
       </div>
-      <div className="sm:hidden md:block">{item.name}</div>
+      <div className="hidden md:block">{item.name}</div>
     </Link>
   );
 };
