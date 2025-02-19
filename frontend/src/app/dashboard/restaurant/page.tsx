@@ -3,17 +3,17 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { IRestaurants } from "@/interface/IRestaurants";
 
-async function getData(): Promise<IRestaurants[]> {
+async function getRestaurants(): Promise<IRestaurants[]> {
   const restaurants: IRestaurants[] = await fetchRestaurants();
   return restaurants;
 }
 
 export default async function RestaurantDashboard() {
-  const data = await getData();
+  const restaurants = await getRestaurants();
 
   return (
-    <div className="container mx-auto p-10 max-w-full">
-      <DataTable columns={columns} data={data} />
+    <div className="container mx-auto p-10 max-w-full overflow-auto">
+      <DataTable columns={columns} data={restaurants} />
     </div>
   );
 }

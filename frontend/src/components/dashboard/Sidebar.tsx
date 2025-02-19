@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import SideMenuItem from "./SideMenu";
-import { HomeIcon } from "@heroicons/react/24/outline";
 import {Divider} from "@heroui/divider";
+import { LayoutDashboard, Store } from "lucide-react";
 
 interface ISideMenuList {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -12,12 +12,12 @@ interface ISideMenuList {
 
 const SideMenuList: ISideMenuList[] = [
   {
-    icon: HomeIcon,
+    icon: LayoutDashboard,
     name: "Dashboard",
     link: "/dashboard",
   },
   {
-    icon: HomeIcon,
+    icon: Store,
     name: "Restaurant",
     link: "/dashboard/restaurant",
   },
