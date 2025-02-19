@@ -12,7 +12,7 @@ const SideMenu = ({ item }: { item: ISideMenuList }) => {
   const router = useRouter();
 
   return (
-    <Link onPress={() => router.push(item.link)} className="flex items-center font-semibold hover:bg-red-700 md:pl-2 py-3 rounded-sm mb-3 cursor-pointer text-white">
+    <Link onPress={() => router.push(item.link)} className="flex items-center transition duration-600 ease-in-out hover:bg-neutral-500 md:pl-2 py-3 rounded-sm mb-3 cursor-pointer text-white">
       <div className="pr-2">
         <item.icon className="h-5 w-5"></item.icon>
       </div>
