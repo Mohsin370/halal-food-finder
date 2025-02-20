@@ -16,7 +16,8 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { PlusIcon } from "lucide-react";
-import RestaurantModal from "../../../components/client/RestaurantModal";
+// import RestaurantModal from "../../../components/client/RestaurantModal";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -27,6 +28,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const router = useRouter();
+
 
   const table = useReactTable({
     data,
@@ -45,10 +48,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     },
   });
 
-  const handleModalOpen = (backdrop: string) => {
-    // setBackdrop(backdrop);
-    // onOpen();
-  };
 
   return (
     <div>
@@ -59,7 +58,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
-        <RestaurantModal/>
+        {/* <RestaurantModal/> */}
+      <PlusIcon className="rounded-sm border-2 border-black cursor-pointer hover:bg-black hover:text-white transition duration-600 ease-in-out"
+      onClick={() => router.push("/dashboard/restaurant/add")}
+      />
+
       </div>
       <div className="rounded-md border">
         <Table>
