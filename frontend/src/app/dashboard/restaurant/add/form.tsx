@@ -2,10 +2,21 @@
 
 import * as React from "react";
 import { Button, Divider, Form, Input } from "@heroui/react";
+import AddressSearch from "../../../../components/client/AddressSearch";
 
 export default function RestaurantForm() {
+  type RestaurantAddressType = {
+    address: string;
+    suburb: string;
+    country: string;
+    city: string;
+    lat: string;
+    lng: string;
+    state: string;
+  };
+
   const [name, setName] = React.useState("");
-  const [address, setAddress] = React.useState("");
+  const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [submitted, setSubmitted] = React.useState(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,26 +54,10 @@ export default function RestaurantForm() {
           value={name}
           onValueChange={setName}
           fullWidth={false}
-
         />
       </div>
       <div className="flex flex-wrap gap-5 my-10">
-        <Input
-          isRequired
-          errorMessage="Please enter a valid address"
-          label="Address"
-          labelPlacement="outside"
-          name="address"
-          placeholder="Restaurant Adress"
-          type="text"
-          value={address}
-          onValueChange={setAddress}
-          fullWidth={false}
-        />
-       
-        
-       
-       
+        <AddressSearch setAddress={setAddress} />
       </div>
       <Button type="submit" variant="bordered">
         Submit
