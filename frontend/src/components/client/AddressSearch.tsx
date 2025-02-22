@@ -20,7 +20,7 @@ type RestaurantAddressType = {
 export default function AddressSearch({ setAddress }: { setAddress: (address: RestaurantAddressType) => void }) {
   const [selectedAddress, setSelectedAddress] = React.useState<string>("");
 
-  let list = useAsyncList<Feature>({
+  let list = useAsyncList<Feature, Boolean>({
     async load({ filterText }) {
       if (filterText === undefined || filterText === "" || filterText.length < 2) {
         return {
@@ -44,17 +44,6 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
         res = properties.full_address;
         break;
       }
-      //   case "poi":
-      //   case "postcode": {
-      //     res = properties.name + ", " + properties.place_formatted;
-      //     break;
-      //   }
-      //   case "place":
-      //   case "locality":
-      //   case "street": {
-      //     res = properties.name + ", " + properties.place_formatted;
-      //     break;
-      //   }
     }
 
     return <div>{res}</div>;
@@ -70,7 +59,7 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
       city: properties.context.place.name,
       state: properties.context.region.region_code,
       lat: properties.coordinates.latitude,
-      suburb: properties.context.locality,
+      suburb: properties.context.locality.name,
       lng: properties.coordinates.longitude,
     });
     list.setFilterText(properties.full_address);
@@ -78,11 +67,10 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
   };
   return (
     <Autocomplete
-      label="Address"
+      label="Find Address"
       isRequired
-      labelPlacement="outside"
       errorMessage="Please enter a valid address"
-      placeholder="Search an address"
+      placeholder="Find an address"
       onInputChange={(text: string) => {
         setSelectedAddress(text); // Allow user to change the input field
         list.setFilterText(text);
@@ -99,7 +87,7 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
       }}
     >
       {(item) => (
-        <AutocompleteItem key={item.properties?.mapbox_id} onPress={() => setAddressState(item)}>
+        <AutocompleteItem key={item.properties?.mapbox_id} textValue={selectedAddress} onPress={() => setAddressState(item)}>
           {processLocationname(item)}
         </AutocompleteItem>
       )}
