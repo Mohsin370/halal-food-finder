@@ -4,6 +4,7 @@ import * as React from "react";
 import { Button, Form, Input, Image } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectSection, SelectItem } from "@heroui/select";
+import { addRestaurant } from "../../../../utils/api";
 
 export default function RestaurantForm() {
   type RestaurantAddressType = {
@@ -22,12 +23,23 @@ export default function RestaurantForm() {
     { key: "lion", label: "Food Truck" },
   ];
 
+  const HalalStatus = [
+    { key: "certified", label: "Halal Certified" },
+    { key: "partial", label: "Partially Halal" },
+    { key: "vegetarian", label: "Vegetarian" },
+  ];
+
+  
+
+  
+
   const [name, setName] = React.useState<string>();
   const [image, setImage] = React.useState("");
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
+  const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -35,6 +47,8 @@ export default function RestaurantForm() {
     const data = Object.fromEntries(formData);
 
     console.log(data);
+    delete data['image'];
+    const resp = await addRestaurant(data);
   };
 
   return (
@@ -71,12 +85,17 @@ export default function RestaurantForm() {
             ))}
           </Select>
 
+          <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Halal Status" selectedKeys={halalStatus} onSelectionChange={(keys) => setHalalStatus(keys as Set<string>)}>
+            {HalalStatus.map((type) => (
+              <SelectItem key={type.key}>{type.label}</SelectItem>
+            ))}
+          </Select>
+
           <Input
             type="file"
             accept="image/*"
             className="xl:w-1/6 lg:w-1/4 w-full"
             onChange={(file) => {
-              console.log(file);
               const imageFile = file.target.files?.[0];
               if (imageFile) {
                 const imageUrl = URL.createObjectURL(imageFile);

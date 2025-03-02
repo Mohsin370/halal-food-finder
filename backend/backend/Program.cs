@@ -8,6 +8,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ServerContext>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", PolicyBuilder =>
+        PolicyBuilder.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader());
+
+});
 
 var app = builder.Build();
 
@@ -22,6 +30,8 @@ app.UseSwaggerUI();
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 
