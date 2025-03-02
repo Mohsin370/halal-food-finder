@@ -82,43 +82,9 @@ const FilterModal = () => {
                     </div>
                   </div>
 
-                  {/* Price Range */}
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold dark:text-white">Price Range</h3>
-                    <Select name="priceRange" value={filters.priceRange} onChange={(e) => handleFilterChange(e as React.ChangeEvent<HTMLSelectElement>)} placeholder="Select">
-                      <SelectItem key="low" value="low">
-                        $
-                      </SelectItem>
-                      <SelectItem key="medium" value="medium">
-                        $$
-                      </SelectItem>
-                      <SelectItem key="high" value="high">
-                        $$$
-                      </SelectItem>
-                    </Select>
-                  </div>
 
-                  {/* Rating */}
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold dark:text-white">Rating</h3>
-                    <Select name="rating" value={filters.rating} onChange={(e) => handleFilterChange(e as React.ChangeEvent<HTMLSelectElement>)} placeholder="Select">
-                      <SelectItem key="1" value="1">
-                        1 Star
-                      </SelectItem>
-                      <SelectItem key="2" value="2">
-                        2 Stars
-                      </SelectItem>
-                      <SelectItem key="3" value="3">
-                        3 Stars
-                      </SelectItem>
-                      <SelectItem key="4" value="4">
-                        4 Stars
-                      </SelectItem>
-                      <SelectItem key="5" value="5">
-                        5 Stars
-                      </SelectItem>
-                    </Select>
-                  </div>
+
+
 
                   {/* Location */}
                   <div className="mb-4">
