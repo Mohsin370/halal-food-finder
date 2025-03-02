@@ -5,6 +5,8 @@ import { Button, Form, Input, Image } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectSection, SelectItem } from "@heroui/select";
 import { addRestaurant } from "../../../../utils/api";
+import {addToast} from "@heroui/react";
+
 
 export default function RestaurantForm() {
   type RestaurantAddressType = {
@@ -45,10 +47,15 @@ export default function RestaurantForm() {
     const formData = new FormData(e.currentTarget);
     formData.append("restaurantType", Array.from(restaurantType).join(","));
     const data = Object.fromEntries(formData);
-
+    data.image = "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg";
     console.log(data);
-    delete data['image'];
     const resp = await addRestaurant(data);
+    if(resp.status == 201){
+      addToast({
+        title: "Success",
+        description: "Retaurant Added Successfully"
+      })
+    }
   };
 
   return (
@@ -124,6 +131,7 @@ export default function RestaurantForm() {
           <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={false} isReadOnly={true} />
           <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={address?.city} fullWidth={false} isReadOnly={true} />
           <Input isRequired errorMessage="Please enter a valid suburb" label="Suburb" name="suburb" placeholder="Suburb" type="text" value={address?.suburb} fullWidth={false} isReadOnly={true} />
+          <Input isRequired errorMessage="Please enter a valid state" label="state" name="state" placeholder="State" type="text" value={address?.state} fullWidth={false} isReadOnly={true} />
           <Input
             isRequired
             errorMessage="Please enter a valid country"

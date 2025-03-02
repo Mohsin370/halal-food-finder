@@ -29,4 +29,5 @@ export const addRestaurant = async (data: any) => {
     },
     body: JSON.stringify(data),
   });
+  return response.json();
 };
