@@ -31,7 +31,11 @@ export default function RestaurantForm() {
     { key: "vegetarian", label: "Vegetarian" },
   ];
 
-  
+  const CuisineType = [
+    { key: "pak", label: "Pakistani" },
+    { key: "lab", label: "Labanese" },
+    { key: "afg", label: "Afghani" },
+  ];
 
   
 
@@ -40,6 +44,7 @@ export default function RestaurantForm() {
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
+  const [cuisineType, setCuisineType] = React.useState<Set<string>>(new Set([]));
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,7 +53,7 @@ export default function RestaurantForm() {
     formData.append("restaurantType", Array.from(restaurantType).join(","));
     const data = Object.fromEntries(formData);
     data.image = "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg";
-    console.log(data);
+
     const resp = await addRestaurant(data);
     if(resp.status == 201){
       addToast({
@@ -98,6 +103,12 @@ export default function RestaurantForm() {
             ))}
           </Select>
 
+          <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Cuisine Type" selectedKeys={cuisineType} onSelectionChange={(keys) => setCuisineType(keys as Set<string>)}>
+            {CuisineType.map((type) => (
+              <SelectItem key={type.key}>{type.label}</SelectItem>
+            ))}
+          </Select>
+
           <Input
             type="file"
             accept="image/*"
@@ -127,7 +138,7 @@ export default function RestaurantForm() {
         <div className="flex flex-wrap gap-5 mb-10 m-auto">
           <AddressSearch setAddress={setAddress} />
         </div>
-        <div className="flex gap-5 flex-wrap justify-center ">
+        <div className="flex gap-5 flex-wrap justify-center m-auto ">
           <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={false} isReadOnly={true} />
           <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={address?.city} fullWidth={false} isReadOnly={true} />
           <Input isRequired errorMessage="Please enter a valid suburb" label="Suburb" name="suburb" placeholder="Suburb" type="text" value={address?.suburb} fullWidth={false} isReadOnly={true} />

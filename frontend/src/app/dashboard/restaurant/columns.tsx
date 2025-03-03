@@ -62,7 +62,7 @@ export const columns: ColumnDef<IRestaurants>[] = [
           </DropdownTrigger>
           <DropdownMenu aria-label="Link Actions">
             <DropdownItem key="edit">Edit</DropdownItem>
-            <DropdownItem key="abcd">Delete</DropdownItem>
+            <DropdownItem key="delete" color="danger" onSelect={()=>console.log(row.id)} >Delete</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       );
