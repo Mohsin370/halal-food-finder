@@ -21,6 +21,12 @@ namespace backend.Models
         public string? Country { get; set; }
         [Required]
         public string? State { get; set; }
+        [Required]
+        public string? PostCode { get; set;  }
+        [Required]
+        public string? lat { get; set; }
+        [Required]
+        public string? lng { get; set; }
 
     }
 

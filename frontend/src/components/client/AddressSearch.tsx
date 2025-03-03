@@ -15,6 +15,8 @@ type RestaurantAddressType = {
   lat: string;
   lng: string;
   state: string;
+  postcode: string;
+
 };
 
 export default function AddressSearch({ setAddress }: { setAddress: (address: RestaurantAddressType) => void }) {
@@ -60,6 +62,7 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
       state: properties.context.region.region_code,
       lat: properties.coordinates.latitude,
       suburb: properties.context.locality.name,
+      postcode: properties.context.postcode.name,
       lng: properties.coordinates.longitude,
     });
     list.setFilterText(properties.full_address);
