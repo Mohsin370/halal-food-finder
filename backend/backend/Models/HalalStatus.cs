@@ -7,6 +7,6 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public int Status { get; set; }
+        public string? Status { get; set; }
     }
 }

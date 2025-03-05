@@ -28,9 +28,24 @@ namespace backend.Models
         public string? PostCode { get; set;  }
 
         [Required]
+        [Column(TypeName = "decimal(9,6)")]
         public string? Lat { get; set; }
+
         [Required]
+        [Column(TypeName = "decimal(9,6)")]
         public string? Lng { get; set; }
+
+        [Required]
+        public int CuisineTypeId { get; set; }
+        public CuisineType CuisineType { get; set; }
+
+        [Required]
+        public int RestaurantTypeId { get; set; }
+        public RestaurantType RestaurantType { get; set; }
+
+        [Required]
+        public int HalalStatusId { get; set; }
+        public HalalStatus HalalStatus { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
