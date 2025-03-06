@@ -11,7 +11,10 @@ namespace backend.Data
         public DbSet<RestaurantType> RestaurantTypes { get; set; } = null!;
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ServerContext(DbContextOptions<ServerContext> options) : base(options) { }
+
+
+/*        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
@@ -26,7 +29,7 @@ namespace backend.Data
                 // Use SQL Server with the retrieved connection string
                 optionsBuilder.UseSqlServer(connectionString);
             }
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

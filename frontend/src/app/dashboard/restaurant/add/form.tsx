@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { useEffect } from "react";
 import { Button, Form, Input, Image } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectSection, SelectItem } from "@heroui/select";
-import { addRestaurant } from "../../../../utils/api";
+import { addRestaurant, getRestaurntlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 
 export default function RestaurantForm() {
@@ -43,6 +44,16 @@ export default function RestaurantForm() {
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
   const [cuisineType, setCuisineType] = React.useState<Set<string>>(new Set([]));
+  const [restauntLookUps, setRestaurantLookUps] = React.useState<LookUpType>();
+
+  useEffect (()=>{
+
+    const lookupData = getRestaurntlookUps();
+    lookupData.then((res)=>{
+      setRestaurantLookUps(res)
+    })
+
+  },[])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

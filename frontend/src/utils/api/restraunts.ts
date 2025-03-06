@@ -29,5 +29,6 @@ export const addRestaurant = async (data: any) => {
     },
     body: JSON.stringify(data),
   });
+  if (!response.ok) throw new Error(`Failed to add restaurant`);
   return response.json();
 };
