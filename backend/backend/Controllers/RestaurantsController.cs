@@ -47,7 +47,7 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRestaurant(int id, Restaurant restaurant)
         {
-            if (id != restaurant.id)
+            if (id != restaurant.Id)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace backend.Controllers
             _context.Restaurants.Add(restaurant);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRestaurant", new { id = restaurant.id }, restaurant);
+            return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
         }
 
         // DELETE: api/Restaurants/5
@@ -102,7 +102,7 @@ namespace backend.Controllers
 
         private bool RestaurantExists(int id)
         {
-            return _context.Restaurants.Any(e => e.id == id);
+            return _context.Restaurants.Any(e => e.Id == id);
         }
     }
 }

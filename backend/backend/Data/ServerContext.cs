@@ -9,6 +9,8 @@ namespace backend.Data
         public DbSet<CuisineType> CuisineTypes { get; set; } = null!;
         public DbSet<HalalStatus> HalalStatuses { get; set; } = null!;
         public DbSet<RestaurantType> RestaurantTypes { get; set; } = null!;
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -30,8 +32,8 @@ namespace backend.Data
         {
             //Seeder Function Calls
             SeedRestaurantType(modelBuilder);
-            seedCuisineType(modelBuilder);
-            SeedHalalStatuse(modelBuilder);
+            SeedCuisineType(modelBuilder);
+            SeedHalalStatus(modelBuilder);
 
 
             //Indexing
@@ -55,27 +57,24 @@ namespace backend.Data
         {
             modelBuilder.Entity<RestaurantType>().HasData(
                 new RestaurantType { Id = 1, Name = "Fast Food" },
-                new RestaurantType { Id = 1, Name = "Casual Dinning" },
-                new RestaurantType { Id = 1, Name = "Fine Dinning" },
-                new RestaurantType { Id = 1, Name = "Take Away" },
-                new RestaurantType { Id = 1, Name = "Food Truck" },
-                new RestaurantType { Id = 1, Name = "Cafe" }
-
-
+                new RestaurantType { Id = 2, Name = "Casual Dinning" },
+                new RestaurantType { Id = 3, Name = "Fine Dinning" },
+                new RestaurantType { Id = 4, Name = "Take Away" },
+                new RestaurantType { Id = 5, Name = "Food Truck" },
+                new RestaurantType { Id = 6, Name = "Cafe" }
                 );
         }
 
-        private void SeedHalalStatuse(ModelBuilder modelBuilder)
+        private void SeedHalalStatus(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HalalStatus>().HasData(
                 new HalalStatus { Id = 1, Status = "Certified Halal" },
                 new HalalStatus { Id = 2, Status = "Partially Halal" },
                 new HalalStatus { Id = 3, Status = "Vegeterian" }
-
                 );
         }
 
-        private void seedCuisineType(ModelBuilder modelBuilder)
+        private void SeedCuisineType(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<CuisineType>().HasData(
@@ -89,7 +88,6 @@ namespace backend.Data
                 new CuisineType { Id = 8, Name = "Chinese" },
                 new CuisineType { Id = 9, Name = "Korean" },
                 new CuisineType { Id = 10, Name = "Italian" }
-
             );
         }
     }
