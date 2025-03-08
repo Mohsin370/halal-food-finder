@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Button, Form, Input, Image } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectItem } from "@heroui/select";
-import { addRestaurant, getRestaurntlookUps, LookUpType } from "../../../../utils/api";
+import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 
 export default function RestaurantForm() {
@@ -35,10 +35,8 @@ export default function RestaurantForm() {
   useEffect(() => {
     async function fetchLookups() {
       try {
-        const lookupData = await getRestaurntlookUps();
+        const lookupData = await getRestaurantlookUps();
         setRestaurantLookUps({ ...lookupData });
-
-        // setRestaurantLookUps(lookupData);
       } catch (error) {
         console.error("Unable to fetch lookup data.", error);
       }
@@ -58,7 +56,14 @@ export default function RestaurantForm() {
     if (resp.status == 201) {
       addToast({
         title: "Success",
-        description: "Retaurant Added Successfully",
+        description: "Restaurant Added Successfully.",
+        color: "success",
+      });
+    } else {
+      addToast({
+        title: "Something went wrong",
+        description: "Please Try Again.",
+        color: "danger",
       });
     }
   };
@@ -77,56 +82,58 @@ export default function RestaurantForm() {
       </div>
 
       <Form className="w-full" onSubmit={onSubmit}>
-        <div className="flex flex-wrap gap-10 w-full justify-center">
-          <Input
-            className="lg:w-1/3 w-full"
-            errorMessage="Please enter a valid name"
-            label="Name"
-            name="name"
-            placeholder="Restaurant Name"
-            type="text"
-            isRequired
-            minLength={5}
-            value={name}
-            onValueChange={setName}
-            fullWidth={false}
-          />
-          <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Restaurant Type" selectedKeys={restaurantType} onSelectionChange={(keys) => setRestaurantType(keys as Set<string>)}>
-            {restauntLookUps.restaurantType.map((type) => (
-              <SelectItem key={type.id}>{type.name}</SelectItem>
-            ))}
-          </Select>
-
-          <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Halal Status" selectedKeys={halalStatus} onSelectionChange={(keys) => setHalalStatus(keys as Set<string>)}>
-            {restauntLookUps.halalStatus.map((type) => (
-              <SelectItem key={type.id}>{type.status}</SelectItem>
-            ))}
-          </Select>
-
-          <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Cuisine Type" selectedKeys={cuisineType} onSelectionChange={(keys) => setCuisineType(keys as Set<string>)}>
-            {restauntLookUps.cuisineType.map((type) => (
-              <SelectItem key={type.id}>{type.name}</SelectItem>
-            ))}
-          </Select>
-
-          <Input
-            type="file"
-            accept="image/*"
-            className="xl:w-1/6 lg:w-1/4 w-full"
-            onChange={(file) => {
-              const imageFile = file.target.files?.[0];
-              if (imageFile) {
-                const imageUrl = URL.createObjectURL(imageFile);
-                setImage(imageUrl);
-                return () => URL.revokeObjectURL(imageUrl); // Free memory
-              }
-            }}
-            errorMessage="Cover photo required"
-            label="Cover photo"
-            name="image"
-            fullWidth={false}
-            isRequired
-          />
+        <Input
+          className="lg:w-1/2 w-full m-auto"
+          errorMessage="Please enter a valid name"
+          label="Name"
+          name="name"
+          placeholder="Restaurant Name"
+          type="text"
+          isRequired
+          minLength={5}
+          value={name}
+          onValueChange={setName}
+          fullWidth={true}
+        />
+        <div className="m-auto w-full lg:w-1/2">
+          <div className="my-3 flex">
+            <Select isRequired className="" label="Restaurant Type" selectedKeys={restaurantType} onSelectionChange={(keys) => setRestaurantType(keys as Set<string>)}>
+              {restauntLookUps.restaurantType.map((type) => (
+                <SelectItem key={type.id}>{type.name}</SelectItem>
+              ))}
+            </Select>
+            <div className="mx-3"></div>
+            <Select isRequired className="" label="Halal Status" selectedKeys={halalStatus} onSelectionChange={(keys) => setHalalStatus(keys as Set<string>)}>
+              {restauntLookUps.halalStatus.map((type) => (
+                <SelectItem key={type.id}>{type.status}</SelectItem>
+              ))}
+            </Select>
+          </div>
+          <div className="my-3 flex">
+            <Select isRequired label="Cuisine Type" selectedKeys={cuisineType} onSelectionChange={(keys) => setCuisineType(keys as Set<string>)}>
+              {restauntLookUps.cuisineType.map((type) => (
+                <SelectItem key={type.id}>{type.name}</SelectItem>
+              ))}
+            </Select>
+            <div className="mx-3"></div>
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(file) => {
+                const imageFile = file.target.files?.[0];
+                if (imageFile) {
+                  const imageUrl = URL.createObjectURL(imageFile);
+                  setImage(imageUrl);
+                  return () => URL.revokeObjectURL(imageUrl); // Free memory
+                }
+              }}
+              errorMessage="Cover photo required"
+              label="Cover photo"
+              name="image"
+              fullWidth={true}
+              isRequired
+            />
+          </div>
         </div>
         {/* Address */}
         <div className="flex items-center my-6 w-full">
@@ -138,37 +145,46 @@ export default function RestaurantForm() {
         <div className="flex flex-wrap gap-5 mb-10 m-auto">
           <AddressSearch setAddress={setAddress} />
         </div>
-        <div className="flex gap-5 flex-wrap justify-center m-auto ">
-          <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={false} isReadOnly={true} />
-          <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={address?.city} fullWidth={false} isReadOnly={true} />
-          <Input isRequired errorMessage="Please enter a valid suburb" label="Suburb" name="suburb" placeholder="Suburb" type="text" value={address?.suburb} fullWidth={false} isReadOnly={true} />
-          <Input isRequired errorMessage="Please enter a valid state" label="state" name="state" placeholder="State" type="text" value={address?.state} fullWidth={false} isReadOnly={true} />
-          <Input
-            isRequired
-            errorMessage="Please enter a valid postcode"
-            label="postcode"
-            name="postcode"
-            placeholder="Postcode"
-            type="text"
-            value={address?.postcode}
-            fullWidth={false}
-            isReadOnly={true}
-          />
-          <Input
-            isRequired
-            errorMessage="Please enter a valid country"
-            className="max-w-fit"
-            label="Country"
-            name="country"
-            placeholder="Country"
-            type="text"
-            value={address?.country}
-            fullWidth={false}
-            isReadOnly={true}
-          />
+        <div className="m-auto w-full lg:w-1/2">
+          <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={true} isReadOnly={true} />
+          <div className="my-3 flex">
+            <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={address?.city} fullWidth={true} isReadOnly={true} />
+            <div className="mx-3"></div>
+            <Input isRequired errorMessage="Please enter a valid suburb" label="Suburb" name="suburb" placeholder="Suburb" type="text" value={address?.suburb} fullWidth={true} isReadOnly={true} />
+          </div>
+          <div className="my-3 flex">
+            <Input isRequired errorMessage="Please enter a valid state" label="state" name="state" placeholder="State" type="text" value={address?.state} fullWidth={true} isReadOnly={true} />
+            <div className="mx-3"></div>
+
+            <Input
+              isRequired
+              errorMessage="Please enter a valid postcode"
+              label="postcode"
+              name="postcode"
+              placeholder="Postcode"
+              type="text"
+              value={address?.postcode}
+              fullWidth={true}
+              isReadOnly={true}
+            />
+            <div className="mx-3"></div>
+
+            <Input
+              isRequired
+              errorMessage="Please enter a valid country"
+              className="max-w-fit"
+              label="Country"
+              name="country"
+              placeholder="Country"
+              type="text"
+              value={address?.country}
+              fullWidth={true}
+              isReadOnly={true}
+            />
+          </div>
         </div>
 
-        <Button type="submit" variant="bordered" className="m-auto mt-10 ">
+        <Button type="submit" variant="bordered" className="m-auto my-10 ">
           Submit
         </Button>
       </Form>

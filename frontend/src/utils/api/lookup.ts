@@ -21,7 +21,7 @@ export type LookUpType = {
     cuisineType: CuisineType[]
 }
 
-export const getRestaurntlookUps = async ():Promise<LookUpType> => {
+export const getRestaurantlookUps = async ():Promise<LookUpType> => {
   const response = await fetch(`${BASE_URL}/restaurants/lookup`);
   if (!response.ok) throw new Error(`Failed to fetch lookup data`);
 

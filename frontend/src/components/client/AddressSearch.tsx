@@ -36,7 +36,7 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
     },
   });
 
-  const processLocationname = (item: Feature) => {
+  const processLocationName = (item: Feature) => {
     let res: string = "";
     let { properties } = item;
     if (!properties) return <div>No data</div>;
@@ -52,7 +52,6 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
   };
   const setAddressState = (selection: Feature) => {
     const { properties } = selection;
-    console.log(properties);
 
     if (!properties) return;
     setAddress({
@@ -91,7 +90,7 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
     >
       {(item) => (
         <AutocompleteItem key={item.properties?.mapbox_id} textValue={selectedAddress} onPress={() => setAddressState(item)}>
-          {processLocationname(item)}
+          {processLocationName(item)}
         </AutocompleteItem>
       )}
     </Autocomplete>
