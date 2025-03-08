@@ -1,24 +1,24 @@
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type RestaurantType = {
-    Id: string,
-    Name: string
+    id: string,
+    name: string
 }
 
 type HalalStatus = {
-    Id: string,
-    Status: string
+    id: string,
+    status: string
 }
 
 type CuisineType = {
-    Id: string,
-    Name: string
+    id: string,
+    name: string
 }
 
 export type LookUpType = {
-    RestaurantType: RestaurantType[],
-    HalalStatus: HalalStatus[],
-    CuisineType: CuisineType[]
+    restaurantType: RestaurantType[],
+    halalStatus: HalalStatus[],
+    cuisineType: CuisineType[]
 }
 
 export const getRestaurntlookUps = async ():Promise<LookUpType> => {

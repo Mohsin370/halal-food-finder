@@ -4,7 +4,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Button, Form, Input, Image } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
-import { Select, SelectSection, SelectItem } from "@heroui/select";
+import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurntlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 
@@ -19,41 +19,32 @@ export default function RestaurantForm() {
     lng: string;
     state: string;
   };
-  const RestaunrType = [
-    { key: "cat", label: "Fast Food" },
-    { key: "dog", label: "Fine Dinning" },
-    { key: "elephant", label: "Casual Dinning" },
-    { key: "lion", label: "Food Truck" },
-  ];
 
-  const HalalStatus = [
-    { key: "certified", label: "Halal Certified" },
-    { key: "partial", label: "Partially Halal" },
-    { key: "vegetarian", label: "Vegetarian" },
-  ];
-
-  const CuisineType = [
-    { key: "pak", label: "Pakistani" },
-    { key: "lab", label: "Labanese" },
-    { key: "afg", label: "Afghani" },
-  ];
-
-  const [name, setName] = React.useState<string>();
+  const [name, setName] = React.useState("");
   const [image, setImage] = React.useState("");
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
   const [cuisineType, setCuisineType] = React.useState<Set<string>>(new Set([]));
-  const [restauntLookUps, setRestaurantLookUps] = React.useState<LookUpType>();
+  const [restauntLookUps, setRestaurantLookUps] = React.useState<LookUpType>({
+    restaurantType: [],
+    cuisineType: [],
+    halalStatus: [],
+  });
 
-  useEffect (()=>{
+  useEffect(() => {
+    async function fetchLookups() {
+      try {
+        const lookupData = await getRestaurntlookUps();
+        setRestaurantLookUps({ ...lookupData });
 
-    const lookupData = getRestaurntlookUps();
-    lookupData.then((res)=>{
-      setRestaurantLookUps(res)
-    })
-
-  },[])
+        // setRestaurantLookUps(lookupData);
+      } catch (error) {
+        console.error("Unable to fetch lookup data.", error);
+      }
+    }
+    fetchLookups();
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,20 +92,20 @@ export default function RestaurantForm() {
             fullWidth={false}
           />
           <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Restaurant Type" selectedKeys={restaurantType} onSelectionChange={(keys) => setRestaurantType(keys as Set<string>)}>
-            {RestaunrType.map((type) => (
-              <SelectItem key={type.key}>{type.label}</SelectItem>
+            {restauntLookUps.restaurantType.map((type) => (
+              <SelectItem key={type.id}>{type.name}</SelectItem>
             ))}
           </Select>
 
           <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Halal Status" selectedKeys={halalStatus} onSelectionChange={(keys) => setHalalStatus(keys as Set<string>)}>
-            {HalalStatus.map((type) => (
-              <SelectItem key={type.key}>{type.label}</SelectItem>
+            {restauntLookUps.halalStatus.map((type) => (
+              <SelectItem key={type.id}>{type.status}</SelectItem>
             ))}
           </Select>
 
           <Select isRequired className="xl:w-1/6 lg:w-1/4 w-full" label="Cuisine Type" selectedKeys={cuisineType} onSelectionChange={(keys) => setCuisineType(keys as Set<string>)}>
-            {CuisineType.map((type) => (
-              <SelectItem key={type.key}>{type.label}</SelectItem>
+            {restauntLookUps.cuisineType.map((type) => (
+              <SelectItem key={type.id}>{type.name}</SelectItem>
             ))}
           </Select>
 
@@ -127,7 +118,7 @@ export default function RestaurantForm() {
               if (imageFile) {
                 const imageUrl = URL.createObjectURL(imageFile);
                 setImage(imageUrl);
-                console.log(imageUrl);
+                return () => URL.revokeObjectURL(imageUrl); // Free memory
               }
             }}
             errorMessage="Cover photo required"
