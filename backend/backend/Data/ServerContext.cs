@@ -11,10 +11,10 @@ namespace backend.Data
         public DbSet<RestaurantType> RestaurantTypes { get; set; } = null!;
 
 
-        public ServerContext(DbContextOptions<ServerContext> options) : base(options) { }
+     //   public ServerContext(DbContextOptions<ServerContext> options) : base(options) { }
 
 
-/*        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
@@ -27,9 +27,9 @@ namespace backend.Data
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
                 // Use SQL Server with the retrieved connection string
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseNpgsql(connectionString);
             }
-        }*/
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace backend.Data
             modelBuilder.Entity<Restaurant>()
                .HasIndex(r => r.Lng);
         }
-        
+
         private void SeedRestaurantType(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RestaurantType>().HasData(

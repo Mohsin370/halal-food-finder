@@ -28,11 +28,9 @@ namespace backend.Models
         public string? PostCode { get; set;  }
 
         [Required]
-        [Column(TypeName = "decimal(9,6)")]
         public string? Lat { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(9,6)")]
         public string? Lng { get; set; }
 
         [Required]
