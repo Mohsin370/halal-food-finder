@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -26,6 +27,24 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
         {
             return await _context.Restaurants.ToListAsync();
+        }
+
+        [HttpGet("lookup")]
+        public async Task<ActionResult<RestaurantLooUpDto>> GetRestaurantLookups()
+        {
+            var HalalStatus = await _context.HalalStatuses.ToListAsync();
+            var CuisineType = await _context.CuisineTypes.ToListAsync();
+            var RestaurantType = await _context.RestaurantTypes.ToListAsync();
+
+            var lookupDto =  new RestaurantLooUpDto
+            {
+                RestaurantType = await _context.RestaurantTypes.ToListAsync(),
+                HalalStatus = await _context.HalalStatuses.ToListAsync(),
+                CuisineType = await _context.CuisineTypes.ToListAsync(),
+            };
+
+            return Ok(lookupDto);
+
         }
 
         // GET: api/Restaurants/5
