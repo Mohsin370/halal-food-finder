@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ServerContext))]
-    [Migration("20250308071006_Restaurant-and-lookups")]
+    [Migration("20250308174657_Restaurant-and-lookups")]
     partial class Restaurantandlookups
     {
         /// <inheritdoc />
@@ -135,6 +135,10 @@ namespace backend.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("City")
                         .IsRequired()

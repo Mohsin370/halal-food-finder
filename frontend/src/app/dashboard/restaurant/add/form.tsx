@@ -14,7 +14,7 @@ export default function RestaurantForm() {
     suburb: string;
     country: string;
     city: string;
-    postcode: string;
+    postCode: string;
     lat: string;
     lng: string;
     state: string;
@@ -33,6 +33,12 @@ export default function RestaurantForm() {
   });
 
   useEffect(() => {
+    console.log("Updated Address:", address);
+ }, [address]);
+ 
+
+  useEffect(() => {
+
     async function fetchLookups() {
       try {
         const lookupData = await getRestaurantlookUps();
@@ -48,7 +54,11 @@ export default function RestaurantForm() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    formData.append("restaurantType", Array.from(restaurantType).join(","));
+    formData.append("restaurantTypeId", Array.from(restaurantType).join(","));
+    formData.append("halalStatusId", Array.from(halalStatus).join(","));
+    formData.append("cuisineTypeId", Array.from(cuisineType).join(","));
+    formData.append("lat", address!.lat);
+    formData.append("lng", address!.lng);
     const data = Object.fromEntries(formData);
     data.image = "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg";
 
@@ -58,12 +68,14 @@ export default function RestaurantForm() {
         title: "Success",
         description: "Restaurant Added Successfully.",
         color: "success",
+        timeout: 3000,
       });
     } else {
       addToast({
         title: "Something went wrong",
         description: "Please Try Again.",
         color: "danger",
+        timeout: 3000,
       });
     }
   };
@@ -159,11 +171,11 @@ export default function RestaurantForm() {
             <Input
               isRequired
               errorMessage="Please enter a valid postcode"
-              label="postcode"
-              name="postcode"
+              label="postCode"
+              name="postCode"
               placeholder="Postcode"
               type="text"
-              value={address?.postcode}
+              value={address?.postCode}
               fullWidth={true}
               isReadOnly={true}
             />

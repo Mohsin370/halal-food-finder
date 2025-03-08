@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using backend.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.OpenApi;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -16,6 +16,8 @@ namespace backend.Models
         public string? Name { get; set; }
         [Required]
         public string? Image { get; set; }
+        [Required]
+        public string? Address { get; set; }
         [Required]
         public string? Suburb { get; set; }
         [Required]
@@ -35,14 +37,19 @@ namespace backend.Models
 
         [Required]
         public int CuisineTypeId { get; set; }
+        [JsonIgnore]
+
         public CuisineType CuisineType { get; set; }
 
         [Required]
         public int RestaurantTypeId { get; set; }
+        [JsonIgnore]
         public RestaurantType RestaurantType { get; set; }
 
         [Required]
         public int HalalStatusId { get; set; }
+        [JsonIgnore]
+
         public HalalStatus HalalStatus { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

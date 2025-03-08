@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
 using backend.DTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Controllers
 {
@@ -97,10 +98,15 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
         {
-            _context.Restaurants.Add(restaurant);
-            await _context.SaveChangesAsync();
+            try{
+                _context.Restaurants.Add(restaurant);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
+                return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
+            }catch(ValidationException ex)
+            {
+                return BadRequest( new { message="Validation Failed!", error = ex.Message });
+            }
         }
 
         // DELETE: api/Restaurants/5

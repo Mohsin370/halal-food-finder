@@ -22,7 +22,7 @@ export const fetchRestaurantById = async (id: number) => {
 };
 
 export const addRestaurant = async (data: any) => {
-  const response = await fetch(`${BASE_URL}/restaurants/`, {
+  const response = await fetch(`${BASE_URL}/Restaurants/`, {
     method: "POST",
     headers:{
       "Content-Type": "application/json",
