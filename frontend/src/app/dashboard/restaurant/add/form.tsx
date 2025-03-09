@@ -7,6 +7,8 @@ import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
+import { useRouter } from "next/navigation";
+
 
 export default function RestaurantForm() {
   type RestaurantAddressType = {
@@ -19,7 +21,7 @@ export default function RestaurantForm() {
     lng: string;
     state: string;
   };
-
+  const router = useRouter();
   const [name, setName] = React.useState("");
   const [image, setImage] = React.useState("");
   const [address, setAddress] = React.useState<RestaurantAddressType>();
@@ -70,6 +72,7 @@ export default function RestaurantForm() {
         color: "success",
         timeout: 3000,
       });
+      router.push("/dashboard/restaurant")
     } else {
       addToast({
         title: "Something went wrong",

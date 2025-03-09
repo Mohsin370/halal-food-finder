@@ -3,13 +3,9 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { IRestaurants } from "@/interface/IRestaurants";
 
-async function getRestaurants(): Promise<IRestaurants[]> {
-  const restaurants: IRestaurants[] = await fetchRestaurants();
-  return restaurants;
-}
-
 export default async function RestaurantDashboard() {
-  const restaurants = await getRestaurants();
+  const restaurants: IRestaurants[] = await fetchRestaurants();
+
 
   return (
     <div className="container mx-auto p-10 max-w-full overflow-auto">

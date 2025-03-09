@@ -1,7 +1,7 @@
 import * as React from "react";
 import RestaurantForm from "./form";
 
-export default function Example() {
+export default function AddRestaurant() {
   return (
     <div className="mx-auto w-full overflow-auto">
       <div className="mt-5 sm:mt-20 px-20 w-full ">
