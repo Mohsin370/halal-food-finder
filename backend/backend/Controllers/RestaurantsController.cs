@@ -9,6 +9,7 @@ using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace backend.Controllers
 {
@@ -61,6 +62,34 @@ namespace backend.Controllers
 
             return restaurant;
         }
+
+
+        public class RestaurantDTO()
+        {
+            public Restaurant Restaurant { get; set; }
+            public CuisineType CuisineType { get; set; }
+            public HalalStatus HalalStatus { get; set; }
+            public RestaurantType restaurantType { get; set; }
+        }
+
+        // GET: api/Restaurants/mapPin
+        [HttpGet("mapPin")]
+        public async Task<IActionResult> GetRestaurantPinLocation()
+        {
+            var restaurant = await _context.Restaurants
+              //  .Join(r  => r.RestaurantType)
+                .Include(r=>r.RestaurantType)
+                .Include(r=>r.HalalStatus)
+                .Include(r=>r.CuisineType)
+                .ToListAsync();
+
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+            return Ok(restaurant);
+        }
+
 
         // PUT: api/Restaurants/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

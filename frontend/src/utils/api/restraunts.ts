@@ -14,6 +14,16 @@ export const fetchRestaurants = async () => {
     return [];
   }
 };
+export const fetchRestaurantMapPins = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/Restaurants/mapPin`);
+    if (!response.ok) throw new Error("Failed to fetch restaurants Pins");
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
 
 export const fetchRestaurantById = async (id: number) => {
   const response = await fetch(`${BASE_URL}/restaurants/${id}`);

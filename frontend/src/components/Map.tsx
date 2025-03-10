@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Marker, Map as RestaurantsMap } from "react-map-gl/mapbox";
 import { fetchRestaurants } from "../utils/api";
 import { RestaurantType } from "../types/RestaurantType";
-import { MapPin } from "lucide-react";
-import { MapPinIcon } from "@heroicons/react/24/solid";
 import MapPinLocation from "./client/Popover";
 
 export default function Map() {
