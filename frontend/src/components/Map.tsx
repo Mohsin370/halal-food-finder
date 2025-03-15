@@ -12,7 +12,7 @@ export default function Map() {
     zoom: 12,
   });
 
-  const [restaurantPins, setRestaurantPins] = useState<any>([]);
+  const [restaurantPins, setRestaurantPins] = useState<Restaurant[]>([]);
 
   const [userLocation, setUserLocation] = useState({
     longitude: 138.59,
@@ -22,7 +22,8 @@ export default function Map() {
   useEffect(() => {
     //get Restaurant to PIN
     const restaurants = fetchRestaurantMapPins();
-    restaurants.then((res: Restaurant) => {
+    console.log("ngrok: ",restaurants);
+    restaurants.then((res: Restaurant[]) => {
       setRestaurantPins(res);
       console.log(res);
     });
@@ -72,7 +73,7 @@ export default function Map() {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         {...initialViewState}
         onMove={(evt) => setInitialViewState(evt.viewState)}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
+        mapStyle="mapbox://styles/mapbox/streets-v11"
       >
         <Marker longitude={userLocation.longitude} latitude={userLocation.latitude} anchor="bottom">
           <div className="relative">
@@ -82,10 +83,8 @@ export default function Map() {
             before:bg-red-600 before:opacity-50 before:animate-ping"
             ></div>
           </div>
-
-          {/* <div className="bg-red-600 shadow-[0_0_0_3px_black] border-hite border-3 w-6 h-6 rounded-full hover:scale-125 hover:cursor-pointer"></div> */}
         </Marker>
-        {restaurantPins?.map((res: Restaurant) => {
+        {restaurantPins.map((res: Restaurant) => {
           return (
             <Marker key={res.id} longitude={parseFloat(res.lng)} latitude={parseFloat(res.lat)} anchor="bottom" className="cursor-pointer">
               <MapPinLocation restaurant={res} />
