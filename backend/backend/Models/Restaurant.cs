@@ -37,19 +37,16 @@ namespace backend.Models
 
         [Required]
         public int CuisineTypeId { get; set; }
-        
-        [JsonIgnore]
-        public CuisineType? CuisineType { get; set; }
+
+        public CuisineType CuisineType { get; set; } = null!;
 
         [Required]
         public int RestaurantTypeId { get; set; }
-        [JsonIgnore]
-        public RestaurantType? RestaurantType { get; set; }
+        public RestaurantType RestaurantType { get; set; } = null!;
 
         [Required]
         public int HalalStatusId { get; set; }
-        [JsonIgnore]
-        public HalalStatus? HalalStatus { get; set; }
+        public HalalStatus HalalStatus { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

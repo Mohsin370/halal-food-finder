@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const fetchRestaurants = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/Restaurants`, { cache: "no-store" });
+    const response = await fetch(`${BASE_URL}/Restaurants`);
     if (!response.ok) throw new Error("Failed to fetch restaurants");
     return response.json();
   } catch (error) {

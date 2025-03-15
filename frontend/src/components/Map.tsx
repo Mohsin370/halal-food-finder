@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Marker, Map as RestaurantsMap } from "react-map-gl/mapbox";
-import { fetchRestaurants } from "../utils/api";
-import { RestaurantType } from "../types/RestaurantType";
+import { fetchRestaurantMapPins } from "../utils/api";
+import { Restaurant } from "../types/RestaurantType";
 import MapPinLocation from "./client/Popover";
 
 export default function Map() {
@@ -21,8 +21,8 @@ export default function Map() {
 
   useEffect(() => {
     //get Restaurant to PIN
-    const restaurants = fetchRestaurants();
-    restaurants.then((res: RestaurantType) => {
+    const restaurants = fetchRestaurantMapPins();
+    restaurants.then((res: Restaurant) => {
       setRestaurantPins(res);
       console.log(res);
     });
@@ -77,7 +77,7 @@ export default function Map() {
         <Marker longitude={userLocation.longitude} latitude={userLocation.latitude} anchor="bottom">
           <div className="relative">
             <div
-              className="bg-red-600 shadow-[0_0_0_1px_black] border-white border-2 w-4 h-4 rounded-full hover:scale-125 hover:cursor-pointer 
+              className="bg-red-600 shadow-[0_0_0_1px_black] border-white border-2 w-4 h-4 rounded-full hover:scale-125 cursor-pointer 
             before:content-[''] before:absolute before:inset-0 before:w-full before:h-full before:rounded-full 
             before:bg-red-600 before:opacity-50 before:animate-ping"
             ></div>
@@ -85,9 +85,9 @@ export default function Map() {
 
           {/* <div className="bg-red-600 shadow-[0_0_0_3px_black] border-hite border-3 w-6 h-6 rounded-full hover:scale-125 hover:cursor-pointer"></div> */}
         </Marker>
-        {restaurantPins?.map((res: RestaurantType) => {
+        {restaurantPins?.map((res: Restaurant) => {
           return (
-            <Marker longitude={parseFloat(res.lng)} latitude={parseFloat(res.lat)} anchor="bottom">
+            <Marker key={res.id} longitude={parseFloat(res.lng)} latitude={parseFloat(res.lat)} anchor="bottom" className="cursor-pointer">
               <MapPinLocation restaurant={res} />
             </Marker>
           );

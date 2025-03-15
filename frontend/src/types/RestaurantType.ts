@@ -1,4 +1,4 @@
-export type RestaurantType = {
+export type Restaurant = {
   id: number;
   name: string;
   image: string;
@@ -10,8 +10,25 @@ export type RestaurantType = {
   lng: string;
   address:string;
   createdAt:string;
-  cuisineTypeId:string,
+  cuisineType :CuisineType,
+  halalStatus :HalalStatus,
+  restaurantType :RestaurantType,
   halalStatusId:string,
   restaurantTypeId:string,
   postCode:string
 };
+
+export type CuisineType = {
+  id:string,
+  name:string
+}
+
+export type HalalStatus = {
+  id:string,
+  status:string
+}
+
+export type RestaurantType = {
+  id:string,
+  name:string
+}

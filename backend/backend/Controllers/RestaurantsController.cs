@@ -64,23 +64,15 @@ namespace backend.Controllers
         }
 
 
-        public class RestaurantDTO()
-        {
-            public Restaurant Restaurant { get; set; }
-            public CuisineType CuisineType { get; set; }
-            public HalalStatus HalalStatus { get; set; }
-            public RestaurantType restaurantType { get; set; }
-        }
 
         // GET: api/Restaurants/mapPin
         [HttpGet("mapPin")]
         public async Task<IActionResult> GetRestaurantPinLocation()
         {
             var restaurant = await _context.Restaurants
-              //  .Join(r  => r.RestaurantType)
-                .Include(r=>r.RestaurantType)
-                .Include(r=>r.HalalStatus)
-                .Include(r=>r.CuisineType)
+                .Include(r => r.CuisineType)
+                .Include(r => r.RestaurantType)
+                .Include(r => r.HalalStatus)
                 .ToListAsync();
 
             if (restaurant == null)

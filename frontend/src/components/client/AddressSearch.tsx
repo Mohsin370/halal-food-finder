@@ -70,7 +70,6 @@ export default function AddressSearch({ setAddress }: { setAddress: (address: Re
   return (
     <Autocomplete
       label="Find Address"
-      isRequired
       errorMessage="Please enter a valid address"
       placeholder="Find an address"
       onInputChange={(text: string) => {
