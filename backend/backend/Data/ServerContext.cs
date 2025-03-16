@@ -33,6 +33,14 @@ namespace backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //Add db relationships
+            modelBuilder.Entity<Restaurant>()
+                .HasOne(r => r.CuisineType)
+                .WithMany(c => c.Restaurants)
+                .HasForeignKey(r => r.CuisineTypeId);
+
+
             //Seeder Function Calls
             SeedRestaurantType(modelBuilder);
             SeedCuisineType(modelBuilder);

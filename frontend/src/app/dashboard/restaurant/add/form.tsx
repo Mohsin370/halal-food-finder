@@ -23,7 +23,7 @@ export default function RestaurantForm() {
   };
   const router = useRouter();
   const [name, setName] = React.useState("");
-  const [image, setImage] = React.useState("");
+  const [image, setImage] = React.useState<any>();
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
@@ -54,7 +54,7 @@ export default function RestaurantForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log({image});
     const formData = new FormData(e.currentTarget);
     formData.append("restaurantTypeId", Array.from(restaurantType).join(","));
     formData.append("halalStatusId", Array.from(halalStatus).join(","));
@@ -137,9 +137,9 @@ export default function RestaurantForm() {
               onChange={(file) => {
                 const imageFile = file.target.files?.[0];
                 if (imageFile) {
-                  const imageUrl = URL.createObjectURL(imageFile);
-                  setImage(imageUrl);
-                  return () => URL.revokeObjectURL(imageUrl); // Free memory
+                  // const imageUrl = URL.createObjectURL(imageFile);
+                  setImage(imageFile);
+                  // return () => URL.revokeObjectURL(imageUrl); // Free memory
                 }
               }}
               errorMessage="Cover photo required"

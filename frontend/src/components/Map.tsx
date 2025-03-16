@@ -22,7 +22,6 @@ export default function Map() {
   useEffect(() => {
     //get Restaurant to PIN
     const restaurants = fetchRestaurantMapPins();
-    console.log("ngrok: ",restaurants);
     restaurants.then((res: Restaurant[]) => {
       setRestaurantPins(res);
       console.log(res);
@@ -43,7 +42,6 @@ export default function Map() {
             longitude,
             latitude,
           });
-          console.log(coords);
         },
         (error) => {
           setInitialViewState({

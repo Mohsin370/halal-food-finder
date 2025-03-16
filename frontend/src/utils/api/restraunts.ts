@@ -4,6 +4,17 @@ import { IRestaurants } from "@/interface/IRestaurants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+export const fetchRcentRestaurants = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/Restaurants/recent`);
+    if (!response.ok) throw new Error("Failed to fetch restaurants");
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const fetchRestaurants = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants`);
@@ -34,7 +45,7 @@ export const fetchRestaurantById = async (id: number) => {
 export const addRestaurant = async (data: any) => {
   const response = await fetch(`${BASE_URL}/Restaurants/`, {
     method: "POST",
-    headers:{
+    headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

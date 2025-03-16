@@ -10,6 +10,7 @@ using backend.Models;
 using backend.DTOs;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Internal;
+using backend.Services;
 
 namespace backend.Controllers
 {
@@ -18,35 +19,32 @@ namespace backend.Controllers
     public class RestaurantsController : ControllerBase
     {
         private readonly ServerContext _context;
+        private readonly IRestaurantService _restaurantService;
 
-        public RestaurantsController(ServerContext context)
+        public RestaurantsController(ServerContext context, RestaurantService restaurantService)
         {
             _context = context;
+            _restaurantService = restaurantService;
         }
 
-        // GET: api/Restaurants
-        [HttpGet]
+        // GET: api/Restaurants/recent
+        [HttpGet("recent")]
         public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
         {
-            return await _context.Restaurants.ToListAsync();
+            var restaurants = await _restaurantService.RecentlyAddedAsync();
+            if (restaurants == null)
+            {
+                return NotFound();
+            }
+            return Ok(restaurants);
         }
 
+        // GET: api/Restaurants/lookup
         [HttpGet("lookup")]
-        public async Task<ActionResult<RestaurantLooUpDto>> GetRestaurantLookups()
+        public async Task<ActionResult<RestaurantLookUpDto>> GetRestaurantLookups()
         {
-            var HalalStatus = await _context.HalalStatuses.ToListAsync();
-            var CuisineType = await _context.CuisineTypes.ToListAsync();
-            var RestaurantType = await _context.RestaurantTypes.ToListAsync();
-
-            var lookupDto =  new RestaurantLooUpDto
-            {
-                RestaurantType = await _context.RestaurantTypes.ToListAsync(),
-                HalalStatus = await _context.HalalStatuses.ToListAsync(),
-                CuisineType = await _context.CuisineTypes.ToListAsync(),
-            };
-
+            var lookupDto = await _restaurantService.RestaurantLookUpAsync();
             return Ok(lookupDto);
-
         }
 
         // GET: api/Restaurants/5
@@ -67,19 +65,15 @@ namespace backend.Controllers
 
         // GET: api/Restaurants/mapPin
         [HttpGet("mapPin")]
-        public async Task<IActionResult> GetRestaurantPinLocation()
+        public async Task<ActionResult<RestaurantPinDto>> GetRestaurantPinLocation()
         {
-            var restaurant = await _context.Restaurants
-                .Include(r => r.CuisineType)
-                .Include(r => r.RestaurantType)
-                .Include(r => r.HalalStatus)
-                .ToListAsync();
+            var restaurants = await _restaurantService.RestaurantPinLocation();
 
-            if (restaurant == null)
+            if (restaurants == null)
             {
                 return NotFound();
             }
-            return Ok(restaurant);
+            return Ok(restaurants);
         }
 
 
@@ -119,14 +113,16 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
         {
-            try{
+            try
+            {
                 _context.Restaurants.Add(restaurant);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
-            }catch(ValidationException ex)
+            }
+            catch (ValidationException ex)
             {
-                return BadRequest( new { message="Validation Failed!", error = ex.Message });
+                return BadRequest(new { message = "Validation Failed!", error = ex.Message });
             }
         }
 

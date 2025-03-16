@@ -13,27 +13,30 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
         [Required]
-        public string? Image { get; set; }
+        public string Image { get; set; } = null!;
         [Required]
-        public string? Address { get; set; }
+        public string Address { get; set; } = null!;
         [Required]
-        public string? Suburb { get; set; }
+        public string Suburb { get; set; } = null!;
         [Required]
-        public string? City { get; set; }
+        public string City { get; set; } = null!;
         [Required]
-        public string? Country { get; set; }
+        public string Country { get; set; } = null!;
         [Required]
-        public string? State { get; set; }
+        public string State { get; set; } = null!;
         [Required]
-        public string? PostCode { get; set;  }
+        public string PostCode { get; set; } = null!;
 
         [Required]
-        public string? Lat { get; set; }
+        public string Lat { get; set; } = null!;
 
         [Required]
-        public string? Lng { get; set; }
+        public string Lng { get; set; } = null!;
+
+        //[Required]
+        //public bool isFeatured { get; set; } = false;
 
         [Required]
         public int CuisineTypeId { get; set; }

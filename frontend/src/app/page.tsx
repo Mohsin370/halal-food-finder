@@ -1,11 +1,11 @@
 import Slider from "../components/Slider";
-import { fetchRestaurants } from "../utils/api";
+import { fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
 import { Image } from "@heroui/react";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {
-  const restaurants = await fetchRestaurants();
+  const restaurants = await fetchRcentRestaurants();
 
   return (
     <div className="md:mx-3">
