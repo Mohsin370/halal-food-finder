@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { Button, Form, Input, Image } from "@heroui/react";
+import { Button, Form, Input, Image, form } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
@@ -23,7 +23,7 @@ export default function RestaurantForm() {
   };
   const router = useRouter();
   const [name, setName] = React.useState("");
-  const [image, setImage] = React.useState<any>();
+  const [image, setImage] = React.useState("");
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
@@ -61,8 +61,8 @@ export default function RestaurantForm() {
     formData.append("cuisineTypeId", Array.from(cuisineType).join(","));
     formData.append("lat", address!.lat);
     formData.append("lng", address!.lng);
+    formData.append("image", image);
     const data = Object.fromEntries(formData);
-    data.image = "https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg";
 
     const resp = await addRestaurant(data);
     if (resp.status == 201) {
@@ -138,7 +138,7 @@ export default function RestaurantForm() {
                 const imageFile = file.target.files?.[0];
                 if (imageFile) {
                   // const imageUrl = URL.createObjectURL(imageFile);
-                  setImage(imageFile);
+                  setImage(URL.createObjectURL(imageFile));
                   // return () => URL.revokeObjectURL(imageUrl); // Free memory
                 }
               }}
