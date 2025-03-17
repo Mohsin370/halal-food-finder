@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.DTOs;
+using backend.Helpers;
 using backend.Models;
 using Humanizer;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,9 +12,11 @@ namespace backend.Services
     public class RestaurantService : IRestaurantService
     {
         private readonly ServerContext _serverContext;
-        public RestaurantService(ServerContext serverContext)
+        private readonly CloudinaryFTP _cloudinaryFTP;
+        public RestaurantService(ServerContext serverContext, CloudinaryFTP cloudinaryFTP)
         {
             _serverContext = serverContext;
+            _cloudinaryFTP = cloudinaryFTP;
         }
 
         public async Task<IEnumerable<RestaurantDto>> RecentlyAddedAsync()
@@ -117,10 +120,18 @@ namespace backend.Services
     
         public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
         {
+            var uploadResponse = await _cloudinaryFTP.UploadImage(dto.Image);
+
+            if (uploadResponse.Error != null)
+            {
+                throw new Exception($"Image upload failed: {uploadResponse.Error.Message}");
+            }
+
+
             var restaurant = new Restaurant
             {
                 Name = dto.Name,
-                Image = dto.Image,
+                Image = uploadResponse.SecureUrl.ToString(),
                 Address = dto.Address,
                 Suburb = dto.Suburb,
                 City = dto.City,

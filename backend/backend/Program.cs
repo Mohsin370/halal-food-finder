@@ -1,7 +1,14 @@
 using backend.Data;
+using backend.Helpers;
 using backend.Services;
+using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
+
+
+//Load env
+DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
+
 
 // Add services to the container.
 
@@ -11,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ServerContext>();
 builder.Services.AddScoped<RestaurantService>();
+builder.Services.AddSingleton<CloudinaryFTP>();
 
 
 builder.Services.AddCors(options =>

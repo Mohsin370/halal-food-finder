@@ -137,9 +137,15 @@ export default function RestaurantForm() {
               onChange={(file) => {
                 const imageFile = file.target.files?.[0];
                 if (imageFile) {
-                  // const imageUrl = URL.createObjectURL(imageFile);
-                  setImage(URL.createObjectURL(imageFile));
-                  // return () => URL.revokeObjectURL(imageUrl); // Free memory
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    const base64String = reader.result as string;
+                    console.log(base64String);
+                    setImage(base64String);
+                };
+                
+                reader.readAsDataURL(imageFile);
+//                  setImage(URL.createObjectURL(imageFile));
                 }
               }}
               errorMessage="Cover photo required"
