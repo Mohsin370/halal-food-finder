@@ -1,17 +1,6 @@
-// components/Card.tsx
-
 import { Card, CardHeader, CardBody, Image } from "@heroui/react";
 
-interface Restaurant {
-  id: number;
-  name: string;
-  image: string;
-  type: string;
-  suburb: string;
-  city: string;
-}
-
-const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({
+const ScrollCard: React.FC<{ restaurant: RestaurantT }> = ({
   restaurant,
 }) => {
   return (
@@ -19,7 +8,7 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({
       <Card className="py-4" isPressable={true}>
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h4 className="font-bold text-large">{restaurant.name}</h4>
-          <p className="text-tiny uppercase font-bold">{restaurant.type}</p>
+          <p className="text-tiny uppercase font-bold">{restaurant.restaurantType.name}</p>
           <small className="text-default-500">
             {restaurant.suburb}, {restaurant.city}
           </small>

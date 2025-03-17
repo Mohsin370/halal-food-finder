@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,12 @@ namespace backend.Services
                     Id = r.Id,
                     Name = r.Name,
                     Image = r.Image,
-                    Postcode = r.PostCode,
+                    Suburb = r.Suburb,
+                    RestaurantType = new RestaurantTypeDto
+                    {
+                        Id = r.RestaurantType.Id,
+                        Name = r.RestaurantType.Name,
+                    },
                     City = r.City,
                     CreatedAt = r.CreatedAt
                 })
@@ -108,5 +114,31 @@ namespace backend.Services
             return restaurants;
 
         }
+    
+        public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
+        {
+            var restaurant = new Restaurant
+            {
+                Name = dto.Name,
+                Image = dto.Image,
+                Address = dto.Address,
+                Suburb = dto.Suburb,
+                City = dto.City,
+                Country = dto.Country,
+                State = dto.State,
+                PostCode = dto.PostCode,
+                Lat = dto.Lat,
+                Lng = dto.Lng,
+                CuisineTypeId = dto.cuisineTypeId,
+                RestaurantTypeId = dto.restaurantTypeId,
+                HalalStatusId = dto.halalStatusId
+            };
+
+             _serverContext.Restaurants.Add(restaurant);
+            await _serverContext.SaveChangesAsync();
+            return restaurant;
+
+        }
+
     }
 }

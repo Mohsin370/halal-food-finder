@@ -11,6 +11,7 @@ using backend.DTOs;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Internal;
 using backend.Services;
+using Humanizer;
 
 namespace backend.Controllers
 {
@@ -109,15 +110,12 @@ namespace backend.Controllers
         }
 
         // POST: api/Restaurants
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
+        public async Task<ActionResult<Restaurant>> PostRestaurant([FromBody] AddRestaurantDto dto)
         {
             try
             {
-                _context.Restaurants.Add(restaurant);
-                await _context.SaveChangesAsync();
-
+                var restaurant  = await _restaurantService.PostRestaurant(dto);
                 return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
             }
             catch (ValidationException ex)

@@ -4,16 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import ScrollCard from "./Card";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 
-interface SliderProps {
-  id: number;
-  name: string;
-  image: string;
-  type: string;
-  suburb: string;
-  city: string;
-}
 
-export default function Slider({ items }: { items: SliderProps[] }) {
+export default function Slider({ items }: { items: RestaurantT[] }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
@@ -72,7 +64,7 @@ export default function Slider({ items }: { items: SliderProps[] }) {
   return (
     <div className="relative">
       <div ref={scrollContainerRef} className="flex overflow-x-auto whitespace-nowrap scrollbar-hide px-3">
-        {items?.map((item: SliderProps) => (
+        {items?.map((item: RestaurantT) => (
           <div key={item.id} className="inline-block">
             <ScrollCard restaurant={item} />
           </div>

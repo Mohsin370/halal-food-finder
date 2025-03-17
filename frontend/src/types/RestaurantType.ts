@@ -19,16 +19,16 @@ export type Restaurant = {
 };
 
 export type CuisineType = {
-  id:string,
+  id: number,
   name:string
 }
 
 export type HalalStatus = {
-  id:string,
+  id:number,
   status:string
 }
 
 export type RestaurantType = {
-  id:string,
+  id:number,
   name:string
 }
