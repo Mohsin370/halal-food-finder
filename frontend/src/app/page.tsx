@@ -1,3 +1,4 @@
+"use client"
 import Slider from "../components/Slider";
 import { fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
