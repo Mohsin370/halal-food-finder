@@ -18,7 +18,7 @@ export const fetchRcentRestaurants = async () => {
 export const fetchRestaurantsListing = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants/listing`);
-    if (!response.ok) throw new Error("Failed to fetch restaurants");
+    //if (!response.ok) throw new Error("Failed to fetch restaurants");
     return response.json();
   } catch (error) {
     console.log(error);
