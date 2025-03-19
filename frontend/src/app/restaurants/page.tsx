@@ -1,6 +1,6 @@
 import SearchSection from "../../components/client/SearchSection";
 import ListingCard from "../../components/ListingCard";
-import { fetchRestaurants } from "../../utils/api";
+import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../utils/api";
 import { Pagination } from "@heroui/react";
 
 interface IRestaurants {
@@ -13,12 +13,21 @@ interface IRestaurants {
 }
 
 const Listings = async () => {
-  const restaurants: IRestaurants[] = await fetchRestaurants();
+  const restaurants: IRestaurants[] = await fetchRestaurantsListing();
+  const lookups = await getRestaurantlookUps();
+  
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
         <div className="text-center m-auto">
           <SearchSection displaySearchbtn={false}/>
+        </div>
+        <div className="flex my-2 justify-center">
+          {lookups?.cuisineType.map((el)=>{
+              return(
+                <div className="px-3">{el.name}</div>
+              )
+          })}
         </div>
         <div className="">
           {restaurants.map((restaurant: IRestaurants) => (
@@ -27,6 +36,7 @@ const Listings = async () => {
             </div>
           ))}
         </div>
+     
         <div className="flex justify-center m-7">
           <Pagination showControls total={10} initialPage={1} />
         </div>

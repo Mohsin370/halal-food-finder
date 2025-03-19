@@ -151,5 +151,16 @@ namespace backend.Services
 
         }
 
+        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing()
+        {
+            var listing = await _serverContext.Restaurants
+                            .Select(r => new RestaurantListingDto
+                            {
+                                Id = r.Id,
+                                Name = r.Name,
+                                Image = r.Image
+                            }).ToListAsync();
+            return listing;
+        }
     }
 }

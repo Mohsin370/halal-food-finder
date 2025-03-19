@@ -15,6 +15,8 @@ namespace backend.Models
         [Required]
         public string Name { get; set; } = null!;
         [Required]
+        public string Description { get; set; } = null!;
+        [Required]
         public string Image { get; set; } = null!;
         [Required]
         public string Address { get; set; } = null!;
@@ -35,8 +37,8 @@ namespace backend.Models
         [Required]
         public string Lng { get; set; } = null!;
 
-        //[Required]
-        //public bool isFeatured { get; set; } = false;
+        [Required]
+        public bool isFeatured { get; set; } = false;
 
         [Required]
         public int CuisineTypeId { get; set; }

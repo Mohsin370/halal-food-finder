@@ -62,7 +62,12 @@ namespace backend.Controllers
             return restaurant;
         }
 
-
+        [HttpGet("listing")]
+        public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing (){
+        
+            var listing = await _restaurantService.RestaurantListing();
+            return Ok(listing);
+        }
 
         // GET: api/Restaurants/mapPin
         [HttpGet("mapPin")]

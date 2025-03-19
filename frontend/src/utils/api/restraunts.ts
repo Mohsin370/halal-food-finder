@@ -15,9 +15,9 @@ export const fetchRcentRestaurants = async () => {
   }
 };
 
-export const fetchRestaurants = async () => {
+export const fetchRestaurantsListing = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/Restaurants`);
+    const response = await fetch(`${BASE_URL}/Restaurants/listing`);
     if (!response.ok) throw new Error("Failed to fetch restaurants");
     return response.json();
   } catch (error) {
@@ -52,3 +52,12 @@ export const addRestaurant = async (data: any) => {
   });
   return response;
 };
+
+export const deleteRestaurantById = async (id: number) => {
+  const response = await fetch(`${BASE_URL}/Restaurants/${id}`,{
+  method: "DELETE",  
+  });
+  if (response.ok){
+    return response.json();
+  }
+}
