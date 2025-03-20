@@ -15,6 +15,18 @@ export const fetchRcentRestaurants = async () => {
   }
 };
 
+export const fetchFeaturedRestaurants = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/Restaurants/featured`);
+    if (!response.ok) throw new Error("Failed to fetch restaurants");
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+
 export const fetchRestaurantsListing = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants/listing`);

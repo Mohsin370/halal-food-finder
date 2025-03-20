@@ -1,11 +1,12 @@
 import Slider from "../components/Slider";
-import { fetchRcentRestaurants } from "../utils/api";
+import { fetchFeaturedRestaurants, fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
 import { Image } from "@heroui/react";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {
   const restaurants = await fetchRcentRestaurants();
+  const featured = await fetchFeaturedRestaurants();
 
   return (
     <div className="md:mx-3">
@@ -32,7 +33,7 @@ export default async function Home() {
       <div className="flex justify-center">
         <div className="p-3 container">
           <h1 className="font-bold text-2xl p-2">Featured Restaurants</h1>
-          <Slider items={restaurants} />
+          <Slider items={featured} />
         </div>
       </div>
     </div>

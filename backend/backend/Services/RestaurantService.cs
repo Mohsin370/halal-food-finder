@@ -31,6 +31,35 @@ namespace backend.Services
                     Name = r.Name,
                     Image = r.Image,
                     Suburb = r.Suburb,
+                    IsFeatured = r.isFeatured,
+                    RestaurantType = new RestaurantTypeDto
+                    {
+                        Id = r.RestaurantType.Id,
+                        Name = r.RestaurantType.Name,
+                    },
+                    City = r.City,
+                    CreatedAt = r.CreatedAt
+                })
+                .ToListAsync();
+
+            return restaurants;
+
+        }
+
+        public async Task<IEnumerable<RestaurantDto>> FeaturedRestaurants()
+        {
+            var restaurants = await _serverContext.Restaurants
+                .AsNoTracking()
+                .Where(x=> x.isFeatured == true)
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(10)
+                .Select(r => new RestaurantDto
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Image = r.Image,
+                    Suburb = r.Suburb,
+                    IsFeatured = r.isFeatured,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -161,6 +190,7 @@ namespace backend.Services
                     Image = r.Image,
                     Suburb = r.Suburb,
                     City = r.City,
+                    IsFeatured = r.isFeatured,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,

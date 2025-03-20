@@ -30,9 +30,22 @@ namespace backend.Controllers
 
         // GET: api/Restaurants/recent
         [HttpGet("recent")]
-        public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
+        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants()
         {
             var restaurants = await _restaurantService.RecentlyAddedAsync();
+            if (restaurants == null)
+            {
+                return NotFound();
+            }
+            return Ok(restaurants);
+        }
+
+
+        // GET: api/Restaurants/recent
+        [HttpGet("featured")]
+        public async Task<ActionResult<IEnumerable<RestaurantDto>>> FeaturedRestaurants()
+        {
+            var restaurants = await _restaurantService.FeaturedRestaurants();
             if (restaurants == null)
             {
                 return NotFound();

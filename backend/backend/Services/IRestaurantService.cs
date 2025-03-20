@@ -7,10 +7,11 @@ namespace backend.Services
     public interface IRestaurantService
     {
         Task<IEnumerable<RestaurantDto>> RecentlyAddedAsync();
+        Task<IEnumerable<RestaurantDto>> FeaturedRestaurants();
         Task<RestaurantLookUpDto> RestaurantLookUpAsync();
         Task<IEnumerable<RestaurantPinDto>> RestaurantPinLocation();
         Task<Restaurant> PostRestaurant(AddRestaurantDto dto);
         Task<IEnumerable<RestaurantListingDto>> RestaurantListing();
-
+        
     }
 }
