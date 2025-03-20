@@ -169,6 +169,7 @@ namespace backend.Services
                 PostCode = dto.PostCode,
                 Lat = dto.Lat,
                 Lng = dto.Lng,
+                isFeatured = Convert.ToBoolean(dto.IsFeatured),
                 CuisineTypeId = dto.cuisineTypeId,
                 RestaurantTypeId = dto.restaurantTypeId,
                 HalalStatusId = dto.halalStatusId

@@ -2,13 +2,12 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { Button, Form, Input, Image, form } from "@heroui/react";
+import { Button, Form, Input, Image, form, Textarea } from "@heroui/react";
 import AddressSearch from "../../../../components/client/AddressSearch";
 import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
-
 
 export default function RestaurantForm() {
   type RestaurantAddressType = {
@@ -21,13 +20,25 @@ export default function RestaurantForm() {
     lng: string;
     state: string;
   };
+  const isFeaturedFill = [
+    {
+      key: "true",
+      name: "Yes",
+    },
+    {
+      key: "false",
+      name: "No",
+    },
+  ];
   const router = useRouter();
   const [name, setName] = React.useState("");
   const [image, setImage] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [address, setAddress] = React.useState<RestaurantAddressType>();
   const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
   const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
   const [cuisineType, setCuisineType] = React.useState<Set<string>>(new Set([]));
+  const [isFeatured, setIsFeatured] = React.useState<Set<string>>(new Set(["false"]));
   const [restauntLookUps, setRestaurantLookUps] = React.useState<LookUpType>({
     restaurantType: [],
     cuisineType: [],
@@ -36,11 +47,9 @@ export default function RestaurantForm() {
 
   useEffect(() => {
     console.log("Updated Address:", address);
- }, [address]);
- 
+  }, [address]);
 
   useEffect(() => {
-
     async function fetchLookups() {
       try {
         const lookupData = await getRestaurantlookUps();
@@ -54,7 +63,7 @@ export default function RestaurantForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({image});
+    console.log({ image });
     const formData = new FormData(e.currentTarget);
     formData.append("restaurantTypeId", Array.from(restaurantType).join(","));
     formData.append("halalStatusId", Array.from(halalStatus).join(","));
@@ -62,6 +71,7 @@ export default function RestaurantForm() {
     formData.append("lat", address!.lat);
     formData.append("lng", address!.lng);
     formData.append("image", image);
+    formData.append("isFeatured", Array.from(isFeatured).join(","));
     const data = Object.fromEntries(formData);
 
     const resp = await addRestaurant(data);
@@ -72,7 +82,7 @@ export default function RestaurantForm() {
         color: "success",
         timeout: 3000,
       });
-      router.push("/dashboard/restaurant")
+      router.push("/dashboard/restaurant");
     } else {
       addToast({
         title: "Something went wrong",
@@ -110,6 +120,19 @@ export default function RestaurantForm() {
           onValueChange={setName}
           fullWidth={true}
         />
+        <Textarea
+          className="lg:w-1/2 w-full m-auto "
+          errorMessage="Please enter some description"
+          label="Description"
+          name="description"
+          placeholder="Say some nice things"
+          type="text"
+          isRequired
+          minLength={5}
+          value={description}
+          onValueChange={setDescription}
+          fullWidth={true}
+        />
         <div className="m-auto w-full lg:w-1/2">
           <div className="my-3 flex">
             <Select isRequired className="" label="Restaurant Type" selectedKeys={restaurantType} onSelectionChange={(keys) => setRestaurantType(keys as Set<string>)}>
@@ -131,30 +154,35 @@ export default function RestaurantForm() {
               ))}
             </Select>
             <div className="mx-3"></div>
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(file) => {
-                const imageFile = file.target.files?.[0];
-                if (imageFile) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    const base64String = reader.result as string;
-                    console.log(base64String);
-                    setImage(base64String);
-                };
-                
-                reader.readAsDataURL(imageFile);
-//                  setImage(URL.createObjectURL(imageFile));
-                }
-              }}
-              errorMessage="Cover photo required"
-              label="Cover photo"
-              name="image"
-              fullWidth={true}
-              isRequired
-            />
+            <Select isRequired label="Featured" selectedKeys={isFeatured} onSelectionChange={(keys) => setIsFeatured(keys as Set<string>)}>
+              {isFeaturedFill.map((item) => (
+                <SelectItem key={item.key}>{item.name}</SelectItem>
+              ))}
+            </Select>
           </div>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(file) => {
+              const imageFile = file.target.files?.[0];
+              if (imageFile) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  const base64String = reader.result as string;
+                  console.log(base64String);
+                  setImage(base64String);
+                };
+
+                reader.readAsDataURL(imageFile);
+                //                  setImage(URL.createObjectURL(imageFile));
+              }
+            }}
+            errorMessage="Cover photo required"
+            label="Cover photo"
+            name="image"
+            fullWidth={true}
+            isRequired
+          />
         </div>
         {/* Address */}
         <div className="flex items-center my-6 w-full">
