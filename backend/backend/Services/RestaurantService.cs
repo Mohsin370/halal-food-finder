@@ -117,7 +117,7 @@ namespace backend.Services
             return restaurants;
 
         }
-    
+
         public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
         {
             var uploadResponse = await _cloudinaryFTP.UploadImage(dto.Image);
@@ -145,7 +145,7 @@ namespace backend.Services
                 HalalStatusId = dto.halalStatusId
             };
 
-             _serverContext.Restaurants.Add(restaurant);
+            _serverContext.Restaurants.Add(restaurant);
             await _serverContext.SaveChangesAsync();
             return restaurant;
 
@@ -154,12 +154,20 @@ namespace backend.Services
         public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing()
         {
             var listing = await _serverContext.Restaurants
-                            .Select(r => new RestaurantListingDto
-                            {
-                                Id = r.Id,
-                                Name = r.Name,
-                                Image = r.Image
-                            }).ToListAsync();
+                .Select(r => new RestaurantListingDto
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Image = r.Image,
+                    Suburb = r.Suburb,
+                    City = r.City,
+                    RestaurantType = new RestaurantTypeDto
+                    {
+                        Id = r.RestaurantType.Id,
+                        Name = r.RestaurantType.Name
+
+                    }
+                }).ToListAsync();
             return listing;
         }
     }

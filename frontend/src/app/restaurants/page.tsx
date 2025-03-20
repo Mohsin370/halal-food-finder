@@ -1,19 +1,13 @@
+import ListingItem from "../../components/Card";
 import SearchSection from "../../components/client/SearchSection";
-import ListingCard from "../../components/ListingCard";
+// import ListingCard from "../../components/ListingCard";
 import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../utils/api";
 import { Pagination } from "@heroui/react";
 
-interface IRestaurants {
-  id: number;
-  name: string;
-  image: string;
-  type: string;
-  suburb: string;
-  city: string;
-}
+
 
 const Listings = async () => {
-  const restaurants: IRestaurants[] = await fetchRestaurantsListing();
+  const restaurants: RestaurantT[] = await fetchRestaurantsListing();
   const lookups = await getRestaurantlookUps();
   
   return (
@@ -22,17 +16,17 @@ const Listings = async () => {
         <div className="text-center m-auto">
           <SearchSection displaySearchbtn={false}/>
         </div>
-        <div className="flex my-2 justify-center">
+        <div className="flex flex-wrap my-2 justify-center cursor-pointer">
           {lookups?.cuisineType.map((el)=>{
               return(
-                <div className="px-3">{el.name}</div>
+                <div className="px-3" key={el.id}>{el.name}</div>
               )
           })}
         </div>
         <div className="">
-          {restaurants.map((restaurant: IRestaurants) => (
-            <div className="mb-3" key={restaurant.id}>
-              <ListingCard restaurant={restaurant}/>
+          {restaurants.map((restaurant: RestaurantT) => (
+            <div className="mb-3 flex flex-wrap justify-center" key={restaurant.id}>
+              <ListingItem restaurant={restaurant} />
             </div>
           ))}
         </div>

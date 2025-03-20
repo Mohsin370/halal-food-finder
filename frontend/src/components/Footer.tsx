@@ -29,13 +29,8 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link color="primary" href="/about" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link color="primary" href="/contact" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
-                Contact
+              <Link color="primary" href="/mapView" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
+                Map View
               </Link>
             </li>
           </ul>
