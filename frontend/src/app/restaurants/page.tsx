@@ -23,9 +23,9 @@ const Listings = async () => {
               )
           })}
         </div>
-        <div className="">
+        <div className="flex flex-wrap justify-center">
           {restaurants.map((restaurant: RestaurantT) => (
-            <div className="mb-3 flex flex-wrap justify-center" key={restaurant.id}>
+            <div className="mb-3" key={restaurant.id}>
               <ListingItem restaurant={restaurant} />
             </div>
           ))}

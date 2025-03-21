@@ -98,7 +98,8 @@ namespace backend.Services
                 .Select(r => new HalalStatusDto
                 {
                     Id = r.Id,
-                    Status = r.Status
+                    Status = r.Status,
+                    Description = r.Description
                 })
                 .ToListAsync();
 
@@ -133,7 +134,8 @@ namespace backend.Services
                   HalalStatus = new HalalStatusDto
                   {
                       Id = r.HalalStatus.Id,
-                      Status = r.HalalStatus.Status
+                      Status = r.HalalStatus.Status,
+                      Description = r.HalalStatus.Description
                   },
                   RestaurantType = new RestaurantTypeDto
                   {

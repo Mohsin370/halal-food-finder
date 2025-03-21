@@ -9,6 +9,8 @@ namespace backend.Models
         [Required]
         public string? Status { get; set; }
 
+        public required string Description { get; set; }
+
         //public ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
     }
 }
