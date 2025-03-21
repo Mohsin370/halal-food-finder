@@ -161,6 +161,7 @@ namespace backend.Services
             {
                 Name = dto.Name,
                 Image = uploadResponse.SecureUrl.ToString(),
+                Description = dto.Description,
                 Address = dto.Address,
                 Suburb = dto.Suburb,
                 City = dto.City,
