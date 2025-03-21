@@ -7,7 +7,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const fetchRcentRestaurants = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants/recent`);
-    if (!response.ok) throw new Error("Failed to fetch recent restaurants");
     return response.json();
   } catch (error) {
     console.log(error);
@@ -18,7 +17,6 @@ export const fetchRcentRestaurants = async () => {
 export const fetchFeaturedRestaurants = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants/featured`);
-    if (!response.ok) throw new Error("Failed to fetch featured restaurants");
     return response.json();
   } catch (error) {
     console.log(error);
