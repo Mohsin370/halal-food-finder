@@ -1,7 +1,7 @@
 import Slider from "../components/Slider";
 import { fetchFeaturedRestaurants, fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
-import { Image } from "@heroui/react";
+import {Image} from "@heroui/image";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {

@@ -1,4 +1,6 @@
-import { Card, CardHeader, CardBody, Image } from "@heroui/react";
+import { Card, CardHeader, CardBody } from "@heroui/card";
+import {Image} from "@heroui/image";
+
 
 const ScrollCard: React.FC<{ restaurant: RestaurantT }> = ({
   restaurant,

@@ -2,7 +2,7 @@ import ListingItem from "../../components/Card";
 import SearchSection from "../../components/client/SearchSection";
 // import ListingCard from "../../components/ListingCard";
 import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../utils/api";
-import { Pagination } from "@heroui/react";
+import { Pagination } from "@heroui/pagination";
 
 
 
