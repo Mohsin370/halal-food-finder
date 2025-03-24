@@ -37,6 +37,11 @@ namespace backend.Services
                         Id = r.RestaurantType.Id,
                         Name = r.RestaurantType.Name,
                     },
+                    CuisineType = new CuisineTypeDto
+                    {
+                        Id = r.CuisineType.Id,
+                        Name = r.CuisineType.Name,
+                    },
                     City = r.City,
                     CreatedAt = r.CreatedAt
                 })
@@ -64,6 +69,11 @@ namespace backend.Services
                     {
                         Id = r.RestaurantType.Id,
                         Name = r.RestaurantType.Name,
+                    },
+                    CuisineType = new CuisineTypeDto
+                    {
+                        Id = r.CuisineType.Id,
+                        Name = r.CuisineType.Name,
                     },
                     City = r.City,
                     CreatedAt = r.CreatedAt

@@ -9,6 +9,8 @@
         public string City { get; set; } = null!;
         public bool IsFeatured { get; set; }
         public RestaurantTypeDto RestaurantType { get; set; } = new RestaurantTypeDto();
+        public CuisineTypeDto CuisineType { get; internal set; } = null!;
+
         public DateTime CreatedAt { get; set; }
 
     }

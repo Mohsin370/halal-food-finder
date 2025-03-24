@@ -5,7 +5,7 @@ import {Image} from "@heroui/image";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {
-  const restaurants = await fetchRcentRestaurants();
+  const restaurants:RestaurantT[] = await fetchRcentRestaurants();
   const featured = await fetchFeaturedRestaurants();
 
   return (
