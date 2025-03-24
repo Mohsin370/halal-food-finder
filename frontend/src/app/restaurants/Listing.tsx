@@ -28,9 +28,8 @@ const getCuisineImage = (cuisineName: string) => {
     try {
       return require(`../../images/icons/cuisines/${cuisineName.toLowerCase()}.png`);
     } catch (e) {
+      return require(`../../images/icons/cuisines/indian.svg`);
     }
-    return require(`../../images/icons/cuisines/indian.svg`);
-
   }
 };
 const Listing = ({ restaurants, lookups }: listingProp) => {
@@ -70,16 +69,7 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
         <div className="flex my-2 justify-center cursor-pointer  overflow-auto">
           {lookups?.cuisineType.map((el) => {
             return (
-              <div
-                className={twMerge(
-                  "mx-5 px-5 py-2",
-                  filter?.cuisineType === el.id
-                    ? "bg-zinc-600 text-white rounded-xl"
-                    : ""
-                )}
-                key={el.id}
-                onClick={() => handleFilterChange(el)}
-              >
+              <div className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id ? "bg-zinc-600 text-white rounded-xl" : "")} key={el.id} onClick={() => handleFilterChange(el)}>
                 <div className="flex flex-col items-center">
                   <Image src={getCuisineImage(el.name)} width={50} alt="" />
                   <p className=" text-sm">{el.name}</p>
