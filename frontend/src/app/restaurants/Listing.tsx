@@ -7,6 +7,7 @@ import SearchSection from "../../components/client/SearchSection";
 import { LookUpType } from "../../utils/api";
 import { CuisineType } from "../../types/RestaurantType";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 type filterType = {
   cuisineType: number | null;
@@ -17,6 +18,21 @@ type listingProp = {
   lookups: LookUpType;
 };
 
+const getCuisineImage = (cuisineName: string) => {
+  //dynamically assign picture for cuisine type
+  try {
+    // Dynamically import the image
+    return require(`../../images/icons/cuisines/${cuisineName.toLowerCase()}.svg`);
+  } catch (e) {
+    // Fallback image if the cuisine doesn't have a corresponding image
+    try {
+      return require(`../../images/icons/cuisines/${cuisineName.toLowerCase()}.png`);
+    } catch (e) {
+    }
+    return require(`../../images/icons/cuisines/indian.svg`);
+
+  }
+};
 const Listing = ({ restaurants, lookups }: listingProp) => {
   const [filter, setFilters] = React.useState<filterType>();
   const router = useRouter();
@@ -35,14 +51,14 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
 
   const handleFilterChange = (cuisineType: CuisineType) => {
     let cuisineTypeId = null;
-    if (filter?.cuisineType !== cuisineType.id){
+    if (filter?.cuisineType !== cuisineType.id) {
       cuisineTypeId = cuisineType.id;
     }
-      setFilters({
-        cuisineType: cuisineTypeId,
-      });
+    setFilters({
+      cuisineType: cuisineTypeId,
+    });
 
-      router.push(`?cuisineType=${cuisineTypeId}`);
+    router.push(`?cuisineType=${cuisineTypeId}`);
   };
 
   return (
@@ -51,20 +67,23 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
         <div className="text-center m-auto">
           <SearchSection displaySearchbtn={false} />
         </div>
-        <div className="flex flex-wrap my-2 justify-center cursor-pointer">
+        <div className="flex my-2 justify-center cursor-pointer  overflow-auto">
           {lookups?.cuisineType.map((el) => {
             return (
               <div
                 className={twMerge(
-                  "px-3",
+                  "mx-5 px-5 py-2",
                   filter?.cuisineType === el.id
-                    ? "bg-black text-white rounded-xl"
+                    ? "bg-zinc-600 text-white rounded-xl"
                     : ""
                 )}
                 key={el.id}
                 onClick={() => handleFilterChange(el)}
               >
-                {el.name}
+                <div className="flex flex-col items-center">
+                  <Image src={getCuisineImage(el.name)} width={50} alt="" />
+                  <p className=" text-sm">{el.name}</p>
+                </div>
               </div>
             );
           })}
