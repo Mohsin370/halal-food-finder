@@ -184,9 +184,16 @@ namespace backend.Services
 
         }
 
-        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing()
+        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType)
         {
-            var listing = await _serverContext.Restaurants
+            var query = _serverContext.Restaurants.AsQueryable();
+            if (cuisineType.HasValue)
+            {
+                query = query.Where(r => r.CuisineType.Id == cuisineType);
+            }
+
+
+            var listing = await query
                 .Select(r => new RestaurantListingDto
                 {
                     Id = r.Id,
@@ -199,9 +206,14 @@ namespace backend.Services
                     {
                         Id = r.RestaurantType.Id,
                         Name = r.RestaurantType.Name
-
+                    },
+                    CuisineType = new CuisineTypeDto
+                    {
+                        Id = r.CuisineType.Id,
+                        Name = r.CuisineType.Name
                     }
-                }).ToListAsync();
+                })
+                .ToListAsync();
             return listing;
         }
     }

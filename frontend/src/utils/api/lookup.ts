@@ -1,19 +1,8 @@
+import { CuisineType, HalalStatus } from "../../types/RestaurantType";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-type RestaurantType = {
-  id: string;
-  name: string;
-};
 
-type HalalStatus = {
-  id: string;
-  status: string;
-};
-
-type CuisineType = {
-  id: string;
-  name: string;
-};
 
 export type LookUpType = {
   restaurantType: RestaurantType[];

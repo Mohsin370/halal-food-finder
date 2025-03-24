@@ -76,9 +76,9 @@ namespace backend.Controllers
         }
 
         [HttpGet("listing")]
-        public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing (){
+        public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing(int? cuisineType){
         
-            var listing = await _restaurantService.RestaurantListing();
+            var listing = await _restaurantService.RestaurantListing(cuisineType);
             return Ok(listing);
         }
 

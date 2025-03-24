@@ -1,7 +1,5 @@
 // utils/api/restaurants.ts
 
-import { IRestaurants } from "@/interface/IRestaurants";
-
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const fetchRcentRestaurants = async () => {
@@ -27,9 +25,10 @@ export const fetchFeaturedRestaurants = async () => {
 };
 
 
-export const fetchRestaurantsListing = async () => {
+export const fetchRestaurantsListing = async (cuisineType?: number): Promise<RestaurantT[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/Restaurants/listing`);
+    const query = cuisineType? `?cuisineType=${cuisineType}`:"";
+    const response = await fetch(`${BASE_URL}/Restaurants/listing${query}`);
     if(!response.ok){
       return[]
     }
@@ -40,6 +39,9 @@ export const fetchRestaurantsListing = async () => {
     return [];
   }
 };
+
+
+
 export const fetchRestaurantMapPins = async () => {
   try {
     const response = await fetch(`${BASE_URL}/Restaurants/mapPin`);

@@ -1,16 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pagination } from "@heroui/pagination";
 import { twMerge } from "tailwind-merge";
 import ListingItem from "../../components/Card";
 import SearchSection from "../../components/client/SearchSection";
 import { LookUpType } from "../../utils/api";
+import { CuisineType } from "../../types/RestaurantType";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type filterType = {
-  cuisineType: string;
-};
-const init = {
-  cuisineType: "",
+  cuisineType: number | null;
 };
 
 type listingProp = {
@@ -20,6 +19,31 @@ type listingProp = {
 
 const Listing = ({ restaurants, lookups }: listingProp) => {
   const [filter, setFilters] = React.useState<filterType>();
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const cuisineType = searchParams.get("cuisineType") || "";
+
+  useEffect(() => {
+    //Update initial state of selected cuisine type
+    if (cuisineType) {
+      setFilters({
+        cuisineType: parseInt(cuisineType),
+      });
+    }
+  }, []);
+
+  const handleFilterChange = (cuisineType: CuisineType) => {
+    let cuisineTypeId = null;
+    if (filter?.cuisineType !== cuisineType.id){
+      cuisineTypeId = cuisineType.id;
+    }
+      setFilters({
+        cuisineType: cuisineTypeId,
+      });
+
+      router.push(`?cuisineType=${cuisineTypeId}`);
+  };
 
   return (
     <div className="flex justify-center">
@@ -31,13 +55,14 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
           {lookups?.cuisineType.map((el) => {
             return (
               <div
-                className={twMerge("px-3", filter?.cuisineType === el.id ? "bg-black text-white rounded-xl" : "")}
+                className={twMerge(
+                  "px-3",
+                  filter?.cuisineType === el.id
+                    ? "bg-black text-white rounded-xl"
+                    : ""
+                )}
                 key={el.id}
-                onClick={() =>
-                  setFilters({
-                    cuisineType: el.id,
-                  })
-                }
+                onClick={() => handleFilterChange(el)}
               >
                 {el.name}
               </div>

@@ -1,11 +1,9 @@
 import { fetchRestaurantsListing } from "../../../utils/api";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { IRestaurants } from "@/interface/IRestaurants";
 
 export default async function RestaurantDashboard() {
-  const restaurants: IRestaurants[] = await fetchRestaurantsListing();
-console.log(restaurants)
+  const restaurants: RestaurantT[] = await fetchRestaurantsListing();
 
   return (
     <div className="container mx-auto p-10 max-w-full overflow-auto">

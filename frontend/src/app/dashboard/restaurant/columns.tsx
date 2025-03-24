@@ -4,10 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
-import { IRestaurants } from "@/interface/IRestaurants";
 
 let toggleState = false;
-export const columns: ColumnDef<IRestaurants>[] = [
+export const columns: ColumnDef<RestaurantT>[] = [
   {
     accessorKey: "image",
     header:"",

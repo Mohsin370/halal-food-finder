@@ -63,7 +63,6 @@ export default function RestaurantForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ image });
     const formData = new FormData(e.currentTarget);
     formData.append("restaurantTypeId", Array.from(restaurantType).join(","));
     formData.append("halalStatusId", Array.from(halalStatus).join(","));
