@@ -1,26 +1,27 @@
-"use client"
+"use client";
 import React from "react";
-import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button} from "@heroui/react";
-import {Logo} from "../images/logo";
-import { useRouter } from 'next/navigation';
-
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarMenuToggle,
+  NavbarMenuItem,
+  NavbarMenu,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button,
+} from "@heroui/react";
+import { Logo } from "../images/logo";
+import { useRouter } from "next/navigation";
 
 export default function App() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+    { name: "Home", link: "/" },
+    { name: "Restaurants", link: "restaurants" },
+    { name: "Map View", link: "mapView" },
   ];
 
   return (
@@ -31,23 +32,35 @@ export default function App() {
       maxWidth="2xl"
     >
       <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand className="cursor-pointer" onClick={ ()=>router.push('/')}>
+        <NavbarBrand
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
+        >
           <Logo />
           <p className="font-bold text-inherit">HalalFindr</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand className="cursor-pointer" onClick={ ()=>router.push('/')}>
+        <NavbarBrand
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
+        >
           <Logo />
           <p className="font-bold text-inherit">HalalFindr</p>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" className="cursor-pointer" onPress={ ()=>router.push('/restaurants')}>
+          <Link
+            color="foreground"
+            className="cursor-pointer"
+            onPress={() => router.push("/restaurants")}
+          >
             Restaurants
           </Link>
         </NavbarItem>
@@ -69,13 +82,13 @@ export default function App() {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full"
-              color={
-                index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-              }
-              href="#"
+              // color={
+              //   index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+              // }
+              href={item.link}
               size="lg"
             >
-              {item}
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}
