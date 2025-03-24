@@ -24,9 +24,9 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
         />
       </PopoverTrigger>
       <PopoverContent className="">
-        <div className="px-1 py-2 flex">
+        <div className="px-1 py-2">
           <div className="">
-            <Image alt="Restaurant Image" src={restaurant.image} width={150} height={100} />
+            <Image alt="Restaurant Image" src={restaurant.image} width={250} height={250} />
           </div>
           <div className="pl-3 pr-5 w-48">
             <div className="text-medium font-semibold">{restaurant.name}</div>
