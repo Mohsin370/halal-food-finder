@@ -8,6 +8,7 @@ import { LookUpType } from "../../utils/api";
 import { CuisineType } from "../../types/RestaurantType";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import NotFound from "../../images/no_data.svg";
 
 type filterType = {
   cuisineType: number | null;
@@ -63,9 +64,9 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
-        <div className="text-center m-auto">
+        {/* <div className="text-center m-auto">
           <SearchSection displaySearchbtn={false} />
-        </div>
+        </div> */}
         <div className="flex my-2 justify-center cursor-pointer  overflow-auto">
           {lookups?.cuisineType.map((el) => {
             return (
@@ -79,11 +80,18 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
           })}
         </div>
         <div className="flex flex-wrap justify-center">
-          {restaurants.map((restaurant: RestaurantT) => (
-            <div className="mb-3" key={restaurant.id}>
-              <ListingItem restaurant={restaurant} />
+          {restaurants.length > 0 ? (
+            restaurants.map((restaurant: RestaurantT) => (
+              <div className="mb-3" key={restaurant.id}>
+                <ListingItem restaurant={restaurant} />
+              </div>
+            ))
+          ) : (
+            <div className="my-10">
+              <Image src={NotFound} width={250} alt="Not Found" />
+              <p className="text-xl text-center">No Restaurant Found...</p>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="flex justify-center m-7">
