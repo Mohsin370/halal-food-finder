@@ -15,11 +15,11 @@ export default async function Home() {
           className="text-center object-cover"
           src={LandingImage.src}
           loading="lazy"
-          height={400}
+          height={320}
           width={1500}
           alt="Landing Page Image"
         />
-        <div className="absolute z-10 text-center top-40">
+        <div className="absolute z-10 text-center top-20 md:top-20">
             <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
             <SearchSection displayMapBtn={false}/>
           </div>
