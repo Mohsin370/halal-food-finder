@@ -71,7 +71,7 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
             return (
               <div className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id ? "bg-zinc-600 text-white rounded-xl" : "")} key={el.id} onClick={() => handleFilterChange(el)}>
                 <div className="flex flex-col items-center">
-                  <Image src={getCuisineImage(el.name)} width={50} alt="" />
+                  <Image src={getCuisineImage(el.name)} className="w-12 h-12 object-contain" alt="" />
                   <p className=" text-sm">{el.name}</p>
                 </div>
               </div>
