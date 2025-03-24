@@ -64,6 +64,15 @@ export default function App() {
             Restaurants
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link
+            color="foreground"
+            className="cursor-pointer"
+            onPress={() => router.push("/mapView")}
+          >
+            Map View
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
       {/* <NavbarContent justify="end">

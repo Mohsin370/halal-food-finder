@@ -28,7 +28,7 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
           <div className="">
             <Image alt="Restaurant Image" src={restaurant.image} width={250} height={200} />
           </div>
-          <div className="pl-3 pr-5">
+          <div className="pl-3 pr-5 w-[250]">
             <div className="text-medium font-semibold">{restaurant.name}</div>
             <div className="text-small">
               {restaurant.cuisineType.name} • {restaurant.restaurantType.name}
