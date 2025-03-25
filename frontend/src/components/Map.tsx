@@ -24,7 +24,6 @@ export default function Map() {
     const restaurants = fetchRestaurantMapPins();
     restaurants.then((res: Restaurant[]) => {
       setRestaurantPins(res);
-      console.log(res);
     });
 
     if ("geolocation" in navigator) {

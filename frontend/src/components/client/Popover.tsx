@@ -26,9 +26,9 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
       <PopoverContent className="">
         <div className="px-1 py-2">
           <div className="">
-            <Image alt="Restaurant Image" src={restaurant.image} width={250} height={250} />
+            <Image alt="Restaurant Image" src={restaurant.image} width={250} height={200} />
           </div>
-          <div className="pl-3 pr-5 w-48">
+          <div className="pl-3 pr-5 w-[250]">
             <div className="text-medium font-semibold">{restaurant.name}</div>
             <div className="text-small">
               {restaurant.cuisineType.name} • {restaurant.restaurantType.name}

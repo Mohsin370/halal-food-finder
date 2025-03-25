@@ -17,18 +17,17 @@ const SearchSection = ({ displaySearchbtn = true, displayMapBtn = true }: search
   return (
     <div className="flex justify-center items-center flex-wrap">
       <SearchInput />
-      <Spacer x={4} />
-      <div className="my-3 sm:my-0">
+      {/* <Spacer x={4} /> */}
+      {/* <div className="my-3 sm:my-0">
         <FilterModal />
-      </div>
-      <Spacer x={3} />
+      </div> */}
       {displayMapBtn && (
-        <Button size="lg" className="mr-3 bg-red-600 text-white  border-danger-800" onPress={() => router.push("/mapView")}>
+        <Button size="lg" className="mr-3 bg-red-600 text-white  border-danger-800 " onPress={() => router.push("/mapView")}>
           <MapIcon className="h-5 w-5"></MapIcon>Map
         </Button>
       )}{" "}
       {displaySearchbtn && (
-        <Button className="text-white bg-red-600 border-danger-800" size="lg" variant="shadow" onPress={() => router.push("/restaurants")}>
+        <Button className="text-white bg-red-600 border-danger-800 sm:ml-5" size="lg" variant="shadow" onPress={() => router.push("/restaurants")}>
           Search
         </Button>
       )}
