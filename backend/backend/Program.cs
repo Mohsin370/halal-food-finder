@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ServerContext>();
 builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddSingleton<CloudinaryFTP>();
+builder.Services.AddHttpClient<GooglePlaceService>();
 
 
 builder.Services.AddCors(options =>
