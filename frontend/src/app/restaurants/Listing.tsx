@@ -93,10 +93,6 @@ const Listing = ({ restaurants, lookups }: listingProp) => {
             </div>
           )}
         </div>
-
-        <div className="flex justify-center m-7">
-          <Pagination showControls total={10} initialPage={1} />
-        </div>
       </div>
     </div>
   );
