@@ -8,6 +8,7 @@ import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import GoogleAutoComplete from "../../../../components/client/GoogleAutoComplete";
 
 export default function RestaurantForm() {
   type RestaurantAddressType = {
@@ -191,7 +192,9 @@ export default function RestaurantForm() {
         </div>
 
         <div className="flex flex-wrap gap-5 mb-10 m-auto">
-          <AddressSearch setAddress={setAddress} />
+          {/* Not using mapbox autocomplete, moving to google apis */}
+          {/* <AddressSearch setAddress={setAddress} />  */}
+          <GoogleAutoComplete setAddress={setAddress} />
         </div>
         <div className="m-auto w-full lg:w-1/2">
           <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={true} isReadOnly={true} />
