@@ -2,6 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Autocomplete, AutocompleteItem } from "@heroui/react";
 import React from "react";
 import { autoComplete } from "../../utils/api";
+import { AutocompleteResponse, Suggestion } from "../../types/AutoComplete.type";
 
 type RestaurantAddressType = {
   address: string;
@@ -14,36 +15,27 @@ type RestaurantAddressType = {
   postCode: string;
 };
 
-type PredictionType = {
-    description: string;
-    place_id: string;
-};
+
 
 export default function GoogleAutoComplete({ setAddress }: { setAddress: (address: RestaurantAddressType) => void }) {
-    // const [selectedAddress, setSelectedAddress] = React.useState<string>("");
-    const [predictions, setPredictions] = React.useState<PredictionType[]>([]);
+  // const [selectedAddress, setSelectedAddress] = React.useState<string>("");
+  const [predictions, setPredictions] = React.useState<Suggestion[]>([]);
 
-  const animals = [
-    { label: "Cat", key: "cat", description: "The second most popular pet in the world" },
-    { label: "Dog", key: "dog", description: "The most popular pet in the world" },
-  ];
 
   const onHandleInputChange = async (text: string) => {
     if (text.length < 5) {
       return; //input should have at least 5 charachters
     }
-    const address = await autoComplete(text);
-    if(address.status !== "OK"){
-        return;
-    }
-    
-    console.log(address);
-    setPredictions([...address.predictions])
+    const address: AutocompleteResponse = await autoComplete(text);
+
+
+    console.log(address.suggestions);
+    setPredictions([...address.suggestions]);
   };
 
-  const onAddressSelect = (prediction:PredictionType) =>{
+  const onAddressSelect = (prediction: Suggestion) => {
     console.log("selected Address", prediction);
-  }
+  };
 
   return (
     <Autocomplete
@@ -55,7 +47,8 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
         // setSelectedAddress(text); // Allow user to change the input field
         // list.setFilterText(text);
       }}
-      defaultItems={predictions}
+      items={predictions}
+      // defaultItems={predictions}
       //   inputValue={(text:string)=>setSelectedAddress(text)}
       //   items={list.items}
       //   isLoading={list.isLoading}
@@ -67,7 +60,11 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
         emptyContent: "No Address Found",
       }}
     >
-      {(prediction) => <AutocompleteItem key={prediction.place_id} onPress={()=>onAddressSelect(prediction)} >{prediction.description}</AutocompleteItem>}
+      {(prediction) => (
+        <AutocompleteItem key={prediction.placePrediction.placeId} onPress={() => onAddressSelect(prediction)}>
+          {prediction.placePrediction.text.text}
+        </AutocompleteItem>
+      )}
     </Autocomplete>
   );
 }

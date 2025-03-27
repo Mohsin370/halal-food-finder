@@ -1,8 +1,4 @@
-﻿using backend.Data;
-using backend.DTOs;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Web;
 
 namespace backend.Services
@@ -11,7 +7,7 @@ namespace backend.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
-        private const string placesEndPoint = "https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+        private const string placesEndPoint = "https://places.googleapis.com/v1/places:";
 
         public GooglePlaceService( HttpClient httpClient, IConfiguration configuration)
         {
@@ -23,11 +19,18 @@ namespace backend.Services
         public async Task<string> AutoComplete(string? input)
         {
             var encodedInput = HttpUtility.UrlEncode(input);
-            var url = $"{placesEndPoint}input={encodedInput}&types=geocode&key={_apiKey}";
-
+            var url = $"{placesEndPoint}autocomplete";
+            _httpClient.DefaultRequestHeaders.Add("X-Goog-Api-Key", _apiKey);
+            _httpClient.DefaultRequestHeaders.Add("X-Goog-FieldMask", "suggestions.placePrediction.placeId,suggestions.placePrediction.text.text");
+            var payload = new
+            {
+                input
+            };
+            string jsonRequest = JsonSerializer.Serialize(payload);
+            var content = new StringContent(jsonRequest);
             try
             {
-                var response = await _httpClient.GetAsync(url);
+                var response = await _httpClient.PostAsync(url, content);
                 response.EnsureSuccessStatusCode();
 
                 var result = await response.Content.ReadAsStringAsync();
