@@ -191,7 +191,7 @@ export default function RestaurantForm() {
           <div className="flex-grow border-t border-gray-300 h-px"></div>
         </div>
 
-        <div className="flex flex-wrap gap-5 mb-10 m-auto">
+        <div className="flex flex-wrap gap-5 mb-10 m-auto w-1/2">
           {/* Not using mapbox autocomplete, moving to google apis */}
           {/* <AddressSearch setAddress={setAddress} />  */}
           <GoogleAutoComplete setAddress={setAddress} />
