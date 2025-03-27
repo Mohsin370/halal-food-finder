@@ -26,7 +26,7 @@ const SideMenuList: ISideMenuList[] = [
 const SideBar = () => {
   return (
     <div className="w-14 md:w-[250px]  bg-gradient-to-bl from-[#42424A] to-[#191919] shadow-lg  shadow-slate-800  text-white rounded-sm h-[97%] ml-3 my-3">
-      <div className="py-5 pl-10 text-xl font-bold cursor-pointer">Halal Hunt</div>
+      <div className="py-5 pl-1 md:pl-10 text-xl font-bold cursor-pointer">Halal Hunt</div>
       <span className="text-center flex justify-center">
 
       <Divider className="w-4/5 bg-white "/>
