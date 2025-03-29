@@ -67,12 +67,11 @@ namespace backend.Data
         private void SeedRestaurantType(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RestaurantType>().HasData(
-                new RestaurantType { Id = 1, Name = "Fast Food" },
-                new RestaurantType { Id = 2, Name = "Casual Dinning" },
-                new RestaurantType { Id = 3, Name = "Fine Dinning" },
-                new RestaurantType { Id = 4, Name = "Take Away" },
-                new RestaurantType { Id = 5, Name = "Food Truck" },
-                new RestaurantType { Id = 6, Name = "Cafe" }
+                new RestaurantType { Id = 1, Name = "Casual Dinning" },
+                new RestaurantType { Id = 2, Name = "Fine Dinning" },
+                new RestaurantType { Id = 3, Name = "Take Away" },
+                new RestaurantType { Id = 4, Name = "Food Truck" },
+                new RestaurantType { Id = 5, Name = "Cafe" }
                 );
         }
 
@@ -81,7 +80,6 @@ namespace backend.Data
             modelBuilder.Entity<HalalStatus>().HasData(
                 new HalalStatus { Id = 1, Status = "Certified Halal", Description="This restaurant offer halal food only." },
                 new HalalStatus { Id = 2, Status = "Partially Halal", Description="This restaurant offer some halal food and some food items are not halal." },
-                new HalalStatus { Id = 3, Status = "Vegeterian", Description = "This is a vegeterian restaurant. All food items in the menu are halal." }
                 );
         }
 
