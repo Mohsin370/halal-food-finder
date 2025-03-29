@@ -3,7 +3,14 @@ import { Autocomplete, AutocompleteItem } from "@heroui/react";
 import React from "react";
 import { autoComplete, placeDetails } from "../../utils/api";
 
-export default function GoogleAutoComplete({ setAddress }: { setAddress: (address: RestaurantAddressType) => void }) {
+type propType = {
+  address: RestaurantAddressType;
+  placeId: string;
+  rating: string;
+  userRatingCount: string;
+};
+
+export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetails: (placeDetailData: propType) => void }) {
   // const [selectedAddress, setSelectedAddress] = React.useState<string>("");
   const [predictions, setPredictions] = React.useState<Suggestion[]>([]);
 
@@ -35,7 +42,6 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
       lat: "",
       lng: "",
       state: "",
-      placeId: "",
     };
 
     placeDetail.addressComponents.forEach((element: any) => {
@@ -53,8 +59,12 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
     addressDetails.address = placeDetail.shortFormattedAddress;
     addressDetails.lat = placeDetail.location.latitude.toString();
     addressDetails.lng = placeDetail.location.longitude.toString();
-    addressDetails.placeId = placeDetail.id;
-    setAddress(addressDetails);
+    setPlaceDetails({
+      address: addressDetails,
+      placeId: placeDetail.id,
+      rating: placeDetail.rating.toString(),
+      userRatingCount: placeDetail.userRatingCount.toString(),
+    });
   };
 
   return (

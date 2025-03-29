@@ -19,6 +19,9 @@ export default function RestaurantForm() {
 
   // **Single Form State**
   const [formState, setFormState] = React.useState({
+    placeId: "",
+    rating: "",
+    userRatingCount: "",
     name: "",
     description: "",
     image: "",
@@ -64,7 +67,9 @@ export default function RestaurantForm() {
     formData.append("lng", formState.address?.lng || "");
     formData.append("image", formState.image);
     formData.append("isFeatured", Array.from(formState.isFeatured).join(","));
-    formData.append("placeId", formState.address?.placeId);
+    formData.append("placeId", formState.placeId);
+    formData.append("rating", formState.rating);
+    formData.append("userRatingCount", formState.userRatingCount);
 
     const data = Object.fromEntries(formData);
 
@@ -167,7 +172,11 @@ export default function RestaurantForm() {
 
         <div className="flex flex-wrap gap-5 mb-10 m-auto w-full lg:w-1/2">
           {/* Not using mapbox autocomplete, moving to google apis */}
-          <GoogleAutoComplete setAddress={(newAddress) => setFormState((prev) => ({ ...prev, address: newAddress }))} />
+          <GoogleAutoComplete
+            setPlaceDetails={(placeDetail) =>
+              setFormState((prev) => ({ ...prev, address: placeDetail.address, placeId: placeDetail.placeId, rating: placeDetail.rating, userRatingCount: placeDetail.userRatingCount }))
+            }
+          />
         </div>
         <div className="m-auto w-full lg:w-1/2">
           <Input

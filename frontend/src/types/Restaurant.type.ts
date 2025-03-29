@@ -7,5 +7,4 @@ type RestaurantAddressType = {
   lng: string;
   state: string;
   postCode: string;
-  placeId: string;
 };
