@@ -11,18 +11,17 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
     if (text.length < 10) {
       return; //input should have at least 10 charachters
     }
-    try{
+    try {
       const address: AutocompleteResponse = await autoComplete(text);
       setPredictions([...address.suggestions]);
-   
-    }catch(e){
-      console.error("Could not auto complete, ",e);
+    } catch (e) {
+      console.error("Could not auto complete, ", e);
     }
   };
 
   const onAddressSelect = async (prediction: Suggestion) => {
     console.log("selected Address", prediction);
-    const params = ["addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount"];
+    const params = ["id", "addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount"];
 
     const placeDetail: PlaceDetailsResponse = await placeDetails(prediction.placePrediction.placeId, params);
     if (!placeDetail) return;
@@ -36,6 +35,7 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
       lat: "",
       lng: "",
       state: "",
+      placeId: "",
     };
 
     placeDetail.addressComponents.forEach((element: any) => {
@@ -53,6 +53,7 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
     addressDetails.address = placeDetail.shortFormattedAddress;
     addressDetails.lat = placeDetail.location.latitude.toString();
     addressDetails.lng = placeDetail.location.longitude.toString();
+    addressDetails.placeId = placeDetail.id;
     setAddress(addressDetails);
   };
 

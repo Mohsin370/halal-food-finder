@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { Button, Form, Input, Image, form, Textarea } from "@heroui/react";
-import AddressSearch from "../../../../components/client/AddressSearch";
+import { Button, Form, Input, Image, Textarea } from "@heroui/react";
 import { Select, SelectItem } from "@heroui/select";
 import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
@@ -11,35 +10,30 @@ import { useRouter } from "next/navigation";
 import GoogleAutoComplete from "../../../../components/client/GoogleAutoComplete";
 
 export default function RestaurantForm() {
-
-  const isFeaturedFill = [
-    {
-      key: "true",
-      name: "Yes",
-    },
-    {
-      key: "false",
-      name: "No",
-    },
-  ];
   const router = useRouter();
-  const [name, setName] = React.useState("");
-  const [image, setImage] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [address, setAddress] = React.useState<RestaurantAddressType>();
-  const [restaurantType, setRestaurantType] = React.useState<Set<string>>(new Set([]));
-  const [halalStatus, setHalalStatus] = React.useState<Set<string>>(new Set([]));
-  const [cuisineType, setCuisineType] = React.useState<Set<string>>(new Set([]));
-  const [isFeatured, setIsFeatured] = React.useState<Set<string>>(new Set(["false"]));
-  const [restauntLookUps, setRestaurantLookUps] = React.useState<LookUpType>({
+
+  const isFeaturedOptions = [
+    { key: "true", name: "Yes" },
+    { key: "false", name: "No" },
+  ];
+
+  // **Single Form State**
+  const [formState, setFormState] = React.useState({
+    name: "",
+    description: "",
+    image: "",
+    restaurantType: new Set<string>(),
+    halalStatus: new Set<string>(),
+    cuisineType: new Set<string>(),
+    isFeatured: new Set<string>(["false"]),
+    address: {} as RestaurantAddressType,
+  });
+
+  const [restaurantLookUps, setRestaurantLookUps] = React.useState<LookUpType>({
     restaurantType: [],
     cuisineType: [],
     halalStatus: [],
   });
-
-  useEffect(() => {
-    console.log("Updated Address:", address);
-  }, [address]);
 
   useEffect(() => {
     async function fetchLookups() {
@@ -53,34 +47,33 @@ export default function RestaurantForm() {
     fetchLookups();
   }, []);
 
+  const handleChange = (key: string, value: any) => {
+    setFormState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    formData.append("restaurantTypeId", Array.from(restaurantType).join(","));
-    formData.append("halalStatusId", Array.from(halalStatus).join(","));
-    formData.append("cuisineTypeId", Array.from(cuisineType).join(","));
-    formData.append("lat", address!.lat);
-    formData.append("lng", address!.lng);
-    formData.append("image", image);
-    formData.append("isFeatured", Array.from(isFeatured).join(","));
+    formData.append("restaurantTypeId", Array.from(formState.restaurantType).join(","));
+    formData.append("halalStatusId", Array.from(formState.halalStatus).join(","));
+    formData.append("cuisineTypeId", Array.from(formState.cuisineType).join(","));
+    formData.append("lat", formState.address?.lat || "");
+    formData.append("lng", formState.address?.lng || "");
+    formData.append("image", formState.image);
+    formData.append("isFeatured", Array.from(formState.isFeatured).join(","));
+    formData.append("placeId", formState.address?.placeId);
+
     const data = Object.fromEntries(formData);
 
     const resp = await addRestaurant(data);
     if (resp.status == 201) {
-      addToast({
-        title: "Success",
-        description: "Restaurant Added Successfully.",
-        color: "success",
-        timeout: 3000,
-      });
+      addToast({ title: "Success", description: "Restaurant Added Successfully.", color: "success", timeout: 3000 });
       router.push("/dashboard/restaurant");
     } else {
-      addToast({
-        title: "Something went wrong",
-        description: "Please Try Again.",
-        color: "danger",
-        timeout: 3000,
-      });
+      addToast({ title: "Something went wrong", description: "Please Try Again.", color: "danger", timeout: 3000 });
     }
   };
 
@@ -90,9 +83,9 @@ export default function RestaurantForm() {
         <Image
           className="object-cover"
           alt="Restaurant Cover Photo"
-          key={image}
+          key={formState.image}
           height={200}
-          src={image ? image : "https://cwdaust.com.au/wpress/wp-content/uploads/2015/04/placeholder-restaurant.png"}
+          src={formState.image || "https://cwdaust.com.au/wpress/wp-content/uploads/2015/04/placeholder-restaurant.png"}
           width={300}
         />
       </div>
@@ -100,53 +93,49 @@ export default function RestaurantForm() {
       <Form className="w-full" onSubmit={onSubmit}>
         <Input
           className="lg:w-1/2 w-full m-auto"
-          errorMessage="Please enter a valid name"
           label="Name"
           name="name"
           placeholder="Restaurant Name"
-          type="text"
           isRequired
           minLength={5}
-          value={name}
-          onValueChange={setName}
-          fullWidth={true}
+          value={formState.name}
+          onValueChange={(val) => handleChange("name", val)}
+          fullWidth
         />
         <Textarea
-          className="lg:w-1/2 w-full m-auto "
-          errorMessage="Please enter some description"
+          className="lg:w-1/2 w-full m-auto"
           label="Description"
           name="description"
           placeholder="Say some nice things"
-          type="text"
           isRequired
           minLength={5}
-          value={description}
-          onValueChange={setDescription}
-          fullWidth={true}
+          value={formState.description}
+          onValueChange={(val) => handleChange("description", val)}
+          fullWidth
         />
         <div className="m-auto w-full lg:w-1/2">
           <div className="my-3 flex">
-            <Select isRequired className="" label="Restaurant Type" selectedKeys={restaurantType} onSelectionChange={(keys) => setRestaurantType(keys as Set<string>)}>
-              {restauntLookUps.restaurantType.map((type) => (
+            <Select isRequired label="Restaurant Type" selectedKeys={formState.restaurantType} onSelectionChange={(keys) => handleChange("restaurantType", keys)}>
+              {restaurantLookUps.restaurantType.map((type) => (
                 <SelectItem key={type.id}>{type.name}</SelectItem>
               ))}
             </Select>
             <div className="mx-3"></div>
-            <Select isRequired className="" label="Halal Status" selectedKeys={halalStatus} onSelectionChange={(keys) => setHalalStatus(keys as Set<string>)}>
-              {restauntLookUps.halalStatus.map((type) => (
+            <Select isRequired label="Halal Status" selectedKeys={formState.halalStatus} onSelectionChange={(keys) => handleChange("halalStatus", keys)}>
+              {restaurantLookUps.halalStatus.map((type) => (
                 <SelectItem key={type.id}>{type.status}</SelectItem>
               ))}
             </Select>
           </div>
           <div className="my-3 flex">
-            <Select isRequired label="Cuisine Type" selectedKeys={cuisineType} onSelectionChange={(keys) => setCuisineType(keys as Set<string>)}>
-              {restauntLookUps.cuisineType.map((type) => (
+            <Select isRequired label="Cuisine Type" selectedKeys={formState.cuisineType} onSelectionChange={(keys) => handleChange("cuisineType", keys)}>
+              {restaurantLookUps.cuisineType.map((type) => (
                 <SelectItem key={type.id}>{type.name}</SelectItem>
               ))}
             </Select>
             <div className="mx-3"></div>
-            <Select isRequired label="Featured" selectedKeys={isFeatured} onSelectionChange={(keys) => setIsFeatured(keys as Set<string>)}>
-              {isFeaturedFill.map((item) => (
+            <Select isRequired label="Featured" selectedKeys={formState.isFeatured} onSelectionChange={(keys) => handleChange("isFeatured", keys)}>
+              {isFeaturedOptions.map((item) => (
                 <SelectItem key={item.key}>{item.name}</SelectItem>
               ))}
             </Select>
@@ -158,23 +147,17 @@ export default function RestaurantForm() {
               const imageFile = file.target.files?.[0];
               if (imageFile) {
                 const reader = new FileReader();
-                reader.onloadend = () => {
-                  const base64String = reader.result as string;
-                  console.log(base64String);
-                  setImage(base64String);
-                };
-
+                reader.onloadend = () => handleChange("image", reader.result as string);
                 reader.readAsDataURL(imageFile);
-                //                  setImage(URL.createObjectURL(imageFile));
               }
             }}
-            errorMessage="Cover photo required"
             label="Cover photo"
             name="image"
-            fullWidth={true}
             isRequired
+            fullWidth
           />
         </div>
+
         {/* Address */}
         <div className="flex items-center my-6 w-full">
           <div className="flex-grow border-t border-gray-300 h-px"></div>
@@ -184,18 +167,47 @@ export default function RestaurantForm() {
 
         <div className="flex flex-wrap gap-5 mb-10 m-auto w-full lg:w-1/2">
           {/* Not using mapbox autocomplete, moving to google apis */}
-          {/* <AddressSearch setAddress={setAddress} />  */}
-          <GoogleAutoComplete setAddress={setAddress} />
+          <GoogleAutoComplete setAddress={(newAddress) => setFormState((prev) => ({ ...prev, address: newAddress }))} />
         </div>
         <div className="m-auto w-full lg:w-1/2">
-          <Input isRequired errorMessage="Please enter a valid address" label="Address" name="address" placeholder="Address" type="text" value={address?.address} fullWidth={true} isReadOnly={true} />
+          <Input
+            isRequired
+            errorMessage="Please enter a valid address"
+            label="Address"
+            name="address"
+            placeholder="Address"
+            type="text"
+            value={formState.address?.address}
+            fullWidth={true}
+            isReadOnly={true}
+          />
           <div className="my-3 flex">
-            <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={address?.city} fullWidth={true} isReadOnly={true} />
+            <Input isRequired errorMessage="Please enter a valid city" label="City" name="city" placeholder="City" type="text" value={formState.address?.city} fullWidth={true} isReadOnly={true} />
             <div className="mx-3"></div>
-            <Input isRequired errorMessage="Please enter a valid suburb" label="Suburb" name="suburb" placeholder="Suburb" type="text" value={address?.suburb} fullWidth={true} isReadOnly={true} />
+            <Input
+              isRequired
+              errorMessage="Please enter a valid suburb"
+              label="Suburb"
+              name="suburb"
+              placeholder="Suburb"
+              type="text"
+              value={formState.address?.suburb}
+              fullWidth={true}
+              isReadOnly={true}
+            />
           </div>
           <div className="my-3 flex">
-            <Input isRequired errorMessage="Please enter a valid state" label="state" name="state" placeholder="State" type="text" value={address?.state} fullWidth={true} isReadOnly={true} />
+            <Input
+              isRequired
+              errorMessage="Please enter a valid state"
+              label="state"
+              name="state"
+              placeholder="State"
+              type="text"
+              value={formState.address?.state}
+              fullWidth={true}
+              isReadOnly={true}
+            />
             <div className="mx-3"></div>
 
             <Input
@@ -205,7 +217,7 @@ export default function RestaurantForm() {
               name="postCode"
               placeholder="Postcode"
               type="text"
-              value={address?.postCode}
+              value={formState.address?.postCode}
               fullWidth={true}
               isReadOnly={true}
             />
@@ -219,14 +231,14 @@ export default function RestaurantForm() {
               name="country"
               placeholder="Country"
               type="text"
-              value={address?.country}
+              value={formState.address?.country}
               fullWidth={true}
               isReadOnly={true}
             />
           </div>
         </div>
 
-        <Button type="submit" variant="bordered" className="m-auto my-10 ">
+        <Button type="submit" variant="bordered" className="m-auto my-10">
           Submit
         </Button>
       </Form>
