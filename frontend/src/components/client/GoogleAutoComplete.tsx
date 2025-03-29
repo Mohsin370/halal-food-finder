@@ -1,40 +1,59 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Autocomplete, AutocompleteItem } from "@heroui/react";
 import React from "react";
-import { autoComplete } from "../../utils/api";
-import { AutocompleteResponse, Suggestion } from "../../types/AutoComplete.type";
-
-type RestaurantAddressType = {
-  address: string;
-  suburb: string;
-  country: string;
-  city: string;
-  lat: string;
-  lng: string;
-  state: string;
-  postCode: string;
-};
-
-
+import { autoComplete, placeDetails } from "../../utils/api";
 
 export default function GoogleAutoComplete({ setAddress }: { setAddress: (address: RestaurantAddressType) => void }) {
   // const [selectedAddress, setSelectedAddress] = React.useState<string>("");
   const [predictions, setPredictions] = React.useState<Suggestion[]>([]);
 
-
   const onHandleInputChange = async (text: string) => {
-    if (text.length < 5) {
-      return; //input should have at least 5 charachters
+    if (text.length < 10) {
+      return; //input should have at least 10 charachters
     }
-    const address: AutocompleteResponse = await autoComplete(text);
-
-
-    console.log(address.suggestions);
-    setPredictions([...address.suggestions]);
+    try{
+      const address: AutocompleteResponse = await autoComplete(text);
+      setPredictions([...address.suggestions]);
+   
+    }catch(e){
+      console.error("Could not auto complete, ",e);
+    }
   };
 
-  const onAddressSelect = (prediction: Suggestion) => {
+  const onAddressSelect = async (prediction: Suggestion) => {
     console.log("selected Address", prediction);
+    const params = ["addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount"];
+
+    const placeDetail: PlaceDetailsResponse = await placeDetails(prediction.placePrediction.placeId, params);
+    if (!placeDetail) return;
+
+    let addressDetails: RestaurantAddressType = {
+      suburb: "",
+      country: "",
+      address: "",
+      city: "",
+      postCode: "",
+      lat: "",
+      lng: "",
+      state: "",
+    };
+
+    placeDetail.addressComponents.forEach((element: any) => {
+      if (element.types.includes("locality")) {
+        addressDetails.suburb = element.longText;
+        addressDetails.city = element.longText;
+      } else if (element.types.includes("administrative_area_level_1")) {
+        addressDetails.state = element.shortText;
+      } else if (element.types.includes("country")) {
+        addressDetails.country = element.shortText;
+      } else if (element.types.includes("postal_code")) {
+        addressDetails.postCode = element.shortText;
+      }
+    });
+    addressDetails.address = placeDetail.shortFormattedAddress;
+    addressDetails.lat = placeDetail.location.latitude.toString();
+    addressDetails.lng = placeDetail.location.longitude.toString();
+    setAddress(addressDetails);
   };
 
   return (
@@ -44,8 +63,6 @@ export default function GoogleAutoComplete({ setAddress }: { setAddress: (addres
       placeholder="Find an address"
       onInputChange={(text: string) => {
         onHandleInputChange(text);
-        // setSelectedAddress(text); // Allow user to change the input field
-        // list.setFilterText(text);
       }}
       items={predictions}
       // defaultItems={predictions}

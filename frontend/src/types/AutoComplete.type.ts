@@ -1,8 +1,8 @@
-export interface AutocompleteResponse {
+interface AutocompleteResponse {
     suggestions: Suggestion[];
   }
   
-  export interface Suggestion {
+  interface Suggestion {
     placePrediction: {
       placeId: string;
       text: {

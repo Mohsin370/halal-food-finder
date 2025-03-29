@@ -11,16 +11,7 @@ import { useRouter } from "next/navigation";
 import GoogleAutoComplete from "../../../../components/client/GoogleAutoComplete";
 
 export default function RestaurantForm() {
-  type RestaurantAddressType = {
-    address: string;
-    suburb: string;
-    country: string;
-    city: string;
-    postCode: string;
-    lat: string;
-    lng: string;
-    state: string;
-  };
+
   const isFeaturedFill = [
     {
       key: "true",
