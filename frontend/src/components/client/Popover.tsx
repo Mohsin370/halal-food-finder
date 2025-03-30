@@ -1,5 +1,4 @@
 import { Popover, PopoverTrigger, PopoverContent, Button } from "@heroui/react";
-import { Restaurant } from "../../types/RestaurantType";
 import { Image } from "@heroui/image";
 import { motion } from "framer-motion";
 import Pin from "../../images/icons/pin.svg";

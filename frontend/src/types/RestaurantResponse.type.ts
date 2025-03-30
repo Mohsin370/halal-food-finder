@@ -18,6 +18,11 @@ type RestaurantT = {
     name:string
   }
   
+  type HalalStatus = {
+    id:number,
+    status:string
+  }
+  
 
   interface listingProps <T extends RestaurantT> {
     items: T[]
