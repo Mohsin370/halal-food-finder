@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Marker, Map as RestaurantsMap } from "react-map-gl/mapbox";
 import { fetchRestaurantMapPins } from "../utils/api";
-import { Restaurant } from "../types/RestaurantType";
 import MapPinLocation from "./client/Popover";
 
 export default function Map() {
