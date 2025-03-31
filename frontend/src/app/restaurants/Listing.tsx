@@ -8,7 +8,7 @@ import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../..
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import NotFound from "../../images/no_data.svg";
-
+import { Spinner } from "@heroui/react";
 
 type filterType = {
   cuisineType: number | null;
@@ -69,6 +69,10 @@ const Listing = () => {
     setFilters({
       cuisineType: cuisineTypeId,
     });
+    if (cuisineTypeId == null) {
+      router.push(`/restaurants`);
+      return;
+    }
 
     router.push(`?cuisineType=${cuisineTypeId}`);
   };
@@ -78,11 +82,7 @@ const Listing = () => {
       <div className="p-3 container">
         <div className="flex my-2 justify-center cursor-pointer overflow-auto">
           {lookups?.cuisineType?.map((el) => (
-            <div
-              className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id ? "bg-zinc-600 text-white rounded-xl" : "")}
-              key={el.id}
-              onClick={() => handleFilterChange(el)}
-            >
+            <div className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id ? "bg-zinc-600 text-white rounded-xl" : "")} key={el.id} onClick={() => handleFilterChange(el)}>
               <div className="flex flex-col items-center">
                 <Image src={getCuisineImage(el.name)} className="w-12 h-12 object-contain" alt={el.name} />
                 <p className="text-sm">{el.name}</p>
@@ -91,16 +91,25 @@ const Listing = () => {
           ))}
         </div>
         <div className="flex flex-wrap justify-center">
-          {restaurants && restaurants.length > 0 ? (
-            restaurants.map((restaurant) => (
-              <div className="mb-3" key={restaurant.id}>
-                <ListingItem restaurant={restaurant} />
+          {restaurants ? (
+            restaurants.length > 0 ? (
+              restaurants.map((restaurant) => (
+                <div className="mb-3" key={restaurant.id}>
+                  <ListingItem restaurant={restaurant} />
+                </div>
+              ))
+            ) : (
+              <div className="my-10">
+                <Image src={NotFound} width={250} alt="Not Found" />
+                <p className="text-xl text-center">No Restaurant Found...</p>
               </div>
-            ))
+            )
           ) : (
-            <div className="my-10">
-              <Image src={NotFound} width={250} alt="Not Found" />
-              <p className="text-xl text-center">No Restaurant Found...</p>
+            <div className="relative min-h-[60vh] w-full ">
+              <div className="absolute inset-0 flex flex-col justify-center items-center ">
+                <Spinner className="text-danger" />
+                <p className="ml-2 text-lg">Loading Restaurants...</p>
+              </div>
             </div>
           )}
         </div>
