@@ -79,7 +79,7 @@ namespace backend.Data
         {
             modelBuilder.Entity<HalalStatus>().HasData(
                 new HalalStatus { Id = 1, Status = "Certified Halal", Description="This restaurant offer halal food only." },
-                new HalalStatus { Id = 2, Status = "Partially Halal", Description="This restaurant offer some halal food and some food items are not halal." },
+                new HalalStatus { Id = 2, Status = "Partially Halal", Description="This restaurant offer some halal food and some food items are not halal." }
                 );
         }
 
