@@ -3,7 +3,7 @@ import { Image } from "@heroui/image";
 
 const ScrollCard: React.FC<{ restaurant: RestaurantT }> = ({ restaurant }) => {
   return (
-    <div className="my-3 w-[350px]">
+    <div className="my-3">
       <Card className="pb-4 flex shadow-none" isPressable={true}>
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h4 className="font-semibold truncate w-[290px] text-left">{restaurant.name}</h4>
