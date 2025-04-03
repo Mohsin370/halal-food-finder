@@ -12,6 +12,7 @@ import LayoutWrapper from "./layoutWrapper";
 const geist = localFont({
   src: "./fonts/Geist-VariableFont_wght.ttf",
   weight: "100 900",
+  variable: "--font-geist",
 });
 
 export const metadata: Metadata = {

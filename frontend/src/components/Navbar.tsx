@@ -1,22 +1,14 @@
 "use client";
 import React from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarMenuToggle,
-  NavbarMenuItem,
-  NavbarMenu,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
-} from "@heroui/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button, Input } from "@heroui/react";
 import { Logo } from "../images/logo";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import LocationInput from "./client/LocationInput";
 
 export default function App() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const pathname = usePathname();
 
   const menuItems = [
     { name: "Home", link: "/" },
@@ -25,51 +17,31 @@ export default function App() {
   ];
 
   return (
-    <Navbar
-      isBordered
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
-      maxWidth="2xl"
-    >
-      <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        />
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand
-          className="cursor-pointer"
-          onClick={() => router.push("/")}
-        >
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
+      {/* Logo */}
+      <NavbarContent className="hidden sm:flex gap-4" justify="start">
+        <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
           <Logo />
           <p className="font-bold text-inherit">HalalFindr</p>
         </NavbarBrand>
       </NavbarContent>
-
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand
-          className="cursor-pointer"
-          onClick={() => router.push("/")}
-        >
-          <Logo />
-          <p className="font-bold text-inherit">HalalFindr</p>
-        </NavbarBrand>
+      {/* Location Section */}
+      {pathname !== "/" && (
+        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+          <NavbarMenuItem>
+            <LocationInput />
+          </NavbarMenuItem>
+        </NavbarContent>
+      )}
+      {/* Menu Options */}
+      <NavbarContent className="hidden sm:flex gap-4" justify="end">
         <NavbarItem>
-          <Link
-            color="foreground"
-            className="cursor-pointer"
-            onPress={() => router.push("/restaurants")}
-          >
+          <Link color="foreground" className="cursor-pointer" onPress={() => router.push("/restaurants")}>
             Restaurants
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link
-            color="foreground"
-            className="cursor-pointer"
-            onPress={() => router.push("/mapView")}
-          >
+          <Link color="foreground" className="cursor-pointer" onPress={() => router.push("/mapView")}>
             Map View
           </Link>
         </NavbarItem>
@@ -85,6 +57,17 @@ export default function App() {
           </Button>
         </NavbarItem>
       </NavbarContent> */}
+
+      {/* Mobile Options */}
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+      </NavbarContent>
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
+          <Logo />
+          <p className="font-bold text-inherit">HalalFindr</p>
+        </NavbarBrand>
+      </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (
