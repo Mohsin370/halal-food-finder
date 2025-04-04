@@ -4,6 +4,7 @@ import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Navb
 import { Logo } from "../images/logo";
 import { useRouter, usePathname } from "next/navigation";
 import LocationInput from "./client/LocationInput";
+import CurrentLocation from "./client/CurrentLocation";
 
 export default function App() {
   const router = useRouter();
@@ -27,9 +28,12 @@ export default function App() {
       </NavbarContent>
       {/* Location Section */}
       {pathname !== "/" && (
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarContent className="hidden sm:flex gap-3" justify="center">
           <NavbarMenuItem>
             <LocationInput />
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <CurrentLocation/>
           </NavbarMenuItem>
         </NavbarContent>
       )}
