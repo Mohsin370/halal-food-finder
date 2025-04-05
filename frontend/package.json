@@ -15,7 +15,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroicons/react": "^2.1.5",
     "@heroui/react": "^2.7.4",
-    "@react-stately/data": "^3.11.6",
+    "@react-stately/data": "^3.12.2",
     "@reduxjs/toolkit": "^2.6.1",
     "@tanstack/react-table": "^8.21.2",
     "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",

@@ -27,7 +27,6 @@ export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetail
   };
 
   const onAddressSelect = async (prediction: Suggestion) => {
-    console.log("selected Address", prediction);
     const params = ["id", "addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount"];
 
     const placeDetail: PlaceDetailsResponse = await placeDetails(prediction.placePrediction.placeId, params);
