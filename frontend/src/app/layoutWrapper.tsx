@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SideBar from "../components/dashboard/Sidebar";
+import { store } from '../redux/store';
+import { Provider } from 'react-redux';
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -20,12 +22,12 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   };
   const Dashboard = ({ children }: { children: React.ReactNode }) => {
     return (
-      <>
+      <Provider store={store}>
         <div className="flex w-100 h-screen bg-gradient-to-tl from-white to-neutral-50">
           <SideBar />
           {children}
         </div>
-      </>
+      </Provider>
     );
   };
 
