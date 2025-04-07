@@ -9,6 +9,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import NotFound from "../../images/no_data.svg";
 import { Divider, Spinner } from "@heroui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type filterType = {
   cuisineType: number | null;
@@ -32,6 +34,9 @@ const getCuisineImage = (cuisineName: string) => {
 };
 
 const Listing = () => {
+  const coords = useSelector((state: RootState) => state.location);
+  console.log(coords);
+
   const [filter, setFilters] = useState<filterType | null>(null);
   const [restaurants, setRestaurants] = useState<RestaurantT[] | null>(null);
   const [lookups, setLookups] = useState<LookUpType | null>(null);
@@ -90,7 +95,7 @@ const Listing = () => {
             </div>
           ))}
         </div>
-        <Divider/>
+        <Divider />
         <div className="flex flex-wrap justify-center">
           {restaurants ? (
             restaurants.length > 0 ? (

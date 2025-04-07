@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SideBar from "../components/dashboard/Sidebar";
-import { store } from '../redux/store';
-import { Provider } from 'react-redux';
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -31,5 +31,5 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     );
   };
 
-  return <>{isDashboard ? <Dashboard children={children} /> : <Home children={children} />}</>;
+  return <Provider store={store}>{isDashboard ? <Dashboard children={children} /> : <Home children={children} />} </Provider>;
 }

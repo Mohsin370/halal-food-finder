@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
+import { AppDispatch } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { setLocation } from "../../redux/features/locationSlice";
 
 export default function CurrentLocation() {
-  const [userLocation, setUserLocation] = React.useState({
-    longitude: 138.59,
-    latitude: -34.92,
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
   const getUserLocation = () => {
     if ("geolocation" in navigator) {
@@ -13,11 +13,7 @@ export default function CurrentLocation() {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
           const { latitude, longitude } = coords;
-          console.log(coords);
-          setUserLocation({
-            latitude,
-            longitude,
-          });
+          dispatch(setLocation({ latitude, longitude }));
         },
         (error) => {
           console.error("Geolocation error:", error);
