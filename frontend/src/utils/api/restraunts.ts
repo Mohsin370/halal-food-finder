@@ -24,13 +24,18 @@ export const fetchFeaturedRestaurants = async () => {
   }
 };
 
-
-export const fetchRestaurantsListing = async (cuisineType?: number): Promise<RestaurantT[]> => {
+export const fetchRestaurantsListing = async (cuisineType?: number, latitude?: string, longitude?: string): Promise<RestaurantT[]> => {
   try {
-    const query = cuisineType? `?cuisineType=${cuisineType}`:"";
-    const response = await fetch(`${BASE_URL}/Restaurants/listing${query}`);
-    if(!response.ok){
-      return[]
+    const params = new URLSearchParams();
+    if (cuisineType) params.append("cuisineType", cuisineType.toString());
+    if(latitude && longitude){
+      params.append("lat",latitude);
+      params.append("lng",longitude);
+    }
+    let query = params.toString();
+    const response = await fetch(`${BASE_URL}/Restaurants/listing?${query}`);
+    if (!response.ok) {
+      return [];
     }
     if (!response.ok) throw new Error("Failed to fetch restaurants listing");
     return response.json();
@@ -39,8 +44,6 @@ export const fetchRestaurantsListing = async (cuisineType?: number): Promise<Res
     return [];
   }
 };
-
-
 
 export const fetchRestaurantMapPins = async () => {
   try {
@@ -71,10 +74,10 @@ export const addRestaurant = async (data: any) => {
 };
 
 export const deleteRestaurantById = async (id: number) => {
-  const response = await fetch(`${BASE_URL}/Restaurants/${id}`,{
-  method: "DELETE",  
+  const response = await fetch(`${BASE_URL}/Restaurants/${id}`, {
+    method: "DELETE",
   });
-  if (response.ok){
+  if (response.ok) {
     return response.json();
   }
-}
+};

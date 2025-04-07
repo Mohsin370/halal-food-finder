@@ -55,7 +55,7 @@ namespace backend.Services
         {
             var restaurants = await _serverContext.Restaurants
                 .AsNoTracking()
-                .Where(x=> x.isFeatured == true)
+                .Where(x => x.isFeatured == true)
                 .OrderByDescending(x => x.CreatedAt)
                 .Take(10)
                 .Select(r => new RestaurantDto
@@ -194,7 +194,7 @@ namespace backend.Services
 
         }
 
-        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType)
+        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType, int? lat, int? lng)
         {
             var query = _serverContext.Restaurants.AsQueryable();
             if (cuisineType.HasValue)

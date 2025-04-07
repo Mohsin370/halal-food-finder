@@ -35,7 +35,6 @@ const getCuisineImage = (cuisineName: string) => {
 
 const Listing = () => {
   const coords = useSelector((state: RootState) => state.location);
-  console.log(coords);
 
   const [filter, setFilters] = useState<filterType | null>(null);
   const [restaurants, setRestaurants] = useState<RestaurantT[] | null>(null);
@@ -45,13 +44,27 @@ const Listing = () => {
   const cuisineType = searchParams.get("cuisineType") || "";
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchLookups = async () => {
       try {
-        const restaurantData = await fetchRestaurantsListing(parseInt(cuisineType || "0"));
-        setRestaurants(restaurantData);
-
         const lookupData = await getRestaurantlookUps();
         setLookups(lookupData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchLookups();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (coords.latitude !== "" && coords.longitude !== "") {
+          console.log("coords available as: ", coords);
+        }
+        const { latitude, longitude } = coords;
+        const restaurantData = await fetchRestaurantsListing(parseInt(cuisineType || "0"), latitude, longitude);
+        setRestaurants(restaurantData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,7 +77,7 @@ const Listing = () => {
         cuisineType: parseInt(cuisineType),
       });
     }
-  }, [cuisineType]);
+  }, [cuisineType, coords]);
 
   const handleFilterChange = (cuisineType: CuisineType) => {
     let cuisineTypeId = null;
