@@ -1,11 +1,11 @@
 import Slider from "../components/Slider";
 import { fetchFeaturedRestaurants, fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
-import {Image} from "@heroui/image";
+import { Image } from "@heroui/image";
 import SearchSection from "../components/client/SearchSection";
 
 export default async function Home() {
-  const restaurants:RestaurantT[] = await fetchRcentRestaurants();
+  const restaurants: RestaurantT[] = await fetchRcentRestaurants();
   const featured = await fetchFeaturedRestaurants();
 
   return (
@@ -20,9 +20,9 @@ export default async function Home() {
           alt="Landing Page Image"
         />
         <div className="absolute z-10 text-center top-20 md:top-20">
-            <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
-            <SearchSection displayMapBtn={false}/>
-          </div>
+          <h3 className="font-bold text-large">Let's Find Some Halal Food</h3>
+          <SearchSection displayMapBtn={false} />
+        </div>
       </div>
       <div className="flex justify-center">
         <div className="p-3 container">
