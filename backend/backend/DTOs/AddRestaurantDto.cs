@@ -13,7 +13,7 @@
         public string PostCode { get; set; } = null!;
         public string Lat { get; set; } = null!;
         public string Lng { get; set; } = null!;
-
+        public string PlaceId { get; set; } = null!;
         public string IsFeatured { get; set; } = null!;
         public int cuisineTypeId { get; set; }
         public int restaurantTypeId { get; set; }

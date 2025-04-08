@@ -27,7 +27,7 @@ namespace backend.Data
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
                 // Use SQL Server with the retrieved connection string
-                optionsBuilder.UseNpgsql(connectionString);
+                optionsBuilder.UseNpgsql(connectionString, o => o.UseNetTopologySuite());
             }
         }
 

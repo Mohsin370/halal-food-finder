@@ -1,5 +1,6 @@
 using backend.Data;
 using backend.Helpers;
+using backend.Mappers;
 using backend.Services;
 using dotenv.net;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,11 @@ DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new PointConverter());
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,7 +42,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ServerContext>();
-    //dbContext.Database.Migrate();  
+    dbContext.Database.Migrate();
 }
 
 

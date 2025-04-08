@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
 
@@ -20,6 +21,7 @@ namespace backend.Migrations
                 .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("backend.Models.CuisineType", b =>
@@ -123,12 +125,6 @@ namespace backend.Migrations
                             Id = 2,
                             Description = "This restaurant offer some halal food and some food items are not halal.",
                             Status = "Partially Halal"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "This is a vegeterian restaurant. All food items in the menu are halal.",
-                            Status = "Vegeterian"
                         });
                 });
 
@@ -177,7 +173,15 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Point>("Location")
+                        .IsRequired()
+                        .HasColumnType("geometry (point, 4326)");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PlaceId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -240,31 +244,26 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Fast Food"
-                        },
-                        new
-                        {
-                            Id = 2,
                             Name = "Casual Dinning"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             Name = "Fine Dinning"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 3,
                             Name = "Take Away"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 4,
                             Name = "Food Truck"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 5,
                             Name = "Cafe"
                         });
                 });

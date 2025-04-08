@@ -2,10 +2,9 @@
 using backend.DTOs;
 using backend.Helpers;
 using backend.Models;
-using Humanizer;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 
 namespace backend.Services
 {
@@ -162,6 +161,7 @@ namespace backend.Services
         public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
         {
             var uploadResponse = await _cloudinaryFTP.UploadImage(dto.Image);
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
             if (uploadResponse.Error != null)
             {
@@ -182,6 +182,8 @@ namespace backend.Services
                 PostCode = dto.PostCode,
                 Lat = dto.Lat,
                 Lng = dto.Lng,
+                PlaceId = dto.PlaceId,
+                Location = new Point(new Coordinate(double.Parse(dto.Lng), double.Parse(dto.Lat))),
                 isFeatured = Convert.ToBoolean(dto.IsFeatured),
                 CuisineTypeId = dto.cuisineTypeId,
                 RestaurantTypeId = dto.restaurantTypeId,
@@ -194,12 +196,18 @@ namespace backend.Services
 
         }
 
-        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType, int? lat, int? lng)
+        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType, double? lat, double? lng)
         {
             var query = _serverContext.Restaurants.AsQueryable();
             if (cuisineType.HasValue)
             {
                 query = query.Where(r => r.CuisineType.Id == cuisineType);
+            }
+
+            if (lat.HasValue && lng.HasValue)
+            {
+                var userLocation = new Point(lng.Value, lat.Value) { SRID = 4326 };
+                query = query.OrderBy(r => r.Location.Distance(userLocation));
             }
 
 

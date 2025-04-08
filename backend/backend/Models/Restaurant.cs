@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using backend.Data;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NetTopologySuite.Geometries;
 
 namespace backend.Models
 {
@@ -36,6 +33,13 @@ namespace backend.Models
 
         [Required]
         public string Lng { get; set; } = null!;
+
+        [Column(TypeName = "geometry (point, 4326)")]
+        [Required]
+        public Point Location { get; set; }
+
+        [Required]
+        public string PlaceId { get; set; } = null!;
 
         [Required]
         public bool isFeatured { get; set; } = false;
