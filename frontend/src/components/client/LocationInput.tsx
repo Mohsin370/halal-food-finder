@@ -5,8 +5,12 @@ import { autoComplete, placeDetails } from "../../utils/api";
 import { setLocation } from "../../redux/features/locationSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function LocationInput() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const dispatch = useDispatch<AppDispatch>();
 
   let list = useAsyncList<Suggestion>({
@@ -16,7 +20,10 @@ export default function LocationInput() {
           items: [],
         };
       }
-      let res: AutocompleteResponse = await autoComplete(filterText ?? "", signal);
+      let res: AutocompleteResponse = await autoComplete(
+        filterText ?? "",
+        signal
+      );
       return {
         items: res.suggestions,
       };
@@ -26,10 +33,16 @@ export default function LocationInput() {
   const locationSelected = async (item: Suggestion) => {
     try {
       //find lat lng
-      const selectedLocationData: PlaceDetailsResponse = await placeDetails(item.placePrediction.placeId, ["location"]);
+      const selectedLocationData: PlaceDetailsResponse = await placeDetails(
+        item.placePrediction.placeId,
+        ["location"]
+      );
       const { latitude, longitude } = selectedLocationData.location;
       //set location state, by dispatch
       dispatch(setLocation({ latitude, longitude }));
+      if (pathname == "/") {
+        router.push("/restaurants");
+      }
     } catch (ex) {
       console.error(ex);
     }
@@ -37,9 +50,20 @@ export default function LocationInput() {
 
   return (
     <div className="flex items-center">
-      <Autocomplete label="Find by location" size="sm" inputValue={list.filterText} isLoading={list.isLoading} items={list.items} onInputChange={list.setFilterText}>
+      <Autocomplete
+        label="Find by location"
+        size="sm"
+        inputValue={list.filterText}
+        isLoading={list.isLoading}
+        items={list.items}
+        onInputChange={list.setFilterText}
+      >
         {(item) => (
-          <AutocompleteItem key={item.placePrediction.placeId} className="capitalize" onPress={() => locationSelected(item)}>
+          <AutocompleteItem
+            key={item.placePrediction.placeId}
+            className="capitalize"
+            onPress={() => locationSelected(item)}
+          >
             {item.placePrediction.text.text}
           </AutocompleteItem>
         )}
