@@ -54,6 +54,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+builder.Logging.AddConsole();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
