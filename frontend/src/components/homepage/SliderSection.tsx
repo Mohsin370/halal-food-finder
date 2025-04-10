@@ -1,0 +1,54 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+  fetchFeaturedRestaurants,
+  fetchRcentRestaurants,
+} from "../../utils/api";
+import Slider from "../Slider";
+import { Spinner } from "@heroui/react";
+
+const SliderSection: React.FC = () => {
+  const [restaurants, setRestaurants] = useState<RestaurantT[]>();
+  const [featured, setFeatured] = useState<RestaurantT[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const restaurants: RestaurantT[] = await fetchRcentRestaurants();
+      const featured = await fetchFeaturedRestaurants();
+      setRestaurants(restaurants);
+      setFeatured(featured);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <div className="flex justify-center">
+        <div className="p-3 container">
+          <h1 className="font-bold text-2xl p-2">Recently Added</h1>
+          {restaurants ? (
+            <Slider items={restaurants} />
+          ) : (
+            <div className="w-full text-center ">
+              <Spinner className="text-danger " />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div className="p-3 container">
+          <h1 className="font-bold text-2xl p-2">Featured Restaurants</h1>
+          {featured ? (
+            <Slider items={featured} />
+          ) : (
+            <div className="w-full text-center ">
+              <Spinner className="text-danger " />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SliderSection;

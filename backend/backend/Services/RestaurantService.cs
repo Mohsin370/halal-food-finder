@@ -31,6 +31,9 @@ namespace backend.Services
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
+                    rating = r.rating,
+                    userRatingCount = r.userRatingCount,
+                    PlaceId = r.PlaceId,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -64,6 +67,9 @@ namespace backend.Services
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
+                    rating = r.rating,
+                    userRatingCount = r.userRatingCount,
+                    PlaceId = r.PlaceId,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,

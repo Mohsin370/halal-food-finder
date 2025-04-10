@@ -1,3 +1,4 @@
+// This component use mapbox api, and now its been superseeded with google autocomplete
 "use client";
 import { Button, Spacer } from "@heroui/react";
 import SearchInput from "../SearchInput";
