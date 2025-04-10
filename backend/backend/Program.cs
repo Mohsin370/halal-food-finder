@@ -38,13 +38,21 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ServerContext>();
-    dbContext.Database.Migrate();
+    try
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ServerContext>();
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("Startup");
+        logger.LogError(ex, "Error during database migration at startup");
+        throw; // Optional: remove to let app keep running even if migration fails
+    }
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
