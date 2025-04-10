@@ -1,11 +1,14 @@
+"use client"
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-const ScrollCard: React.FC<{ restaurant: RestaurantT }> = ({ restaurant }) => {
+const ScrollCard: React.FC<{ restaurant: RestaurantT}> = ({ restaurant }) => {
+  const router = useRouter();
   return (
     <div className="my-3">
-      <Card className="pb-4 flex shadow-none" isPressable={true}>
+      <Card className="pb-4 flex shadow-none" isPressable={true} onPress={()=> router.push(`restaurants/${restaurant.placeId}`)}>
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h4 className="font-semibold truncate w-[290px] text-left">
             {restaurant.name}

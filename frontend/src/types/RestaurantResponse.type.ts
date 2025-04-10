@@ -9,6 +9,7 @@ type RestaurantT = {
     isFeatured?: boolean;
     rating: number,
     userRatingCount: number
+    placeId: number
   }
   type RestaurantType = {
     id: number,
