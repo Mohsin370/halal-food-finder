@@ -6,6 +6,8 @@ using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
+//adding console logging
+builder.Logging.AddConsole();
 
 //Load env
 DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
@@ -50,11 +52,14 @@ using (var scope = app.Services.CreateScope())
         var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
         var logger = loggerFactory.CreateLogger("Startup");
         logger.LogError(ex, "Error during database migration at startup");
+
+        // Fallback logging to file (Azure file system)
+        var logPath = Path.Combine(AppContext.BaseDirectory, "migration_error.log");
+        File.AppendAllText(logPath, $"[{DateTime.UtcNow}] {ex}\n");
         throw; // Optional: remove to let app keep running even if migration fails
     }
 }
 
-builder.Logging.AddConsole();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
