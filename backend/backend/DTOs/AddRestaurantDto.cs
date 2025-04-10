@@ -14,6 +14,8 @@
         public string Lat { get; set; } = null!;
         public string Lng { get; set; } = null!;
         public string PlaceId { get; set; } = null!;
+        public double rating { get; set; }
+        public int userRatingCount { get; set; }
         public string IsFeatured { get; set; } = null!;
         public int cuisineTypeId { get; set; }
         public int restaurantTypeId { get; set; }

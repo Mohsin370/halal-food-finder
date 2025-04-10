@@ -42,6 +42,13 @@ namespace backend.Models
         public string PlaceId { get; set; } = null!;
 
         [Required]
+        public double rating { get; set; }
+
+        [Required] 
+        public int userRatingCount { get; set; }
+
+
+        [Required]
         public bool isFeatured { get; set; } = false;
 
         [Required]

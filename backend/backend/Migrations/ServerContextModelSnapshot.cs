@@ -203,6 +203,12 @@ namespace backend.Migrations
                     b.Property<bool>("isFeatured")
                         .HasColumnType("boolean");
 
+                    b.Property<double>("rating")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("userRatingCount")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("City");

@@ -13,7 +13,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ServerContext))]
-    [Migration("20250407142204_Create-Tables")]
+    [Migration("20250410031940_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -205,6 +205,12 @@ namespace backend.Migrations
 
                     b.Property<bool>("isFeatured")
                         .HasColumnType("boolean");
+
+                    b.Property<double>("rating")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("userRatingCount")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

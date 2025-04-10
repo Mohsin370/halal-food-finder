@@ -77,6 +77,8 @@ namespace backend.Migrations
                     Lng = table.Column<string>(type: "text", nullable: false),
                     Location = table.Column<Point>(type: "geometry (point, 4326)", nullable: false),
                     PlaceId = table.Column<string>(type: "text", nullable: false),
+                    rating = table.Column<double>(type: "double precision", nullable: false),
+                    userRatingCount = table.Column<int>(type: "integer", nullable: false),
                     isFeatured = table.Column<bool>(type: "boolean", nullable: false),
                     CuisineTypeId = table.Column<int>(type: "integer", nullable: false),
                     RestaurantTypeId = table.Column<int>(type: "integer", nullable: false),

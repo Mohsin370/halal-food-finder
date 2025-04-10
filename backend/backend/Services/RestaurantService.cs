@@ -183,6 +183,8 @@ namespace backend.Services
                 Lat = dto.Lat,
                 Lng = dto.Lng,
                 PlaceId = dto.PlaceId,
+                rating = dto.rating,
+                userRatingCount = dto.userRatingCount,
                 Location = new Point(new Coordinate(double.Parse(dto.Lng), double.Parse(dto.Lat))),
                 isFeatured = Convert.ToBoolean(dto.IsFeatured),
                 CuisineTypeId = dto.cuisineTypeId,
@@ -220,6 +222,9 @@ namespace backend.Services
                     Suburb = r.Suburb,
                     City = r.City,
                     IsFeatured = r.isFeatured,
+                    rating = r.rating,
+                    userRatingCount = r.userRatingCount,
+                    PlaceId = r.PlaceId,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,

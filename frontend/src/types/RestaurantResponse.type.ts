@@ -7,6 +7,8 @@ type RestaurantT = {
     suburb: string;
     city: string;
     isFeatured?: boolean;
+    rating: number,
+    userRatingCount: number
   }
   type RestaurantType = {
     id: number,
