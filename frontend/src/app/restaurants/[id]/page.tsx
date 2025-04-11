@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RestaurantDetails = async ({params}: Readonly<{params: {id:string}}>) => {
+const RestaurantDetails = async ({params}: {params: Promise<{id:string}>}) => {
     const {id} = await params;
     return (
         <div className='m-auto container'>
