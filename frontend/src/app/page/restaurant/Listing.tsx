@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "@heroui/pagination";
 import { twMerge } from "tailwind-merge";
-import ListingItem from "../../components/Card";
-import SearchSection from "../../components/client/SearchSection";
-import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../utils/api";
+import ListingItem from "../../../components/Card";
+import SearchSection from "../../../components/client/SearchSection";
+import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../../utils/api";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import NotFound from "../../images/no_data.svg";
+import NotFound from "../../../images/no_data.svg";
 import { Divider, Spinner } from "@heroui/react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
 
 type filterType = {
   cuisineType: number | null;
@@ -23,12 +23,12 @@ type listingProp = {
 
 const getCuisineImage = (cuisineName: string) => {
   try {
-    return require(`../../images/icons/cuisines/${cuisineName.toLowerCase()}.svg`);
+    return require(`../../../images/icons/cuisines/${cuisineName.toLowerCase()}.svg`);
   } catch (e) {
     try {
-      return require(`../../images/icons/cuisines/${cuisineName.toLowerCase()}.png`);
+      return require(`../../../images/icons/cuisines/${cuisineName.toLowerCase()}.png`);
     } catch (e) {
-      return require(`../../images/icons/cuisines/indian.svg`);
+      return require(`../../../images/icons/cuisines/indian.svg`);
     }
   }
 };

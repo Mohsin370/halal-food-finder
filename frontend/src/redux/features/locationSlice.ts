@@ -11,12 +11,9 @@ const locationSlice = createSlice({
   reducers: {
     setLocation: (state, action) => {
       return (state = action.payload);
-    },
-    getLocation: (state) => {
-      return state;
-    },
+    }
   },
 });
 
-export const { setLocation, getLocation } = locationSlice.actions;
+export const { setLocation } = locationSlice.actions;
 export default locationSlice.reducer;

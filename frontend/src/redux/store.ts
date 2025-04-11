@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import LocationReducer from "./features/locationSlice";
+import RestaurantReducer from "./features/restaurantSlice";
 
 export const store = configureStore({
   reducer: {
-    location: LocationReducer
+    location: LocationReducer,
+    restaurant: RestaurantReducer
   },
 });
 

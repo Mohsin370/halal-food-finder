@@ -1,9 +1,6 @@
-import { fetchRestaurantsListing, getRestaurantlookUps } from "../../utils/api";
-import Listing from "./Listing";
+import Listing from "../page/restaurant/Listing";
 
-const Restaurant = async ({ searchParams }: any) => {
-  const params = await searchParams;
-
+const Restaurant = async () => {
   return <Listing />;
 };
 
