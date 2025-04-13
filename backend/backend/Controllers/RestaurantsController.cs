@@ -63,9 +63,9 @@ namespace backend.Controllers
 
         // GET: api/Restaurants/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Restaurant>> GetRestaurant(int id)
+        public async Task<ActionResult<RestaurantDto>> GetRestaurant(int id)
         {
-            var restaurant = await _context.Restaurants.FindAsync(id);
+            var restaurant = await _restaurantService.RestaurantById(id);
 
             if (restaurant == null)
             {

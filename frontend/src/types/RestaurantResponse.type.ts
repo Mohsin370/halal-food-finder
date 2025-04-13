@@ -1,5 +1,6 @@
 type RestaurantT = {
     id: number;
+    description:string,
     name: string;
     image: string;
     restaurantType: RestaurantType;

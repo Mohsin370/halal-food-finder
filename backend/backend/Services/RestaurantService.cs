@@ -28,6 +28,7 @@ namespace backend.Services
                 {
                     Id = r.Id,
                     Name = r.Name,
+                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
@@ -64,6 +65,7 @@ namespace backend.Services
                 {
                     Id = r.Id,
                     Name = r.Name,
+                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
@@ -86,6 +88,38 @@ namespace backend.Services
                 .ToListAsync();
 
             return restaurants;
+        }
+
+        public async Task<RestaurantDto> RestaurantById(int id)
+        {
+            var restaurantById = await _serverContext.Restaurants
+                .Where(r => r.Id == id )
+                .Select(r => new RestaurantDto
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Image = r.Image,
+                    Description = r.Description,
+                    Suburb = r.Suburb,
+                    IsFeatured = r.isFeatured,
+                    rating = r.rating,
+                    userRatingCount = r.userRatingCount,
+                    PlaceId = r.PlaceId,
+                    RestaurantType = new RestaurantTypeDto
+                    {
+                        Id = r.RestaurantType.Id,
+                        Name = r.RestaurantType.Name,
+                    },
+                    CuisineType = new CuisineTypeDto
+                    {
+                        Id = r.CuisineType.Id,
+                        Name = r.CuisineType.Name,
+                    },
+                    City = r.City,
+                    CreatedAt = r.CreatedAt
+                }).FirstOrDefaultAsync();
+
+            return restaurantById;
 
         }
 

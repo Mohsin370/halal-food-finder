@@ -13,13 +13,16 @@ const ScrollCard: React.FC<{ restaurant: RestaurantT }> = ({ restaurant }) => {
 
   const selectRestaurantHandler = () => {
     const payload = {
+      id: restaurant.id,
+      placeId: restaurant.placeId,
       name: restaurant.name,
+      description: restaurant.description,
       image: restaurant.image,
       cuisineType: restaurant.cuisineType.name,
       restaurantType: restaurant.restaurantType.name,
     };
     dispatch(setSelected(payload));
-    router.push(`restaurants/${restaurant.placeId}`);
+    router.push(`restaurants/${restaurant.id}`);
   };
 
   return (
