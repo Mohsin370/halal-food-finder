@@ -13,6 +13,10 @@ type RestaurantAddressType = {
 type Restaurant = {
     id: number;
     name: string;
+    description: string;
+    placeId: string;
+    userRatingCount: number;
+    rating: string;
     image: string;
     type: string;
     suburb: string;

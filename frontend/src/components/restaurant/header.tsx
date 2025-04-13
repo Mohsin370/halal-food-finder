@@ -3,19 +3,18 @@ import { Button, Card, CardFooter } from "@heroui/react";
 import Image from "next/image";
 import React from "react";
 
-const DetailsHeader = ({ imageSrc }: { imageSrc: string }) => {
+const DetailsHeader = ({ imageSrc, cuisineType, restaurantType }: { imageSrc: string, cuisineType:string, restaurantType:string }) => {
   return (
       <Card isFooterBlurred className="border-none max-w-[700px] max-h-[400px] object-contain" radius="md">
       <Image
         alt="Woman listing to music"
         src={imageSrc}
-
         className="object-cover rounded-xl"
         width={700}
         height={500}
       />
       <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-        <p className="text-tiny text-white/80">Available soon.</p>
+        <p className="text-tiny text-white/80">{cuisineType} Cuisine.</p>
         <Button
           className="text-tiny text-white bg-black/20"
           color="default"
@@ -23,7 +22,7 @@ const DetailsHeader = ({ imageSrc }: { imageSrc: string }) => {
           size="sm"
           variant="flat"
         >
-          Notify me
+          {restaurantType}
         </Button>
       </CardFooter>
     </Card>

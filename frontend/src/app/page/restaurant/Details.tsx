@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { fetchRestaurantById } from "../../../utils/api";
 import { setSelected } from "../../../redux/features/restaurantSlice";
+import { Star } from "lucide-react";
 
 const Details = ({ id }: { id: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,16 +16,18 @@ const Details = ({ id }: { id: string }) => {
   useEffect(() => {
     if (!selectedRestaurant.name && id) {
       const getData = async () => {
-        const res: RestaurantT = await fetchRestaurantById(parseInt(id));
+        const restaurant: RestaurantT = await fetchRestaurantById(parseInt(id));
         dispatch(
           setSelected({
-            id: res.id,
-            description: res.description,
-            name: res.name,
-            cuisineType: res.cuisineType.name,
-            restaurantType: res.restaurantType.name,
-            image: res.image,
-            placeId: res.placeId,
+            id: restaurant.id,
+            description: restaurant.description,
+            name: restaurant.name,
+            rating: restaurant.rating,
+            useRatingCount: restaurant.userRatingCount,
+            cuisineType: restaurant.cuisineType.name,
+            restaurantType: restaurant.restaurantType.name,
+            image: restaurant.image,
+            placeId: restaurant.placeId,
           })
         );
       };
@@ -36,11 +39,22 @@ const Details = ({ id }: { id: string }) => {
   //   console.log(restaurantDetails);
 
   return (
-    <div className="m-auto container my-5">
-      <div className="flex">
-        <Header imageSrc={selectedRestaurant.image} />
-        <div className="ml-5">
-          <h2 className="text-xl font-bold">{selectedRestaurant.name}</h2>
+    <div className="m-auto container px-2 my-5 w-full">
+      <div className="flex flex-wrap md:flex-nowrap">
+        <Header imageSrc={selectedRestaurant.image} cuisineType={selectedRestaurant.cuisineType} restaurantType={selectedRestaurant.restaurantType} />
+        <div className="ml-5 md:w-2/3">
+          <div className="flex w-full justify-between">
+            <h2 className="text-xl font-bold">{selectedRestaurant.name}</h2>
+            {selectedRestaurant.useRatingCount && (
+              <div className="flex items-center">
+                <p className="ml-3">{selectedRestaurant.rating}</p>
+                <div>
+                  <Star fill="#FDCC0D" strokeWidth={0} size={20}></Star>
+                </div>
+                <p className="ml-1">({selectedRestaurant.useRatingCount})</p>
+              </div>
+            )}
+          </div>
           <p className="">{selectedRestaurant.description}</p>
         </div>
       </div>

@@ -6,8 +6,10 @@ const initialRestaurantState = {
   name: "",
   image: "",
   placeId: "",
-  cuisineType: 0,
-  restaurantType: 0,
+  rating: 0,
+  useRatingCount: 0,
+  cuisineType: "",
+  restaurantType: "",
 };
 
 const restaurantSlice = createSlice({
