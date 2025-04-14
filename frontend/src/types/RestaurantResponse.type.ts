@@ -24,7 +24,8 @@ type RestaurantT = {
   
   type HalalStatus = {
     id:number,
-    status:string
+    status:string,
+    description:string
   }
   
 

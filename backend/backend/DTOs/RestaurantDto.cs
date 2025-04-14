@@ -15,6 +15,8 @@
         public RestaurantTypeDto RestaurantType { get; set; } = new RestaurantTypeDto();
         public CuisineTypeDto CuisineType { get; internal set; } = null!;
 
+        public HalalStatusDto HalalStatus { get; set; } = new HalalStatusDto();
+
         public DateTime CreatedAt { get; set; }
 
     }

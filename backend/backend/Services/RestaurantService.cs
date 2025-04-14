@@ -45,6 +45,12 @@ namespace backend.Services
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name,
                     },
+                    HalalStatus = new HalalStatusDto
+                    {
+                        Id = r.HalalStatus.Id,
+                        Status = r.HalalStatus.Status,
+                        Description = r.HalalStatus.Description,
+                    },
                     City = r.City,
                     CreatedAt = r.CreatedAt
                 })
@@ -82,6 +88,12 @@ namespace backend.Services
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name,
                     },
+                    HalalStatus = new HalalStatusDto
+                    {
+                        Id = r.HalalStatus.Id,
+                        Status = r.HalalStatus.Status,
+                        Description = r.HalalStatus.Description,
+                    },
                     City = r.City,
                     CreatedAt = r.CreatedAt
                 })
@@ -114,6 +126,12 @@ namespace backend.Services
                     {
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name,
+                    },
+                    HalalStatus = new HalalStatusDto
+                    {
+                        Id = r.HalalStatus.Id,
+                        Status = r.HalalStatus.Status,
+                        Description = r.HalalStatus.Description,
                     },
                     City = r.City,
                     CreatedAt = r.CreatedAt

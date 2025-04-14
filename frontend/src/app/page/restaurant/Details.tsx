@@ -16,7 +16,7 @@ const Details = ({ id }: { id: string }) => {
   useEffect(() => {
     if (!selectedRestaurant.name && id) {
       const getData = async () => {
-        const restaurant: RestaurantT = await fetchRestaurantById(parseInt(id));
+        const restaurant: Restaurant = await fetchRestaurantById(parseInt(id));
         dispatch(
           setSelected({
             id: restaurant.id,
@@ -26,6 +26,7 @@ const Details = ({ id }: { id: string }) => {
             useRatingCount: restaurant.userRatingCount,
             cuisineType: restaurant.cuisineType.name,
             restaurantType: restaurant.restaurantType.name,
+            halalStatus: restaurant.halalStatus.description,
             image: restaurant.image,
             placeId: restaurant.placeId,
           })
@@ -55,6 +56,7 @@ const Details = ({ id }: { id: string }) => {
               </div>
             )}
           </div>
+          <p className="my-3"> {selectedRestaurant.halalStatus} </p>
           <p className="">{selectedRestaurant.description}</p>
         </div>
       </div>
