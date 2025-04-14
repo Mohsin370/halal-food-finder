@@ -2,6 +2,8 @@
 using backend.DTOs;
 using backend.Helpers;
 using backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
@@ -218,6 +220,11 @@ namespace backend.Services
 
         public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
         {
+            if (RestaurantAlreadyExists(dto.PlaceId))
+            {
+                return null;
+            }
+
             var uploadResponse = await _cloudinaryFTP.UploadImage(dto.Image);
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
@@ -276,6 +283,7 @@ namespace backend.Services
                 {
                     Id = r.Id,
                     Name = r.Name,
+                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
                     City = r.City,
@@ -292,10 +300,22 @@ namespace backend.Services
                     {
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name
-                    }
+                    },
+                    HalalStatus = new HalalStatusDto
+                    {
+                        Id = r.HalalStatus.Id,
+                        Status = r.HalalStatus.Status,
+                        Description = r.HalalStatus.Description,
+                    },
                 })
                 .ToListAsync();
             return listing;
+        }
+
+        public bool RestaurantAlreadyExists(string placeId)
+        {
+            return _serverContext.Restaurants.Any(e => e.PlaceId == placeId);
+
         }
     }
 }

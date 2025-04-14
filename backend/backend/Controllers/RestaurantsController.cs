@@ -76,8 +76,9 @@ namespace backend.Controllers
         }
 
         [HttpGet("listing")]
-        public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing(int? cuisineType , double? lat, double? lng){
-        
+        public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing(int? cuisineType, double? lat, double? lng)
+        {
+
             var listing = await _restaurantService.RestaurantListing(cuisineType, lat, lng);
             return Ok(listing);
         }
@@ -129,11 +130,15 @@ namespace backend.Controllers
 
         // POST: api/Restaurants
         [HttpPost]
-        public async Task<ActionResult<Restaurant>> PostRestaurant([FromBody] AddRestaurantDto dto)
+        public async Task<IActionResult> PostRestaurant([FromBody] AddRestaurantDto dto)
         {
             try
             {
-                var restaurant  = await _restaurantService.PostRestaurant(dto);
+                var restaurant = await _restaurantService.PostRestaurant(dto);
+                if (restaurant == null)
+                {
+                    return Conflict("A restaurant with this PlaceId already exists.");
+                }
                 return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
             }
             catch (ValidationException ex)

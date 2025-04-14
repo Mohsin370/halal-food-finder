@@ -77,7 +77,10 @@ export default function RestaurantForm() {
     if (resp.status == 201) {
       addToast({ title: "Success", description: "Restaurant Added Successfully.", color: "success", timeout: 3000 });
       router.push("/dashboard/restaurant");
-    } else {
+    }else if(resp.status === 409) {
+      addToast({ title: "This restaurant may already exist.", description: "Please Try Another business.", color: "danger", timeout: 3000 });
+    }
+     else {
       addToast({ title: "Something went wrong", description: "Please Try Again.", color: "danger", timeout: 3000 });
     }
   };
