@@ -29,7 +29,7 @@ export default function CurrentLocation() {
   return (
     <div>
       <p className="text-sm pointer cursor-pointer" onClick={getUserLocation}>
-        Use my location
+        Find nearby
       </p>
     </div>
   );
