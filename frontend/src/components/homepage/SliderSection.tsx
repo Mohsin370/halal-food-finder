@@ -8,12 +8,12 @@ import Slider from "../Slider";
 import { Spinner } from "@heroui/react";
 
 const SliderSection: React.FC = () => {
-  const [restaurants, setRestaurants] = useState<RestaurantT[]>();
-  const [featured, setFeatured] = useState<RestaurantT[]>();
+  const [restaurants, setRestaurants] = useState<Restaurant[]>();
+  const [featured, setFeatured] = useState<Restaurant[]>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const restaurants: RestaurantT[] = await fetchRcentRestaurants();
+      const restaurants: Restaurant[] = await fetchRcentRestaurants();
       const featured = await fetchFeaturedRestaurants();
       setRestaurants(restaurants);
       setFeatured(featured);

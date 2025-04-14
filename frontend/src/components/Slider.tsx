@@ -6,7 +6,7 @@ import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/o
 import { SliderProps } from "@heroui/react";
 
 
-export default function Slider ({ items }: listingProps<RestaurantT>) {
+export default function Slider ({ items }: listingProps<Restaurant>) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);

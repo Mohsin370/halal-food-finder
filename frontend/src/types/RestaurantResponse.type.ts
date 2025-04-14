@@ -28,6 +28,6 @@ type RestaurantT = {
   }
   
 
-  interface listingProps <T extends RestaurantT> {
+  interface listingProps <T extends Restaurant> {
     items: T[]
   }

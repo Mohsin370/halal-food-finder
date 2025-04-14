@@ -37,7 +37,7 @@ const Listing = () => {
   const coords = useSelector((state: RootState) => state.location);
 
   const [filter, setFilters] = useState<filterType | null>(null);
-  const [restaurants, setRestaurants] = useState<RestaurantT[] | null>(null);
+  const [restaurants, setRestaurants] = useState<Restaurant[] | null>(null);
   const [lookups, setLookups] = useState<LookUpType | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();

@@ -24,7 +24,7 @@ export const fetchFeaturedRestaurants = async () => {
   }
 };
 
-export const fetchRestaurantsListing = async (cuisineType?: number, latitude?: string, longitude?: string): Promise<RestaurantT[]> => {
+export const fetchRestaurantsListing = async (cuisineType?: number, latitude?: string, longitude?: string): Promise<Restaurant[]> => {
   try {
     const params = new URLSearchParams();
     if (cuisineType) params.append("cuisineType", cuisineType.toString());

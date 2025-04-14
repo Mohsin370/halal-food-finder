@@ -1,7 +1,12 @@
 import Listing from "../page/restaurant/Listing";
+import { Suspense } from "react";
 
 const Restaurant = async () => {
-  return <Listing />;
+  return (
+    <Suspense>
+      <Listing />
+    </Suspense>
+  );
 };
 
 export default Restaurant;

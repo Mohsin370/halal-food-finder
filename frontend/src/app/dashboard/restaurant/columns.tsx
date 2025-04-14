@@ -6,7 +6,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/d
 import { Button } from "@heroui/button";
 
 let toggleState = false;
-export const columns: ColumnDef<RestaurantT>[] = [
+export const columns: ColumnDef<Restaurant>[] = [
   {
     accessorKey: "image",
     header:"",
