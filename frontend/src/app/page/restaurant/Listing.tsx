@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Pagination } from "@heroui/pagination";
 import { twMerge } from "tailwind-merge";
 import ListingItem from "../../../components/Card";
-import SearchSection from "../../../components/client/SearchSection";
 import { fetchRestaurantsListing, getRestaurantlookUps, LookUpType } from "../../../utils/api";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -16,10 +14,6 @@ type filterType = {
   cuisineType: number | null;
 };
 
-type listingProp = {
-  restaurants: RestaurantT[];
-  lookups: LookUpType;
-};
 
 const getCuisineImage = (cuisineName: string) => {
   try {
