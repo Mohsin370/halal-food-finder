@@ -28,7 +28,8 @@ namespace backend.Helpers
         {
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription("data:image/png;base64,"+ imageBase64),
+                File = new FileDescription("data:image/png;base64," + imageBase64),
+                Transformation = new Transformation().Width(650).Height(500).Quality("auto:good").FetchFormat("webp"),
                 UseFilename = true,
                 UniqueFilename = false,
                 Overwrite = true

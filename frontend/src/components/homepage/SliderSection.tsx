@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  fetchFeaturedRestaurants,
-  fetchRcentRestaurants,
-} from "../../utils/api";
+import { fetchFeaturedRestaurants, fetchRcentRestaurants } from "../../utils/api";
 import Slider from "../Slider";
 import { Spinner } from "@heroui/react";
 
@@ -29,8 +26,8 @@ const SliderSection: React.FC = () => {
           {restaurants ? (
             <Slider items={restaurants} />
           ) : (
-            <div className="w-full text-center ">
-              <Spinner className="text-danger " />
+            <div className="w-full h-[300px] justify-center flex items-center">
+              <Spinner />
             </div>
           )}
         </div>
@@ -41,8 +38,8 @@ const SliderSection: React.FC = () => {
           {featured ? (
             <Slider items={featured} />
           ) : (
-            <div className="w-full text-center ">
-              <Spinner className="text-danger " />
+            <div className="w-full h-[300px] justify-center flex items-center">
+              <Spinner />
             </div>
           )}
         </div>
