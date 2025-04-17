@@ -77,7 +77,10 @@ export const deleteRestaurantById = async (id: number) => {
   const response = await fetch(`${BASE_URL}/Restaurants/${id}`, {
     method: "DELETE",
   });
-  if (response.ok) {
-    return response.json();
+  if (response.status === 204) {
+    return {
+      success: true,
+      message: "Delete successful"
+    };
   }
 };

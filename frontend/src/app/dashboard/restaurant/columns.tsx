@@ -1,9 +1,10 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
+import { deleteRestaurantById } from "../../../utils/api";
 
 let toggleState = false;
 export const columns: ColumnDef<Restaurant>[] = [
@@ -49,9 +50,9 @@ export const columns: ColumnDef<Restaurant>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const element = row.original;
-
+  
       return (
         <Dropdown>
           <DropdownTrigger asChild>
@@ -61,10 +62,14 @@ export const columns: ColumnDef<Restaurant>[] = [
           </DropdownTrigger>
           <DropdownMenu aria-label="Link Actions">
             <DropdownItem key="edit">Edit</DropdownItem>
-            <DropdownItem key="delete" color="danger" onSelect={()=>console.log(row.id)} >Delete</DropdownItem>
+            <DropdownItem key="delete" color="danger" onPress={() => deleteHandler(element)} > Delete
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       );
     },
   },
 ];
+const deleteHandler = async ( element: Restaurant) => {
+  await deleteRestaurantById(element.id);
+}
