@@ -78,9 +78,21 @@ namespace backend.Controllers
         [HttpGet("listing")]
         public async Task<ActionResult<IEnumerable<RestaurantListingDto>>> RestaurantListing(int? cuisineType, double? lat, double? lng)
         {
-
-            var listing = await _restaurantService.RestaurantListing(cuisineType, lat, lng);
-            return Ok(listing);
+            try
+            {
+                var listing = await _restaurantService.RestaurantListing(cuisineType, lat, lng);
+                return Ok(listing);
+            }
+            catch (ArgumentException ex)
+            {
+                // Handle known argument-related issues
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode(500, "An unexpected error occurred. Please try again later.");
+            }
         }
 
         // GET: api/Restaurants/mapPin
