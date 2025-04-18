@@ -24,28 +24,31 @@ export const columns: ColumnDef<Restaurant>[] = [
     header: "Name",
   },
   {
-    accessorKey: "type",
+    accessorKey: "cuisineType.name",
+    header: "Cuisine",
+  },  {
+    accessorKey: "halalStatus.status",
+    header: "Halal Status",
+  },
+  {
+    accessorKey: "rating",
     header: ({ column }) => {
       return (
-        <Button
-          variant="light"
-          onPress={() => {
+        <div
+        className="flex"
+          onClick={() => {
             column.toggleSorting((toggleState = !toggleState));
           }}
         >
-          Type
+          Rating
           <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </div>
       );
     },
   },
   {
     accessorKey: "suburb",
     header: "Suburb",
-  },
-  {
-    accessorKey: "city",
-    header: "City",
   },
   {
     id: "actions",
