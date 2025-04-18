@@ -97,7 +97,10 @@ namespace backend.Data
                 new CuisineType { Id = 8, Name = "Chinese" },
                 new CuisineType { Id = 9, Name = "Korean" },
                 new CuisineType { Id = 10, Name = "Italian" },
-                new CuisineType { Id = 11, Name = "American" }
+                new CuisineType { Id = 11, Name = "American" },
+                new CuisineType { Id = 12, Name = "Turkish" },
+                new CuisineType { Id = 13, Name = "Australian" },
+                new CuisineType { Id = 14, Name = "Middle Eastern" }
             );
         }
     }
