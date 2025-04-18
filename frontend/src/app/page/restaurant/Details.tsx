@@ -57,7 +57,7 @@ const Details = ({ id }: { id: string }) => {
             )}
           </div>
           <p className="my-3"> {selectedRestaurant.halalStatus} </p>
-          <p className="">{selectedRestaurant.description}</p>
+          <p className="whitespace-pre-line">{selectedRestaurant.description}</p>
         </div>
       </div>
     </div>

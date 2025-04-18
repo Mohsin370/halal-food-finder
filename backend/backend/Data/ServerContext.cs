@@ -96,7 +96,8 @@ namespace backend.Data
                 new CuisineType { Id = 7, Name = "Mexican" },
                 new CuisineType { Id = 8, Name = "Chinese" },
                 new CuisineType { Id = 9, Name = "Korean" },
-                new CuisineType { Id = 10, Name = "Italian" }
+                new CuisineType { Id = 10, Name = "Italian" },
+                new CuisineType { Id = 11, Name = "American" }
             );
         }
     }
