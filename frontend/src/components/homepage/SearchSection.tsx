@@ -13,7 +13,7 @@ const SearchSection: React.FC = () => {
       <div className="flex mt-3 ml-3 justify-content-center">
         <LocationInput />
         <Button
-          className="text-white bg-red-600 sm:ml-5"
+          className="text-white bg-red-600 ml-5"
           size="lg"
           variant="shadow"
           onPress={()=> router.push('/restaurants')}
