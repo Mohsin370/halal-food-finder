@@ -13,8 +13,8 @@ export default function App() {
 
   const menuItems = [
     { name: "Home", link: "/" },
-    { name: "Restaurants", link: "restaurants" },
-    { name: "Map View", link: "mapView" },
+    { name: "Restaurants", link: "/restaurants" },
+    { name: "Map View", link: "/mapView" },
   ];
 
   return (
@@ -33,7 +33,7 @@ export default function App() {
             <LocationInput />
           </NavbarMenuItem>
           <NavbarMenuItem>
-            <CurrentLocation/>
+            <CurrentLocation />
           </NavbarMenuItem>
         </NavbarContent>
       )}
@@ -51,20 +51,15 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
 
-      {/* <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="warning" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent> */}
-
       {/* Mobile Options */}
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+        <NavbarMenuItem>
+          <LocationInput />
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <CurrentLocation />
+        </NavbarMenuItem>
       </NavbarContent>
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
@@ -76,14 +71,7 @@ export default function App() {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              // color={
-              //   index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-              // }
-              href={item.link}
-              size="lg"
-            >
+            <Link className="w-full" href={item.link} size="lg">
               {item.name}
             </Link>
           </NavbarMenuItem>
