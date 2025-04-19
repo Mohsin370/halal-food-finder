@@ -5,12 +5,10 @@ import ScrollCard from "./Card";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import { SliderProps } from "@heroui/react";
 
-
-export default function Slider ({ items }: listingProps<Restaurant>) {
+export default function Slider({ items }: listingProps<Restaurant>) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
-
 
   useEffect(() => {
     const handleScroll = () => checkScrollButtons();
@@ -66,7 +64,7 @@ export default function Slider ({ items }: listingProps<Restaurant>) {
     <div className="relative">
       <div ref={scrollContainerRef} className="flex overflow-x-auto whitespace-nowrap scrollbar-hide px-3">
         {items?.map((item) => (
-          <div key={item.id} className="inline-block ml-3 [&>div>button]:w-[300px]">
+          <div key={item.id} className="inline-block ml-3 [&_h4]:w-full [&_img]:h-[170px] [&>div>button]:w-[300px]">
             <ScrollCard restaurant={item} />
           </div>
         ))}
