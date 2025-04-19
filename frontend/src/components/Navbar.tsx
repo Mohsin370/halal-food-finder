@@ -66,7 +66,7 @@ export default function App() {
         </NavbarContent>
       )}
 
-      <NavbarContent className="sm:hidden pr-3" justify="end">
+      <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
           <Logo />
           <p className="font-bold text-inherit">HalalFindr</p>
