@@ -91,7 +91,7 @@ const Listing = () => {
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
-        <div className="flex my-2 justify-around cursor-pointer overflow-auto">
+        <div className="flex my-2 justify-around cursor-pointer overflow-x-scroll">
           {lookups?.cuisineType?.map((el) => (
             <div className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id && "bg-zinc-600 text-white rounded-xl")} key={el.id} onClick={() => handleFilterChange(el)}>
               <div className="flex flex-col items-center">

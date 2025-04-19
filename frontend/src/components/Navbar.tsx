@@ -54,14 +54,19 @@ export default function App() {
       {/* Mobile Options */}
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
-        <NavbarMenuItem>
-          <LocationInput />
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <CurrentLocation />
-        </NavbarMenuItem>
       </NavbarContent>
-      <NavbarContent className="sm:hidden pr-3" justify="center">
+      {pathname !== "/" && (
+        <NavbarContent className="sm:hidden" justify="center">
+          <NavbarMenuItem>
+            <LocationInput />
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <CurrentLocation />
+          </NavbarMenuItem>
+        </NavbarContent>
+      )}
+
+      <NavbarContent className="sm:hidden pr-3" justify="end">
         <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
           <Logo />
           <p className="font-bold text-inherit">HalalFindr</p>
