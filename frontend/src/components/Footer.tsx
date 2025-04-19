@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
         {/* Logo & About */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">HalalHunt</h2>
+          <h2 className="text-2xl font-bold mb-4">HalalFindr</h2>
           <p className="text-gray-600 dark:text-gray-400">
             Find the best halal food options near you. Your trusted guide for halal restaurants.
           </p>
