@@ -14,7 +14,6 @@ type filterType = {
   cuisineType: number | null;
 };
 
-
 const getCuisineImage = (cuisineName: string) => {
   try {
     return require(`../../../images/icons/cuisines/${cuisineName.toLowerCase()}.svg`);
@@ -103,29 +102,30 @@ const Listing = () => {
           ))}
         </div>
         <Divider />
-        <div className="flex flex-wrap justify-center">
-          {restaurants ? (
-            restaurants.length > 0 ? (
-              restaurants.map((restaurant) => (
+
+        {restaurants ? (
+          restaurants.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+              {restaurants.map((restaurant) => (
                 <div className="mb-3" key={restaurant.id}>
                   <ListingItem restaurant={restaurant} />
                 </div>
-              ))
-            ) : (
-              <div className="my-10">
-                <Image src={NotFound} width={250} alt="Not Found" />
-                <p className="text-xl text-center">No Restaurant Found...</p>
-              </div>
-            )
-          ) : (
-            <div className="relative min-h-[60vh] w-full ">
-              <div className="absolute inset-0 flex flex-col justify-center items-center ">
-                <Spinner className="text-danger" />
-                <p className="ml-2 text-lg">Loading Restaurants...</p>
-              </div>
+              ))}
             </div>
-          )}
-        </div>
+          ) : (
+            <div className="my-10">
+              <Image src={NotFound} width={250} alt="Not Found" />
+              <p className="text-xl text-center">No Restaurant Found...</p>
+            </div>
+          )
+        ) : (
+          <div className="relative min-h-[60vh] w-full ">
+            <div className="absolute inset-0 flex flex-col justify-center items-center ">
+              <Spinner className="text-danger" />
+              <p className="ml-2 text-lg">Loading Restaurants...</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

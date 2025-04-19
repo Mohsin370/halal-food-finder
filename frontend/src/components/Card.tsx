@@ -29,13 +29,17 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
   };
 
   return (
-    <div className="my-3">
-      <Card className="pb-4 flex shadow-none" isPressable={true} onPress={selectRestaurantHandler}>
+    <div className="my-3 w-full">
+      <Card className="pb-4   sm:w-full" isPressable={true} onPress={selectRestaurantHandler}>
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-          <h4 className="font-semibold truncate w-[290px] text-left">{restaurant.name}</h4>
-          <p className="text-tiny uppercase font-semibold">
-            {restaurant.restaurantType.name} , {restaurant.cuisineType.name}
-          </p>
+          <h4 className="font-semibold truncate text-left text-sm w-36 sm:w-full">{restaurant.name}</h4>
+          <div className="sm:flex text-xs text-left">
+            <span className="text-tiny uppercase font-semibold truncate">{restaurant.restaurantType.name}</span>
+            <br/>
+            <span className=" hidden sm:block">,</span>
+            <span className="text-tiny uppercase font-semibold truncate sm:pl-1">{restaurant.cuisineType.name}</span>
+          </div>
+
           <div className="flex justify-between w-full">
             <small className="text-default-500">{restaurant.suburb}</small>
             {restaurant.userRatingCount > 0 && (
@@ -53,8 +57,8 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
             )}
           </div>
         </CardHeader>
-        <CardBody className="overflow-visible py-2 text-end ">
-          <Image alt="Card background" className="object-cover rounded-xl" src={restaurant.image} width={300} height={170} />
+        <CardBody className="overflow-visible py-2 text-end">
+          <Image alt="Card background" className="object-cover rounded-xl w-96 h-[100px] sm:h-[170px]" src={restaurant.image} />
         </CardBody>
       </Card>
     </div>
