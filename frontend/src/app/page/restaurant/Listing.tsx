@@ -37,6 +37,7 @@ const Listing = () => {
   const cuisineType = searchParams.get("cuisineType") || "";
 
   useEffect(() => {
+    if (lookups) return;
     const fetchLookups = async () => {
       try {
         const lookupData = await getRestaurantlookUps();
@@ -113,8 +114,10 @@ const Listing = () => {
               ))}
             </div>
           ) : (
-            <div className="my-10">
-              <Image src={NotFound} width={250} alt="Not Found" />
+            <div className="flex flex-col justify-center">
+              <div className="flex justify-center ">
+                <Image src={NotFound} alt="Not Found" />
+              </div>
               <p className="text-xl text-center">No Restaurant Found...</p>
             </div>
           )
