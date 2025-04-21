@@ -29,8 +29,6 @@ type Restaurant = {
     cuisineType :CuisineType,
     halalStatus :HalalStatus,
     restaurantType :RestaurantType,
-    halalStatusId:string,
-    restaurantTypeId:string,
     postCode:string
   };
   

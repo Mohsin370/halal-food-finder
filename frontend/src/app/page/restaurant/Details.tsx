@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { placeDetails } from "../../../utils/api";
 import Header from "../../../components/restaurant/header";
 
@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { fetchRestaurantById } from "../../../utils/api";
 import { setSelected } from "../../../redux/features/restaurantSlice";
-import { Star } from "lucide-react";
+import { BadgeCheck, Star } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { Spinner } from "@heroui/react";
 
 const Details = ({ id }: { id: string }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   let selectedRestaurant = useSelector((state: RootState) => state.restaurant);
 
   useEffect(() => {
@@ -26,41 +29,66 @@ const Details = ({ id }: { id: string }) => {
             useRatingCount: restaurant.userRatingCount,
             cuisineType: restaurant.cuisineType.name,
             restaurantType: restaurant.restaurantType.name,
-            halalStatus: restaurant.halalStatus.description,
+            halalStatus: restaurant.halalStatus,
             image: restaurant.image,
             placeId: restaurant.placeId,
+            address: restaurant.address,
           })
         );
       };
+      setIsLoading(false);
       getData();
     }
-  }, [id]);
+
+    if (selectedRestaurant.id) {
+      setIsLoading(false);
+    }
+  }, [id, isLoading]);
 
   //   const restaurantDetails = await placeDetails(id, ["*"]);
   //   console.log(restaurantDetails);
 
   return (
-    <div className="m-auto container px-2 my-5 w-full">
-      <div className="flex flex-wrap md:flex-nowrap">
-        <Header imageSrc={selectedRestaurant.image} cuisineType={selectedRestaurant.cuisineType} restaurantType={selectedRestaurant.restaurantType} />
-        <div className="ml-5 md:w-2/3">
-          <div className="flex w-full justify-between">
-            <h2 className="text-xl font-bold">{selectedRestaurant.name}</h2>
-            {selectedRestaurant.useRatingCount && (
-              <div className="flex items-center">
-                <p className="ml-3">{selectedRestaurant.rating}</p>
-                <div>
-                  <Star fill="#FDCC0D" strokeWidth={0} size={20}></Star>
-                </div>
-                <p className="ml-1">({selectedRestaurant.useRatingCount})</p>
+    <>
+      {!isLoading && selectedRestaurant.name ? (
+        <div className="m-auto container px-2 sm:my-8 my-5 w-full ">
+          <div className="flex flex-wrap md:flex-nowrap ">
+            <Header imageSrc={selectedRestaurant.image} cuisineType={selectedRestaurant.cuisineType} restaurantType={selectedRestaurant.restaurantType} />
+            <div className="sm:ml-5 md:w-2/3 sm:mt-0 mt-3">
+              <div className="flex w-full justify-between">
+                <h2 className="text-xl font-bold">{selectedRestaurant.name}</h2>
+                {selectedRestaurant.useRatingCount && (
+                  <div className="flex items-center">
+                    <p className="ml-3">{selectedRestaurant.rating}</p>
+                    <div>
+                      <Star fill="#FDCC0D" strokeWidth={0} size={20}></Star>
+                    </div>
+                    <p className="ml-1">({selectedRestaurant.useRatingCount})</p>
+                  </div>
+                )}
               </div>
-            )}
+              <p>{selectedRestaurant.address}</p>
+              <div className="my-3 w-fit">
+                {selectedRestaurant.halalStatus.status == "Certified Halal" ? (
+                  <div className="flex items-center">
+                    <p>{selectedRestaurant.halalStatus.description}</p>
+                    <BadgeCheck fill="oklch(62.3% 0.214 259.815)" className="ml-2 text-white " />
+                  </div>
+                ) : (
+                  <p className="shadow-sm -mt-2 p-2 rounded-sm text-white bg-rose-600">{selectedRestaurant.halalStatus.description}</p>
+                )}
+              </div>
+              <p className=" overflow-auto sm:h-[300px] p-2 rounded-sm bg-zinc-100 whitespace-pre-line">{selectedRestaurant.description}</p>
+            </div>
           </div>
-          <p className="my-3"> {selectedRestaurant.halalStatus} </p>
-          <p className=" overflow-auto sm:h-[320px] whitespace-pre-line">{selectedRestaurant.description}</p>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="text-center flex-grow mt-32">
+          <Spinner />
+          <p>Loading...</p>
+        </div>
+      )}
+    </>
   );
 };
 

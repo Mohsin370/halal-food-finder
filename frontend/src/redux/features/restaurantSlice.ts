@@ -10,7 +10,12 @@ const initialRestaurantState = {
   useRatingCount: 0,
   cuisineType: "",
   restaurantType: "",
-  halalStatus:"",
+  address:"",
+  halalStatus:{
+    id:0,
+    status:"",
+    description:""
+  },
 };
 
 const restaurantSlice = createSlice({
