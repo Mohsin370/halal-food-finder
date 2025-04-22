@@ -11,7 +11,9 @@ builder.Logging.AddConsole();
 
 //Load env
 DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
+DotNetEnv.Env.Load(); // This reads from .env and sets environment variables
 
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
 
@@ -37,6 +39,7 @@ builder.Services.AddCors(options =>
                      .AllowAnyHeader());
 
 });
+
 
 var app = builder.Build();
 

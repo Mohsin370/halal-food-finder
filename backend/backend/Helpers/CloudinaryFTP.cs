@@ -8,19 +8,19 @@ namespace backend.Helpers
     {
 
         private readonly Cloudinary _cloudinary;
-
-        public CloudinaryFTP()
+        private readonly IConfiguration _configuration;
+        public CloudinaryFTP(IConfiguration configuration)
         {
-//            DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
+             _configuration = configuration;
+            //            DotEnv.Load(new DotEnvOptions(probeForEnv: true)); // Load .env
 
-            string cloudinaryUrl = Environment.GetEnvironmentVariable("CLOUDINARY_URL");
+            string cloudinaryUrl = _configuration["CLOUDINARY_URL"];
             if (string.IsNullOrEmpty(cloudinaryUrl))
             {
                 throw new Exception("CLOUDINARY_URL is not set in environment variables.");
             }
             _cloudinary = new Cloudinary(cloudinaryUrl);
             _cloudinary.Api.Secure = true;
-
         }
 
 

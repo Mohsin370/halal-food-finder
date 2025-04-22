@@ -5,26 +5,28 @@ namespace backend.Data
 {
     public class ServerContext : DbContext
     {
+        private readonly IConfiguration _configuration;
+
         public DbSet<Restaurant> Restaurants { get; set; } = null!;
         public DbSet<CuisineType> CuisineTypes { get; set; } = null!;
         public DbSet<HalalStatus> HalalStatuses { get; set; } = null!;
         public DbSet<RestaurantType> RestaurantTypes { get; set; } = null!;
 
 
-     //   public ServerContext(DbContextOptions<ServerContext> options) : base(options) { }
+
+        public ServerContext(DbContextOptions<ServerContext> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+
+        }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
                 // Retrieve connection string from configuration
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
                 // Use SQL Server with the retrieved connection string
                 optionsBuilder.UseNpgsql(connectionString, o => o.UseNetTopologySuite());
@@ -78,8 +80,8 @@ namespace backend.Data
         private void SeedHalalStatus(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HalalStatus>().HasData(
-                new HalalStatus { Id = 1, Status = "Certified Halal", Description="This restaurant offer halal food only." },
-                new HalalStatus { Id = 2, Status = "Partially Halal", Description="This restaurant offer some halal food and some food items are not halal." }
+                new HalalStatus { Id = 1, Status = "Certified Halal", Description = "This restaurant offer halal food only." },
+                new HalalStatus { Id = 2, Status = "Partially Halal", Description = "This restaurant offer some halal food and some food items are not halal." }
                 );
         }
 
