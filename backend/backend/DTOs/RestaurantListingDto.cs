@@ -11,6 +11,7 @@
         public bool IsFeatured { get; set; }
         public string PlaceId { get; set; } = null!;
         public double rating { get; set; }
+        public string Address { get; set; } = null!;
         public int userRatingCount { get; set; }
         public RestaurantTypeDto RestaurantType { get; set; } = null!;
         public CuisineTypeDto CuisineType { get; internal set; } = null!;

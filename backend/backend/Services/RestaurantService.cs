@@ -294,6 +294,7 @@ namespace backend.Services
                     rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
+                    Address = r.Address,
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
