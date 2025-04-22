@@ -22,7 +22,7 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
           }}
         />
       </PopoverTrigger>
-      <PopoverContent className="">
+      <PopoverContent className="max-w-[275px]">
         <div className="px-1 py-2">
           <div className="">
             <Image alt="Restaurant Image" src={restaurant.image} width={250} height={200} />
