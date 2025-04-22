@@ -33,9 +33,11 @@ builder.Services.AddHttpClient<GooglePlaceService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", PolicyBuilder =>
-        PolicyBuilder.AllowAnyOrigin()
+    options.AddPolicy("AllowVercelFrontend", PolicyBuilder =>
+
+        PolicyBuilder.WithOrigins("https://halal-food-finder.vercel.app")
                      .AllowAnyMethod()
+                     .AllowCredentials()
                      .AllowAnyHeader());
 
 });
@@ -64,6 +66,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -76,7 +79,7 @@ app.UseSwaggerUI();
 
 app.UseAuthorization();
 
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowVercelFrontend");
 
 app.MapControllers();
 
