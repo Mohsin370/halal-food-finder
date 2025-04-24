@@ -43,3 +43,5 @@ frontend/.env*
 # Ignore Visual Studio temporary files, build results, and
 # popular Visual Studio add-ons.
 backend/.vs/
+
+backend/backend/.env
