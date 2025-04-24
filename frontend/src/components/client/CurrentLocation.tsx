@@ -3,9 +3,12 @@ import React from "react";
 import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { setLocation } from "../../redux/features/locationSlice";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function CurrentLocation() {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const getUserLocation = () => {
     if ("geolocation" in navigator) {
@@ -14,6 +17,9 @@ export default function CurrentLocation() {
         ({ coords }) => {
           const { latitude, longitude } = coords;
           dispatch(setLocation({ latitude, longitude }));
+          if (pathname != "/restaurants") {
+            router.push("/restaurants");
+          }
         },
         (error) => {
           console.error("Geolocation error:", error);

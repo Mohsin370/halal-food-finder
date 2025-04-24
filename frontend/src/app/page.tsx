@@ -2,7 +2,6 @@ import Slider from "../components/Slider";
 import { fetchFeaturedRestaurants, fetchRcentRestaurants } from "../utils/api";
 import LandingImage from "../images/landing.svg";
 import { Image } from "@heroui/image";
-import LocationInput from "../components/client/LocationInput";
 import SliderSection from "../components/homepage/SliderSection";
 import SearchSection from "../components/homepage/SearchSection";
 

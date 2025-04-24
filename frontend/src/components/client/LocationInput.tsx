@@ -40,7 +40,7 @@ export default function LocationInput() {
       const { latitude, longitude } = selectedLocationData.location;
       //set location state, by dispatch
       dispatch(setLocation({ latitude, longitude }));
-      if (pathname == "/") {
+      if (pathname !== "/restaurants") {
         router.push("/restaurants");
       }
     } catch (ex) {
