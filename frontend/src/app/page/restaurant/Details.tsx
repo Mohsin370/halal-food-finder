@@ -87,7 +87,7 @@ const Details = ({ id }: { id: string }) => {
           <div className="mt-8">
             <p className="text-2xl text-center">Top 5 reviews from Google</p>
             {
-              selectedRestaurant.reviews.map((review)=>{
+              selectedRestaurant.reviews?.map((review)=>{
                 return <div>
                   <Review review= {review} />
                 </div>
