@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVercelFrontend", PolicyBuilder =>
 
-        PolicyBuilder.WithOrigins("http://localhost:3000", "https://halal-food-finder.vercel.app")
+        PolicyBuilder.WithOrigins("https://halal-food-finder.vercel.app")
                      .AllowAnyMethod()
                      .AllowCredentials()
                      .AllowAnyHeader());
