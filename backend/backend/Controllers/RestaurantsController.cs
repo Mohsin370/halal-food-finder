@@ -22,7 +22,7 @@ namespace backend.Controllers
         private readonly ServerContext _context;
         private readonly IRestaurantService _restaurantService;
 
-        public RestaurantsController(ServerContext context, RestaurantService restaurantService)
+        public RestaurantsController(ServerContext context, RestaurantService restaurantService, Import_Data import)
         {
             _context = context;
             _restaurantService = restaurantService;
@@ -32,6 +32,7 @@ namespace backend.Controllers
         [HttpGet("recent")]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants()
         {
+
             var restaurants = await _restaurantService.RecentlyAddedAsync();
             if (restaurants == null)
             {

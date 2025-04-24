@@ -34,10 +34,19 @@ namespace backend.Services
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
-                    rating = r.rating,
+                    Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Reviews = r.Reviews.Select(rv => new Review
+                    {
+                        Id = rv.Id,
+                        ReviewerName = rv.ReviewerName,
+                        Description = rv.Description,
+                        Rating = rv.Rating,
+                        Date = rv.Date,
+                        RestaurantId = r.Id
+                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -78,10 +87,19 @@ namespace backend.Services
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
-                    rating = r.rating,
+                    Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Reviews = r.Reviews.Select(rv => new Review
+                    {
+                        Id = rv.Id,
+                        ReviewerName = rv.ReviewerName,
+                        Description = rv.Description,
+                        Rating = rv.Rating,
+                        Date = rv.Date,
+                        RestaurantId = r.Id
+                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -118,10 +136,19 @@ namespace backend.Services
                     Description = r.Description,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
-                    rating = r.rating,
+                    Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Reviews = r.Reviews.Select(rv => new Review
+                    {
+                        Id = rv.Id,
+                        ReviewerName = rv.ReviewerName,
+                        Description = rv.Description,
+                        Rating = rv.Rating,
+                        Date = rv.Date,
+                        RestaurantId = r.Id
+                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -295,6 +322,15 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Reviews = r.Reviews.Select(rv => new Review
+                    {
+                        Id = rv.Id,
+                        ReviewerName = rv.ReviewerName,
+                        Description = rv.Description,
+                        Rating = rv.Rating,
+                        Date = rv.Date,
+                        RestaurantId = r.Id
+                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,

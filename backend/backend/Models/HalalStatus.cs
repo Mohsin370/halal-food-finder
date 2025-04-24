@@ -11,6 +11,5 @@ namespace backend.Models
 
         public required string Description { get; set; }
 
-        //public ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
     }
 }

@@ -64,6 +64,8 @@ namespace backend.Models
         public int HalalStatusId { get; set; }
         public HalalStatus HalalStatus { get; set; } = null!;
 
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

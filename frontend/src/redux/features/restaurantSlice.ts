@@ -10,12 +10,19 @@ const initialRestaurantState = {
   useRatingCount: 0,
   cuisineType: "",
   restaurantType: "",
-  address:"",
-  halalStatus:{
-    id:0,
-    status:"",
-    description:""
+  address: "",
+  halalStatus: {
+    id: 0,
+    status: "",
+    description: "",
   },
+  reviews: [{
+    date: new Date(),
+    description: "",
+    id: "",
+    rating: 0,
+    reviewerName: "",
+  }],
 };
 
 const restaurantSlice = createSlice({

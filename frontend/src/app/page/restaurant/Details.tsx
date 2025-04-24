@@ -10,6 +10,7 @@ import { setSelected } from "../../../redux/features/restaurantSlice";
 import { BadgeCheck, Star } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Spinner } from "@heroui/react";
+import Review from "../../../components/client/Review";
 
 const Details = ({ id }: { id: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +34,7 @@ const Details = ({ id }: { id: string }) => {
             image: restaurant.image,
             placeId: restaurant.placeId,
             address: restaurant.address,
+            reviews: restaurant.reviews
           })
         );
       };
@@ -80,6 +82,18 @@ const Details = ({ id }: { id: string }) => {
               </div>
               <p className=" overflow-auto sm:h-[300px] p-2 rounded-sm bg-zinc-100 whitespace-pre-line">{selectedRestaurant.description}</p>
             </div>
+          </div>
+          {/* Review Section */}
+          <div className="mt-8">
+            <p className="text-2xl text-center">Top 5 reviews from Google</p>
+            {
+              selectedRestaurant.reviews.map((review)=>{
+                return <div>
+                  <Review review= {review} />
+                </div>
+              })
+              
+            }
           </div>
         </div>
       ) : (

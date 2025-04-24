@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ServerContext>();
 builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddSingleton<CloudinaryFTP>();
+builder.Services.AddScoped<Import_Data>();
 builder.Services.AddHttpClient<GooglePlaceService>();
 
 

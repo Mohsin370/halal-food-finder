@@ -1,4 +1,6 @@
-﻿namespace backend.DTOs
+﻿using backend.Models;
+
+namespace backend.DTOs
 {
     public class RestaurantDto
     {
@@ -11,8 +13,11 @@
         public bool IsFeatured { get; set; }
         public int userRatingCount { get; set; }
         public string PlaceId { get; set; } = null!;
-        public double rating { get; set; }
+        public double Rating { get; set; }
         public string Address { get; set; } = null!;
+        public IEnumerable<Review> Reviews { get; set; }
+
+
         public RestaurantTypeDto RestaurantType { get; set; } = new RestaurantTypeDto();
         public CuisineTypeDto CuisineType { get; internal set; } = null!;
 

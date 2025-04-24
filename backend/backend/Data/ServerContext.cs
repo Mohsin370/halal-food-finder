@@ -11,6 +11,7 @@ namespace backend.Data
         public DbSet<CuisineType> CuisineTypes { get; set; } = null!;
         public DbSet<HalalStatus> HalalStatuses { get; set; } = null!;
         public DbSet<RestaurantType> RestaurantTypes { get; set; } = null!;
+        public DbSet<Review> Reviews { get; set; } = null!;
 
 
 
@@ -41,6 +42,12 @@ namespace backend.Data
                 .HasOne(r => r.CuisineType)
                 .WithMany(c => c.Restaurants)
                 .HasForeignKey(r => r.CuisineTypeId);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Restaurant)
+                .WithMany(c => c.Reviews)
+                .HasForeignKey(r => r.RestaurantId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             //Seeder Function Calls
