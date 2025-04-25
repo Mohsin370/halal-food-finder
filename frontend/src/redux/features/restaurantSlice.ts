@@ -16,13 +16,17 @@ const initialRestaurantState = {
     status: "",
     description: "",
   },
-  reviews: [{
-    date: new Date(),
-    description: "",
-    id: "",
-    rating: 0,
-    reviewerName: "",
-  }],
+  reviews: [
+    {
+      date: new Date(),
+      description: "",
+      id: "",
+      rating: 0,
+      reviewerName: "",
+    },
+  ],
+  lat: "",
+  lng: "",
 };
 
 const restaurantSlice = createSlice({

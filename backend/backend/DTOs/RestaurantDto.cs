@@ -14,6 +14,8 @@ namespace backend.DTOs
         public int userRatingCount { get; set; }
         public string PlaceId { get; set; } = null!;
         public double Rating { get; set; }
+        public double Lat { get; set; }
+        public double Lng { get; set; }
         public string Address { get; set; } = null!;
         public IEnumerable<Review> Reviews { get; set; }
 

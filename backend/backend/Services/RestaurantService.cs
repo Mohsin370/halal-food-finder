@@ -38,6 +38,8 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Lat = double.Parse(r.Lat),
+                    Lng = double.Parse(r.Lng),
                     Reviews = r.Reviews.Select(rv => new Review
                     {
                         Id = rv.Id,
@@ -91,6 +93,8 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Lat = double.Parse(r.Lat),
+                    Lng = double.Parse(r.Lng),
                     Reviews = r.Reviews.Select(rv => new Review
                     {
                         Id = rv.Id,
@@ -140,6 +144,8 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Lat = double.Parse(r.Lat),
+                    Lng = double.Parse(r.Lng),
                     Reviews = r.Reviews.Select(rv => new Review
                     {
                         Id = rv.Id,
@@ -322,6 +328,8 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    Lat = double.Parse(r.Lat),
+                    Lng = double.Parse(r.Lng),
                     Reviews = r.Reviews.Select(rv => new Review
                     {
                         Id = rv.Id,

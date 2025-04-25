@@ -24,7 +24,9 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
       restaurantType: restaurant.restaurantType.name,
       halalStatus: restaurant.halalStatus,
       address: restaurant.address,
-      reviews: restaurant.reviews
+      reviews: restaurant.reviews,
+      lat: restaurant.lat,
+      lng: restaurant.lng
     };
     dispatch(setSelected(payload));
     router.push(`restaurants/${restaurant.id}`);

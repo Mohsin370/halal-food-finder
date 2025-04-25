@@ -13,6 +13,8 @@ namespace backend.DTOs
         public bool IsFeatured { get; set; }
         public string PlaceId { get; set; } = null!;
         public double rating { get; set; }
+        public double Lat { get; set; }
+        public double Lng { get; set; }
         public string Address { get; set; } = null!;
         public int userRatingCount { get; set; }
         public IEnumerable<Review> Reviews { get; set; }

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { fetchRestaurantById } from "../../../utils/api";
 import { setSelected } from "../../../redux/features/restaurantSlice";
-import { BadgeCheck, Star } from "lucide-react";
+import { BadgeCheck, Navigation, Star } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Spinner } from "@heroui/react";
 import Review from "../../../components/client/Review";
@@ -34,7 +34,9 @@ const Details = ({ id }: { id: string }) => {
             image: restaurant.image,
             placeId: restaurant.placeId,
             address: restaurant.address,
-            reviews: restaurant.reviews
+            reviews: restaurant.reviews,
+            lat: restaurant.lat,
+            lng: restaurant.lng,
           })
         );
       };
@@ -69,7 +71,18 @@ const Details = ({ id }: { id: string }) => {
                   </div>
                 )}
               </div>
-              <p>{selectedRestaurant.address}</p>
+              <div
+                className="flex items-center cursor-pointer underline"
+                onClick={() => {
+                  window.open("https://maps.google.com?q=" + selectedRestaurant.lat + "," + selectedRestaurant.lng);
+                }}
+              >
+                <p>{selectedRestaurant.address}</p>
+                <span className=" text-blue-500">
+                  <Navigation fill="oklch(62.3% 0.214 259.815)" className="pl-1" size={23} />
+                </span>
+              </div>
+
               <div className="my-3 w-fit">
                 {selectedRestaurant.halalStatus.status == "Certified Halal" ? (
                   <div className="flex items-center">
@@ -86,14 +99,13 @@ const Details = ({ id }: { id: string }) => {
           {/* Review Section */}
           <div className="mt-8">
             <p className="text-2xl text-center">Top 5 reviews from Google</p>
-            {
-              selectedRestaurant.reviews?.map((review)=>{
-                return <div>
-                  <Review review= {review} />
+            {selectedRestaurant.reviews?.map((review) => {
+              return (
+                <div>
+                  <Review key={review.id} review={review} />
                 </div>
-              })
-              
-            }
+              );
+            })}
           </div>
         </div>
       ) : (
