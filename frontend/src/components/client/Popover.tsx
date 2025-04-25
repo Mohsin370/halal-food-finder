@@ -3,10 +3,19 @@ import { Image } from "@heroui/image";
 import { motion } from "framer-motion";
 import Pin from "../../images/icons/pin.svg";
 import { Navigation } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function MapPinLocation({ restaurant }: { restaurant: Restaurant }) {
+    const router = useRouter();
+
+
+    const selectRestaurantHandler = () => {
+      router.push(`restaurants/${restaurant.id}`);
+    };
+
+  
   return (
-    <Popover showArrow={true}>
+    <Popover showArrow={true} onClick={selectRestaurantHandler}>
       <PopoverTrigger>
         <motion.img
           src={Pin.src}

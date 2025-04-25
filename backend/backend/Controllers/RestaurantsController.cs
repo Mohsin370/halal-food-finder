@@ -64,7 +64,7 @@ namespace backend.Controllers
 
         // GET: api/Restaurants/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RestaurantDto>> GetRestaurant(int id)
+        public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurant(int id)
         {
             var restaurant = await _restaurantService.RestaurantById(id);
 

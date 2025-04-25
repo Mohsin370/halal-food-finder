@@ -30,25 +30,12 @@ namespace backend.Services
                 {
                     Id = r.Id,
                     Name = r.Name,
-                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
                     Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
-                    Address = r.Address,
-                    Lat = double.Parse(r.Lat),
-                    Lng = double.Parse(r.Lng),
-                    Reviews = r.Reviews.Select(rv => new Review
-                    {
-                        Id = rv.Id,
-                        ReviewerName = rv.ReviewerName,
-                        Description = rv.Description,
-                        Rating = rv.Rating,
-                        Date = rv.Date,
-                        RestaurantId = r.Id
-                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -59,13 +46,6 @@ namespace backend.Services
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name,
                     },
-                    HalalStatus = new HalalStatusDto
-                    {
-                        Id = r.HalalStatus.Id,
-                        Status = r.HalalStatus.Status,
-                        Description = r.HalalStatus.Description,
-                    },
-                    City = r.City,
                     CreatedAt = r.CreatedAt
                 })
                 .ToListAsync();
@@ -85,25 +65,12 @@ namespace backend.Services
                 {
                     Id = r.Id,
                     Name = r.Name,
-                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
                     IsFeatured = r.isFeatured,
                     Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
-                    Address = r.Address,
-                    Lat = double.Parse(r.Lat),
-                    Lng = double.Parse(r.Lng),
-                    Reviews = r.Reviews.Select(rv => new Review
-                    {
-                        Id = rv.Id,
-                        ReviewerName = rv.ReviewerName,
-                        Description = rv.Description,
-                        Rating = rv.Rating,
-                        Date = rv.Date,
-                        RestaurantId = r.Id
-                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -114,13 +81,6 @@ namespace backend.Services
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name,
                     },
-                    HalalStatus = new HalalStatusDto
-                    {
-                        Id = r.HalalStatus.Id,
-                        Status = r.HalalStatus.Status,
-                        Description = r.HalalStatus.Description,
-                    },
-                    City = r.City,
                     CreatedAt = r.CreatedAt
                 })
                 .ToListAsync();
@@ -128,11 +88,11 @@ namespace backend.Services
             return restaurants;
         }
 
-        public async Task<RestaurantDto> RestaurantById(int id)
+        public async Task<RestaurantDetailsDto> RestaurantById(int id)
         {
             var restaurantById = await _serverContext.Restaurants
                 .Where(r => r.Id == id )
-                .Select(r => new RestaurantDto
+                .Select(r => new RestaurantDetailsDto
                 {
                     Id = r.Id,
                     Name = r.Name,

@@ -3,32 +3,11 @@ import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
-import { setSelected } from "../redux/features/restaurantSlice";
 
 const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
 
   const selectRestaurantHandler = () => {
-    const payload = {
-      id: restaurant.id,
-      placeId: restaurant.placeId,
-      name: restaurant.name,
-      rating: restaurant.rating,
-      useRatingCount: restaurant.userRatingCount,
-      description: restaurant.description,
-      image: restaurant.image,
-      cuisineType: restaurant.cuisineType.name,
-      restaurantType: restaurant.restaurantType.name,
-      halalStatus: restaurant.halalStatus,
-      address: restaurant.address,
-      reviews: restaurant.reviews,
-      lat: restaurant.lat,
-      lng: restaurant.lng
-    };
-    dispatch(setSelected(payload));
     router.push(`restaurants/${restaurant.id}`);
   };
 

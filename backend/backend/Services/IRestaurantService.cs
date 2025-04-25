@@ -8,7 +8,7 @@ namespace backend.Services
     {
         Task<IEnumerable<RestaurantDto>> RecentlyAddedAsync();
         Task<IEnumerable<RestaurantDto>> FeaturedRestaurants();
-        Task<RestaurantDto> RestaurantById(int id);
+        Task<RestaurantDetailsDto> RestaurantById(int id);
         bool RestaurantAlreadyExists(string placeId);
         Task<RestaurantLookUpDto> RestaurantLookUpAsync();
         Task<IEnumerable<RestaurantPinDto>> RestaurantPinLocation();

@@ -53,9 +53,6 @@ const Listing = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (coords.latitude !== "" && coords.longitude !== "") {
-          console.log("coords available as: ", coords);
-        }
         const { latitude, longitude } = coords;
         const restaurantData = await fetchRestaurantsListing(parseInt(cuisineType || "0"), latitude, longitude);
         setRestaurants(restaurantData);
@@ -66,11 +63,9 @@ const Listing = () => {
 
     fetchData();
 
-    if (cuisineType) {
-      setFilters({
-        cuisineType: parseInt(cuisineType),
-      });
-    }
+    setFilters({
+      cuisineType: parseInt(cuisineType),
+    });
   }, [cuisineType, coords]);
 
   const handleFilterChange = (cuisineType: CuisineType) => {
@@ -92,26 +87,28 @@ const Listing = () => {
   return (
     <div className="flex justify-center">
       <div className="p-3 container">
-        <div className="flex my-2 justify-around cursor-pointer overflow-x-scroll">
-          {lookups?.cuisineType?.map((el) => (
+        <div className="flex my-2 justify-around cursor-pointer overflow-x-auto">
+          {lookups?.cuisineType.map((el) => (
             <div className={twMerge("mx-5 px-5 py-2", filter?.cuisineType === el.id && "bg-zinc-600 text-white rounded-xl")} key={el.id} onClick={() => handleFilterChange(el)}>
               <div className="flex flex-col items-center">
-                <Image src={getCuisineImage(el.name)} className="w-12 h-12 object-contain" alt={el.name} />
+                <Image src={getCuisineImage(el.name)} loading="lazy" className="w-12 h-12 object-contain" alt={el.name} />
                 <p className="text-sm">{el.name}</p>
               </div>
             </div>
           ))}
         </div>
-        <Divider />
 
         {restaurants ? (
           restaurants.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-              {restaurants.map((restaurant) => (
-                <div className="mb-3" key={restaurant.id}>
-                  <ListingItem restaurant={restaurant} />
-                </div>
-              ))}
+            <div>
+              <Divider />
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                {restaurants.map((restaurant) => (
+                  <div className="mb-3" key={restaurant.id}>
+                    <ListingItem restaurant={restaurant} />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="flex flex-col justify-center">
