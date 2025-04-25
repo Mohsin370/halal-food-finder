@@ -13,7 +13,7 @@ namespace backend.Services
         Task<RestaurantLookUpDto> RestaurantLookUpAsync();
         Task<IEnumerable<RestaurantPinDto>> RestaurantPinLocation();
         Task<Restaurant> PostRestaurant(AddRestaurantDto dto);
-        Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType, double? lat, double? lng);
+        Task<IEnumerable<RestaurantDto>> RestaurantListing(int? cuisineType, double? lat, double? lng);
         
     }
 }

@@ -259,7 +259,7 @@ namespace backend.Services
 
         }
 
-        public async Task<IEnumerable<RestaurantListingDto>> RestaurantListing(int? cuisineType, double? lat, double? lng)
+        public async Task<IEnumerable<RestaurantDto>> RestaurantListing(int? cuisineType, double? lat, double? lng)
         {
             var query = _serverContext.Restaurants.AsQueryable();
             if (cuisineType.HasValue)
@@ -275,30 +275,16 @@ namespace backend.Services
 
 
             var listing = await query
-                .Select(r => new RestaurantListingDto
+                .Select(r => new RestaurantDto
                 {
                     Id = r.Id,
                     Name = r.Name,
-                    Description = r.Description,
                     Image = r.Image,
                     Suburb = r.Suburb,
-                    City = r.City,
                     IsFeatured = r.isFeatured,
-                    rating = r.rating,
+                    Rating = r.rating,
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
-                    Address = r.Address,
-                    Lat = double.Parse(r.Lat),
-                    Lng = double.Parse(r.Lng),
-                    Reviews = r.Reviews.Select(rv => new Review
-                    {
-                        Id = rv.Id,
-                        ReviewerName = rv.ReviewerName,
-                        Description = rv.Description,
-                        Rating = rv.Rating,
-                        Date = rv.Date,
-                        RestaurantId = r.Id
-                    }),
                     RestaurantType = new RestaurantTypeDto
                     {
                         Id = r.RestaurantType.Id,
@@ -308,12 +294,6 @@ namespace backend.Services
                     {
                         Id = r.CuisineType.Id,
                         Name = r.CuisineType.Name
-                    },
-                    HalalStatus = new HalalStatusDto
-                    {
-                        Id = r.HalalStatus.Id,
-                        Status = r.HalalStatus.Status,
-                        Description = r.HalalStatus.Description,
                     },
                 })
                 .ToListAsync();
