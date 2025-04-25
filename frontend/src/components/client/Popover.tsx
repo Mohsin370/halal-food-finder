@@ -6,14 +6,14 @@ import { Navigation } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function MapPinLocation({ restaurant }: { restaurant: Restaurant }) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const selectRestaurantHandler = () => {
-      router.push(`restaurants/${restaurant.id}`);
-    };
+  const selectRestaurantHandler = () => {
+    router.push(`restaurants/${restaurant.id}`);
+  };
 
   return (
-    <Popover showArrow={true} onClick={selectRestaurantHandler}>
+    <Popover showArrow={true} onClick={selectRestaurantHandler} className="cursor-pointer">
       <PopoverTrigger>
         <motion.img
           src={Pin.src}
@@ -32,7 +32,7 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
       <PopoverContent className="max-w-[275px]">
         <div className="px-1 py-2">
           <div className="">
-            <Image style={{objectFit: "cover"}} alt="Restaurant Image" src={restaurant.image} width={275} height={200} />
+            <Image style={{ objectFit: "cover" }} alt="Restaurant Image" src={restaurant.image} width={275} height={200} />
           </div>
           <div className="pl-3 pr-5 w-[250]">
             <div className="text-medium font-semibold">{restaurant.name}</div>
@@ -45,7 +45,8 @@ export default function MapPinLocation({ restaurant }: { restaurant: Restaurant 
               {restaurant.address}, {restaurant.postCode}
               <span
                 className="flex text-blue-500 cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   window.open("https://maps.google.com?q=" + restaurant.lat + "," + restaurant.lng);
                 }}
               >
