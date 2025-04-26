@@ -18,7 +18,7 @@ const ScrollCard: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
           <h4 className="font-semibold truncate text-left text-sm w-36 sm:w-full">{restaurant.name}</h4>
           <div className="sm:flex text-xs text-left">
             <span className="text-tiny uppercase font-semibold truncate">{restaurant.restaurantType.name}</span>
-            <br/>
+            <br />
             <span className=" hidden sm:block">,</span>
             <span className="text-tiny uppercase font-semibold truncate sm:pl-1">{restaurant.cuisineType.name}</span>
           </div>
