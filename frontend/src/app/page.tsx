@@ -8,8 +8,8 @@ import SearchSection from "../components/homepage/SearchSection";
 export default async function Home() {
   return (
     <div className="md:mx-3">
-      <div className="flex justify-center mt-3 relative">
-        <Image className="text-center object-cover" src={LandingImage.src}  height={320} width={1500} alt="Landing Page Image" />
+      <div className="flex justify-center container m-auto mt-3 relative">
+        <Image className="text-center object-cover" src={LandingImage.src}  height={250} width={1500} alt="Landing Page Image" />
         <div className="absolute z-10 text-center top-20 md:top-20">
           <SearchSection />
           {/* <SearchSection displayMapBtn={false} /> */}
