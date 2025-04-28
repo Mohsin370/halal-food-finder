@@ -10,7 +10,7 @@ export default async function Home() {
     <div className="md:mx-3">
       <div className="flex justify-center container m-auto mt-3 relative">
         <Image className="text-center object-cover" src={LandingImage.src}  height={250} width={1500} alt="Landing Page Image" />
-        <div className="absolute z-10 text-center top-20 md:top-20">
+        <div className="absolute z-10 text-center top-20 md:top-16">
           <SearchSection />
           {/* <SearchSection displayMapBtn={false} /> */}
         </div>
