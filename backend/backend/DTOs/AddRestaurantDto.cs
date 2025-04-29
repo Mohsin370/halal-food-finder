@@ -21,5 +21,15 @@
         public int restaurantTypeId { get; set; }
         public int halalStatusId { get; set; }
 
+        public ICollection<ReviewDto>? Reviews { get; set; }
+
+    }
+
+    public class ReviewDto
+    {
+        public string ReviewerName { get; set; }
+        public string Description { get; set; }
+        public int Rating { get; set; }
+
     }
 }

@@ -91,7 +91,7 @@ namespace backend.Services
         public async Task<RestaurantDetailsDto> RestaurantById(int id)
         {
             var restaurantById = await _serverContext.Restaurants
-                .Where(r => r.Id == id )
+                .Where(r => r.Id == id)
                 .Select(r => new RestaurantDetailsDto
                 {
                     Id = r.Id,
@@ -250,7 +250,13 @@ namespace backend.Services
                 isFeatured = Convert.ToBoolean(dto.IsFeatured),
                 CuisineTypeId = dto.cuisineTypeId,
                 RestaurantTypeId = dto.restaurantTypeId,
-                HalalStatusId = dto.halalStatusId
+                HalalStatusId = dto.halalStatusId,
+                Reviews = dto.Reviews?.Select(review => new Review
+                {
+                    ReviewerName = review.ReviewerName,
+                    Rating = review.Rating,
+                    Description = review.Description
+                }).ToList()
             };
 
             _serverContext.Restaurants.Add(restaurant);
