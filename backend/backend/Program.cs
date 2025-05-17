@@ -21,6 +21,7 @@ builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.Converters.Add(new PointConverter());
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,11 +33,12 @@ builder.Services.AddScoped<Import_Data>();
 builder.Services.AddHttpClient<GooglePlaceService>();
 
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVercelFrontend", PolicyBuilder =>
 
-        PolicyBuilder.WithOrigins("https://halal-food-finder.vercel.app")
+        PolicyBuilder.WithOrigins("http://localhost:3000", "https://halal-food-finder.vercel.app")
                      .AllowAnyMethod()
                      .AllowCredentials()
                      .AllowAnyHeader());

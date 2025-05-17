@@ -4,7 +4,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Button, Form, Input, Image, Textarea } from "@heroui/react";
 import { Select, SelectItem } from "@heroui/select";
-import { addRestaurant, getRestaurantlookUps, LookUpType } from "../../../../utils/api";
+import { addRestaurant, getRestaurantlookUps, LookUpType, uploadRestaurantImage } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import GoogleAutoComplete from "../../../../components/client/GoogleAutoComplete";
@@ -30,6 +30,7 @@ export default function RestaurantForm() {
     cuisineType: new Set<string>(),
     isFeatured: new Set<string>(["false"]),
     address: {} as RestaurantAddressType,
+    reviews: [] as Review[],
   });
 
   const [restaurantLookUps, setRestaurantLookUps] = React.useState<LookUpType>({
@@ -60,27 +61,48 @@ export default function RestaurantForm() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    formData.append("restaurantTypeId", Array.from(formState.restaurantType).join(","));
-    formData.append("halalStatusId", Array.from(formState.halalStatus).join(","));
-    formData.append("cuisineTypeId", Array.from(formState.cuisineType).join(","));
-    formData.append("lat", formState.address?.lat || "");
-    formData.append("lng", formState.address?.lng || "");
+
     formData.append("image", formState.image);
-    formData.append("isFeatured", Array.from(formState.isFeatured).join(","));
-    formData.append("placeId", formState.placeId);
-    formData.append("rating", formState.rating);
-    formData.append("userRatingCount", formState.userRatingCount);
+    let image = null;
+    try {
+      image = await uploadRestaurantImage({ image: formState.image }).then((res)=> res.secure_url);
+    } catch {
+      addToast({ title: "Error uploading image file", description: "Please Try Again.", color: "danger", timeout: 3000 });
+      return;
+    }
+    if(!image){
+      addToast({ title: "Error uploading image file", description: "Please Try Again.", color: "danger", timeout: 3000 });
+      return;
+    }
 
-    const data = Object.fromEntries(formData);
-
-    const resp = await addRestaurant(data);
+    const payload = {
+      restaurantTypeId: Array.from(formState.restaurantType)[0],
+      halalStatusId: Array.from(formState.halalStatus)[0],
+      cuisineTypeId: Array.from(formState.cuisineType)[0],
+      isFeatured: Array.from(formState.isFeatured)[0] === "true",
+      lat: formState.address?.lat || "",
+      lng: formState.address?.lng || "",
+      image,
+      placeId: formState.placeId,
+      rating: formState.rating,
+      userRatingCount: formState.userRatingCount,
+      Address: formState.address.address,
+      city: formState.address.city,
+      suburb: formState.address.suburb,
+      name: formState.name,
+      country: formState.address.country,
+      description: formState.description,
+      state: formState.address.state,
+      postcode: formState.address.postCode,
+      reviews: formState.reviews, // already an array of objects
+    };
+    const resp = await addRestaurant(payload);
     if (resp.status == 201) {
       addToast({ title: "Success", description: "Restaurant Added Successfully.", color: "success", timeout: 3000 });
       router.push("/dashboard/restaurant");
-    }else if(resp.status === 409) {
+    } else if (resp.status === 409) {
       addToast({ title: "This restaurant may already exist.", description: "Please Try Another business.", color: "danger", timeout: 3000 });
-    }
-     else {
+    } else {
       addToast({ title: "Something went wrong", description: "Please Try Again.", color: "danger", timeout: 3000 });
     }
   };
@@ -176,8 +198,17 @@ export default function RestaurantForm() {
         <div className="flex flex-wrap gap-5 mb-10 m-auto w-full lg:w-1/2">
           {/* Not using mapbox autocomplete, moving to google apis */}
           <GoogleAutoComplete
-            setPlaceDetails={(placeDetail) =>
-              setFormState((prev) => ({ ...prev, address: placeDetail.address, placeId: placeDetail.placeId, rating: placeDetail.rating, userRatingCount: placeDetail.userRatingCount }))
+            setPlaceDetails={
+              (placeDetail) =>
+                setFormState((prev) => ({
+                  ...prev,
+                  address: placeDetail.address,
+                  placeId: placeDetail.placeId,
+                  rating: placeDetail.rating,
+                  userRatingCount: placeDetail.userRatingCount,
+                  reviews: placeDetail.reviews,
+                }))
+              // setLocationReviews(()=>{...prev})
             }
           />
         </div>

@@ -2,8 +2,7 @@
 using backend.DTOs;
 using backend.Helpers;
 using backend.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
@@ -214,15 +213,11 @@ namespace backend.Services
 
         }
 
-        public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
-        {
-            if (RestaurantAlreadyExists(dto.PlaceId))
-            {
-                return null;
-            }
 
-            var uploadResponse = await _cloudinaryFTP.UploadImage(dto.Image);
-            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+        public async Task<ImageUploadResult> UploadImage(string Image)
+        {
+
+            var uploadResponse = await _cloudinaryFTP.UploadImage(Image);
 
             if (uploadResponse.Error != null)
             {
@@ -230,10 +225,25 @@ namespace backend.Services
             }
 
 
+            return uploadResponse;
+
+        }
+
+
+        public async Task<Restaurant> PostRestaurant(AddRestaurantDto dto)
+        {
+            if (RestaurantAlreadyExists(dto.PlaceId))
+            {
+                return null;
+            }
+
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+
+
             var restaurant = new Restaurant
             {
                 Name = dto.Name,
-                Image = uploadResponse.SecureUrl.ToString(),
+                Image = dto.Image,
                 Description = dto.Description,
                 Address = dto.Address,
                 Suburb = dto.Suburb,
@@ -246,7 +256,7 @@ namespace backend.Services
                 PlaceId = dto.PlaceId,
                 rating = dto.rating,
                 userRatingCount = dto.userRatingCount,
-                Location = new Point(new Coordinate(double.Parse(dto.Lng), double.Parse(dto.Lat))),
+                Location = new NetTopologySuite.Geometries.Point(new Coordinate(double.Parse(dto.Lng), double.Parse(dto.Lat))),
                 isFeatured = Convert.ToBoolean(dto.IsFeatured),
                 CuisineTypeId = dto.cuisineTypeId,
                 RestaurantTypeId = dto.restaurantTypeId,
@@ -255,7 +265,9 @@ namespace backend.Services
                 {
                     ReviewerName = review.ReviewerName,
                     Rating = review.Rating,
-                    Description = review.Description
+                    Description = review.Description,
+                    Date = review.Date,
+
                 }).ToList()
             };
 
@@ -275,7 +287,7 @@ namespace backend.Services
 
             if (lat.HasValue && lng.HasValue)
             {
-                var userLocation = new Point(lng.Value, lat.Value) { SRID = 4326 };
+                var userLocation = new NetTopologySuite.Geometries.Point(lng.Value, lat.Value) { SRID = 4326 };
                 query = query.OrderBy(r => r.Location.Distance(userLocation));
             }
 

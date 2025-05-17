@@ -8,6 +8,7 @@ type propType = {
   placeId: string;
   rating: string;
   userRatingCount: string;
+  reviews: Review[]
 };
 
 export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetails: (placeDetailData: propType) => void }) {
@@ -27,7 +28,7 @@ export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetail
   };
 
   const onAddressSelect = async (prediction: Suggestion) => {
-    const params = ["id", "addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount"];
+    const params = ["id", "addressComponents", "displayName", "shortFormattedAddress", "location", "rating", "userRatingCount" , "reviews"];
 
     const placeDetail: PlaceDetailsResponse = await placeDetails(prediction.placePrediction.placeId, params);
     if (!placeDetail) return;
@@ -42,6 +43,14 @@ export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetail
       lng: "",
       state: "",
     };
+
+    const review_items: Review[] = placeDetail.reviews.map((el) => ({
+      reviewerName: el.authorAttribution.displayName,
+      date: el.publishTime,
+      rating: el.rating,
+      description: el.text.text,
+      id:"0"
+    }));
 
     placeDetail.addressComponents.forEach((element: any) => {
       if (element.types.includes("locality")) {
@@ -58,11 +67,13 @@ export default function GoogleAutoComplete({ setPlaceDetails }: { setPlaceDetail
     addressDetails.address = placeDetail.shortFormattedAddress;
     addressDetails.lat = placeDetail.location.latitude.toString();
     addressDetails.lng = placeDetail.location.longitude.toString();
+
     setPlaceDetails({
       address: addressDetails,
       placeId: placeDetail.id,
       rating: placeDetail.rating.toString(),
       userRatingCount: placeDetail.userRatingCount.toString(),
+      reviews: review_items
     });
   };
 

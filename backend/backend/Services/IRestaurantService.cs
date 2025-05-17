@@ -1,5 +1,6 @@
 ﻿using backend.DTOs;
 using backend.Models;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
@@ -13,6 +14,7 @@ namespace backend.Services
         Task<RestaurantLookUpDto> RestaurantLookUpAsync();
         Task<IEnumerable<RestaurantPinDto>> RestaurantPinLocation();
         Task<Restaurant> PostRestaurant(AddRestaurantDto dto);
+        Task<ImageUploadResult> UploadImage(string Image);
         Task<IEnumerable<RestaurantDto>> RestaurantListing(int? cuisineType, double? lat, double? lng);
         
     }

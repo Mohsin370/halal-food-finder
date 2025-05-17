@@ -6,6 +6,7 @@ type PlaceDetailsResponse = {
   displayName: DisplayName;
   shortFormattedAddress: string;
   id: string;
+  reviews: GoogleReview[]
 };
 
 type AddressComponent = {
@@ -23,4 +24,15 @@ type PlaceLocation = {
 type DisplayName = {
   text: string;
   languageCode: string;
+};
+
+type GoogleReview = {
+  authorAttribution: {
+    displayName: string;
+  };
+  publishTime: Date;
+  rating: number;
+  text: {
+    text: string;
+  };
 };

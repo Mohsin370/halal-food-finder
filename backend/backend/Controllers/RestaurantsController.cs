@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Internal;
 using backend.Services;
 using Humanizer;
+using CloudinaryDotNet.Actions;
 
 namespace backend.Controllers
 {
@@ -153,6 +154,27 @@ namespace backend.Controllers
                     return Conflict("A restaurant with this PlaceId already exists.");
                 }
                 return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { message = "Validation Failed!", error = ex.Message });
+            }
+        }
+
+   
+
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> UploadImage([FromBody] MediaUploadDTO dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Image))
+            {
+                return BadRequest(new { message = "No image data received." });
+            }
+
+            try
+            {
+                var restaurantImage = await _restaurantService.UploadImage(dto.Image);
+                return Ok(restaurantImage);
             }
             catch (ValidationException ex)
             {
