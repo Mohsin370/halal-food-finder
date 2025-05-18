@@ -21,9 +21,11 @@ export default function App() {
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="2xl">
       {/* Logo */}
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
-        <NavbarBrand className="cursor-pointer" onClick={() => router.push("/")}>
-          <Logo />
-          <p className="font-bold text-inherit">HalalFindr</p>
+        <NavbarBrand>
+          <div className="flex items-center cursor-pointer" onClick={() => router.push("/")}>
+            <Logo />
+            <p className="font-bold text-inherit">HalalFindr</p>
+          </div>
         </NavbarBrand>
       </NavbarContent>
       {/* Location Section */}
