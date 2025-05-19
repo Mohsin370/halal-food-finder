@@ -8,7 +8,7 @@ config.autoAddCss = false; // Prevent FontAwesome from automatically adding its 
 import "mapbox-gl/dist/mapbox-gl.css"; // Import the necessary Mapbox CSS
 import LayoutWrapper from "./layoutWrapper";
 import { Analytics } from '@vercel/analytics/next';
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geist = localFont({
   src: "./fonts/Geist-VariableFont_wght.ttf",
@@ -33,6 +33,7 @@ export default function RootLayout({
         <Providers>
           <LayoutWrapper >{children}</LayoutWrapper>
         </Providers>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>
