@@ -7,6 +7,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Prevent FontAwesome from automatically adding its CSS
 import "mapbox-gl/dist/mapbox-gl.css"; // Import the necessary Mapbox CSS
 import LayoutWrapper from "./layoutWrapper";
+import { Analytics } from '@vercel/analytics/next';
 
 
 const geist = localFont({
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Providers>
           <LayoutWrapper >{children}</LayoutWrapper>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
