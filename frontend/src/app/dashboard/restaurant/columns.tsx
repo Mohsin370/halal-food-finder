@@ -27,8 +27,8 @@ export const columns: ColumnDef<Restaurant>[] = [
     accessorKey: "cuisineType.name",
     header: "Cuisine",
   },  {
-    accessorKey: "halalStatus.status",
-    header: "Halal Status",
+    accessorKey: "restaurantType.name",
+    header: "Restaurant Type",
   },
   {
     accessorKey: "rating",
