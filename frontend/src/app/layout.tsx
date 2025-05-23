@@ -7,8 +7,10 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Prevent FontAwesome from automatically adding its CSS
 import "mapbox-gl/dist/mapbox-gl.css"; // Import the necessary Mapbox CSS
 import LayoutWrapper from "./layoutWrapper";
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import NextTopLoader from "nextjs-toploader";
+import RouterEventsProvider from "./RouterEventsProvider";
 
 const geist = localFont({
   src: "./fonts/Geist-VariableFont_wght.ttf",
@@ -30,8 +32,21 @@ export default function RootLayout({
     <html lang="en">
       {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}> */}
       <body className={`${geist.className} antialiased`}>
+        <NextTopLoader
+          color="#ef4444"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease-in-out"	
+          speed={100}
+          zIndex={1600}
+          showAtBottom={false}
+        />
+        <RouterEventsProvider />
         <Providers>
-          <LayoutWrapper >{children}</LayoutWrapper>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </Providers>
         <SpeedInsights />
         <Analytics />
