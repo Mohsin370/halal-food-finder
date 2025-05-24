@@ -1,6 +1,6 @@
 import { fetchRestaurantsListing } from "../../../utils/api";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "../../../components/dashboard/data-table";
 
 export default async function RestaurantDashboard() {
   const restaurants: Restaurant[] = await fetchRestaurantsListing();

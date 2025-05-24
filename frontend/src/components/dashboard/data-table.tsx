@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/client/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../client/table";
 import { Button, Input } from "@heroui/react";
 import {
   ColumnDef,
@@ -30,7 +30,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const router = useRouter();
 
-
   const table = useReactTable({
     data,
     columns,
@@ -48,6 +47,22 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     },
   });
 
+  table.options.meta = {
+    onDelete: (id: number, deleteMethod: () => Promise<{ success: boolean; message: string; } | undefined>) => {
+      if (confirm("Are you sure you want to delete this restaurant?")) {
+        deleteMethod()
+          .then(() => {
+            table.setRowSelection({});
+            table.setColumnFilters([]);
+            table.setSorting([]);
+          })
+          .catch((error) => {
+            console.error("Failed to delete restaurant:", error);
+          });
+        router.refresh();
+      }
+    },
+  };
 
   return (
     <div>
@@ -59,10 +74,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           className="max-w-sm"
         />
         {/* <RestaurantModal/> */}
-      <PlusIcon className="rounded-sm border-2 border-black cursor-pointer hover:bg-black hover:text-white transition duration-600 ease-in-out"
-      onClick={() => router.push("/dashboard/restaurant/add")}
-      />
-
+        <PlusIcon
+          className="rounded-sm border-2 border-black cursor-pointer hover:bg-black hover:text-white transition duration-600 ease-in-out"
+          onClick={() => router.push("/dashboard/restaurant/add")}
+        />
       </div>
       <div className="rounded-md border">
         <Table>

@@ -4,14 +4,14 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Button, Form, Input, Image, Textarea } from "@heroui/react";
 import { Select, SelectItem } from "@heroui/select";
-import { addRestaurant, getRestaurantlookUps, LookUpType, uploadRestaurantImage } from "../../../../utils/api";
+import { addRestaurant, fetchRestaurantById, getRestaurantlookUps, LookUpType, uploadRestaurantImage } from "../../../../utils/api";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import GoogleAutoComplete from "../../../../components/client/GoogleAutoComplete";
 
-export default function RestaurantForm() {
+export default function RestaurantForm(props: { action: "add" | "edit" }) {
   const router = useRouter();
-
+  const [originalImage, setOriginalImage] = React.useState<string>("");
   const isFeaturedOptions = [
     { key: "true", name: "Yes" },
     { key: "false", name: "No" },
@@ -39,7 +39,40 @@ export default function RestaurantForm() {
     halalStatus: [],
   });
 
+  const fetchRestaurantDetails = async () => {
+    const id = window.location.pathname.split("/").pop();
+    const restaurantDetails: any = await fetchRestaurantById(Number(id));
+    setFormState((prev) => ({
+      ...prev,
+      placeId: restaurantDetails.placeId,
+      rating: restaurantDetails.rating,
+      userRatingCount: restaurantDetails.userRatingCount,
+      name: restaurantDetails.name,
+      description: restaurantDetails.description,
+      image: restaurantDetails.image,
+      restaurantType: new Set([restaurantDetails.restaurantType.id.toString()]),
+      halalStatus: new Set([restaurantDetails.halalStatus.id.toString()]),
+      cuisineType: new Set([restaurantDetails.cuisineType.id.toString()]),
+      isFeatured: new Set([restaurantDetails.isFeatured ? "true" : "false"]),
+      address: {
+        address: restaurantDetails.address,
+        city: restaurantDetails.city,
+        suburb: restaurantDetails.suburb,
+        state: restaurantDetails.state,
+        postCode: restaurantDetails.postCode,
+        country: restaurantDetails.country,
+        lat: restaurantDetails.lat,
+        lng: restaurantDetails.lng,
+      },
+      reviews: restaurantDetails.reviews || [],
+    }));
+    setOriginalImage(restaurantDetails.image); // Store the original image URL for comparison
+  };
+
   useEffect(() => {
+    if (props.action === "edit") {
+      fetchRestaurantDetails();
+    }
     async function fetchLookups() {
       try {
         const lookupData = await getRestaurantlookUps();
@@ -60,20 +93,19 @@ export default function RestaurantForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    formData.append("image", formState.image);
-    let image = null;
+console.log("Form State:", originalImage);
+    if(originalImage !== formState.image) {
     try {
-      image = await uploadRestaurantImage({ image: formState.image }).then((res)=> res.secure_url);
+      formState.image = await uploadRestaurantImage({ image: formState.image }).then((res) => res.secure_url);
     } catch {
       addToast({ title: "Error uploading image file", description: "Please Try Again.", color: "danger", timeout: 3000 });
       return;
     }
-    if(!image){
+    if (!formState.image) {
       addToast({ title: "Error uploading image file", description: "Please Try Again.", color: "danger", timeout: 3000 });
       return;
     }
+  }
 
     const payload = {
       restaurantTypeId: Array.from(formState.restaurantType)[0],
@@ -82,7 +114,7 @@ export default function RestaurantForm() {
       isFeatured: Array.from(formState.isFeatured)[0] === "true",
       lat: formState.address?.lat || "",
       lng: formState.address?.lng || "",
-      image,
+      image:formState.image,
       placeId: formState.placeId,
       rating: formState.rating,
       userRatingCount: formState.userRatingCount,
@@ -119,7 +151,6 @@ export default function RestaurantForm() {
           width={300}
         />
       </div>
-
       <Form className="w-full" onSubmit={onSubmit}>
         <Input
           className="lg:w-1/2 w-full m-auto"
@@ -175,6 +206,10 @@ export default function RestaurantForm() {
             accept="image/*"
             onChange={(file) => {
               const imageFile = file.target.files?.[0];
+              if (!imageFile) {
+                // 🟡 No new file selected, keep existing image
+                return;
+              }
               if (imageFile) {
                 const reader = new FileReader();
                 reader.onloadend = () => handleChange("image", reader.result as string);
@@ -183,7 +218,7 @@ export default function RestaurantForm() {
             }}
             label="Cover photo"
             name="image"
-            isRequired
+            isRequired={props.action === "add"}
             fullWidth
           />
         </div>
@@ -243,7 +278,7 @@ export default function RestaurantForm() {
             <Input
               isRequired
               errorMessage="Please enter a valid state"
-              label="state"
+              label="State"
               name="state"
               placeholder="State"
               type="text"
@@ -256,7 +291,7 @@ export default function RestaurantForm() {
             <Input
               isRequired
               errorMessage="Please enter a valid postcode"
-              label="postCode"
+              label="Post Code"
               name="postCode"
               placeholder="Postcode"
               type="text"

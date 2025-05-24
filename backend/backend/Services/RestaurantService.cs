@@ -103,6 +103,9 @@ namespace backend.Services
                     userRatingCount = r.userRatingCount,
                     PlaceId = r.PlaceId,
                     Address = r.Address,
+                    State = r.State,
+                    Country = r.Country,
+                    PostCode = r.PostCode,
                     Lat = double.Parse(r.Lat),
                     Lng = double.Parse(r.Lng),
                     Reviews = r.Reviews.Select(rv => new Review

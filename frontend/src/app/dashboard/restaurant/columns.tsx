@@ -5,12 +5,21 @@ import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
 import { deleteRestaurantById } from "../../../utils/api";
+import { useRouter } from "next/navigation";
+
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData> {
+    onDelete?: (id: number, deleteFn: () => Promise<{ success: boolean; message: string; } | undefined>) => void;
+  }
+}
 
 let toggleState = false;
+
+
 export const columns: ColumnDef<Restaurant>[] = [
   {
     accessorKey: "image",
-    header:"",
+    header: "",
     cell: ({ row }) => {
       return (
         <div className="">
@@ -26,7 +35,8 @@ export const columns: ColumnDef<Restaurant>[] = [
   {
     accessorKey: "cuisineType.name",
     header: "Cuisine",
-  },  {
+  },
+  {
     accessorKey: "restaurantType.name",
     header: "Restaurant Type",
   },
@@ -35,7 +45,7 @@ export const columns: ColumnDef<Restaurant>[] = [
     header: ({ column }) => {
       return (
         <div
-        className="flex"
+          className="flex"
           onClick={() => {
             column.toggleSorting((toggleState = !toggleState));
           }}
@@ -55,7 +65,14 @@ export const columns: ColumnDef<Restaurant>[] = [
     header: "Actions",
     cell: ({ row, table }) => {
       const element = row.original;
-  
+      const router = useRouter();
+      const deleteHandler = async (element: Restaurant) => {
+        //pass the delete method to the meta function
+        table.options.meta?.onDelete?.(element.id, ()=>  deleteRestaurantById(element.id));
+      };
+      const editHandler = async (element: Restaurant) => {
+        router.push(`/dashboard/restaurant/edit/${element.id}`);
+      };
       return (
         <Dropdown>
           <DropdownTrigger asChild>
@@ -64,8 +81,11 @@ export const columns: ColumnDef<Restaurant>[] = [
             </Button>
           </DropdownTrigger>
           <DropdownMenu aria-label="Link Actions">
-            <DropdownItem key="edit">Edit</DropdownItem>
-            <DropdownItem key="delete" color="danger" onPress={() => deleteHandler(element)} > Delete
+            <DropdownItem key="edit" onPress={() => editHandler(element)}>
+              Edit
+            </DropdownItem>
+            <DropdownItem key="delete" color="danger" onPress={() => deleteHandler(element)}>
+              Delete
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -73,6 +93,3 @@ export const columns: ColumnDef<Restaurant>[] = [
     },
   },
 ];
-const deleteHandler = async ( element: Restaurant) => {
-  await deleteRestaurantById(element.id);
-}

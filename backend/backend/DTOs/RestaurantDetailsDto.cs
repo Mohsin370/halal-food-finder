@@ -17,6 +17,10 @@ namespace backend.DTOs
         public double Lat { get; set; }
         public double Lng { get; set; }
         public string Address { get; set; } = null!;
+        public string State { get; set; } = null!;
+        public string PostCode { get; set; } = null!;
+        public string Country { get; set; } = null!;
+
         public IEnumerable<Review> Reviews { get; set; }
         public RestaurantTypeDto RestaurantType { get; set; } = new RestaurantTypeDto();
         public CuisineTypeDto CuisineType { get; internal set; } = null!;
