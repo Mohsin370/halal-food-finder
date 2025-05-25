@@ -18,6 +18,7 @@ import {
 import { PlusIcon } from "lucide-react";
 // import RestaurantModal from "../../../components/client/RestaurantModal";
 import { useRouter } from "next/navigation";
+import ConfirmationModal from "../client/ConfirmationModal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -28,6 +29,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [openModal, setOpenModal] = React.useState(false);
+  const [modelMethod, setModalMethod] = React.useState<() => Promise<{ success: boolean; message: string } | undefined>>();
   const router = useRouter();
 
   const table = useReactTable({
@@ -48,19 +51,20 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   table.options.meta = {
-    onDelete: (id: number, deleteMethod: () => Promise<{ success: boolean; message: string; } | undefined>) => {
-      if (confirm("Are you sure you want to delete this restaurant?")) {
-        deleteMethod()
-          .then(() => {
-            table.setRowSelection({});
-            table.setColumnFilters([]);
-            table.setSorting([]);
-          })
-          .catch((error) => {
-            console.error("Failed to delete restaurant:", error);
-          });
-        router.refresh();
+    onDelete: (id: number, deleteMethod: () => Promise<{ success: boolean; message: string } | undefined>) => {
+      setOpenModal(true);
+     setModalMethod(() => async () => {
+      const result = await deleteMethod();
+      if (result?.success) {
+        table.setRowSelection({});
+        table.setColumnFilters([]);
+        table.setSorting([]);
+        router.refresh(); // If needed
+      } else {
+        console.error("Delete failed:", result?.message);
       }
+      return result;
+    });
     },
   };
 
@@ -118,6 +122,19 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           Next
         </Button>
       </div>
+
+      {openModal && modelMethod && (
+        <ConfirmationModal
+          title="Delete Restaurant"
+          message="Are you sure you want to delete this restaurant?"
+          openModal={openModal}
+          onConfirm={modelMethod}
+          onClose={() => {
+            setOpenModal(false);
+            setModalMethod(undefined);
+          }}
+        />
+      )}
     </div>
   );
 }
