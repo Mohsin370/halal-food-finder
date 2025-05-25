@@ -17,7 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { PlusIcon } from "lucide-react";
 // import RestaurantModal from "../../../components/client/RestaurantModal";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import ConfirmationModal from "../client/ConfirmationModal";
 
 interface DataTableProps<TData, TValue> {
@@ -32,6 +32,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [openModal, setOpenModal] = React.useState(false);
   const [modelMethod, setModalMethod] = React.useState<() => Promise<{ success: boolean; message: string } | undefined>>();
   const router = useRouter();
+  const pathname = usePathname();
 
   const table = useReactTable({
     data,
@@ -53,18 +54,18 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   table.options.meta = {
     onDelete: (id: number, deleteMethod: () => Promise<{ success: boolean; message: string } | undefined>) => {
       setOpenModal(true);
-     setModalMethod(() => async () => {
-      const result = await deleteMethod();
-      if (result?.success) {
-        table.setRowSelection({});
-        table.setColumnFilters([]);
-        table.setSorting([]);
-        router.refresh(); // If needed
-      } else {
-        console.error("Delete failed:", result?.message);
-      }
-      return result;
-    });
+      setModalMethod(() => async () => {
+        const result = await deleteMethod();
+        if (result?.success) {
+          table.setRowSelection({});
+          table.setColumnFilters([]);
+          table.setSorting([]);
+          router.refresh(); // If needed
+        } else {
+          console.error("Delete failed:", result?.message);
+        }
+        return result;
+      });
     },
   };
 
@@ -80,7 +81,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         {/* <RestaurantModal/> */}
         <PlusIcon
           className="rounded-sm border-2 border-black cursor-pointer hover:bg-black hover:text-white transition duration-600 ease-in-out"
-          onClick={() => router.push("/dashboard/restaurant/add")}
+          //route to add page using relative path
+          onClick={() => {
+            router.push(`${pathname}/add`);
+          }}
         />
       </div>
       <div className="rounded-md border">
@@ -126,7 +130,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       {openModal && modelMethod && (
         <ConfirmationModal
           title="Delete Restaurant"
-          message="Are you sure you want to delete this restaurant?"
+          message="Are you sure you want to delete this item?"
           openModal={openModal}
           onConfirm={modelMethod}
           onClose={() => {
